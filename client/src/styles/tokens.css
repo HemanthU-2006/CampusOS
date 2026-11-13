@@ -1,0 +1,16 @@
+@theme {
+  --color-page: #090909;
+  --color-card: #1B1B1B;
+  --color-ring: #232323;
+  --color-row: #131313;
+  --color-rule: #2F2F2F;
+  --color-lime: #83F34D;
+  --color-lime-ink: #0B2400;
+  --color-glow: #1D2E13;
+  --color-muted: rgb(255 255 255 / 0.82);
+  --font-sans: "Figtree", system-ui, sans-serif;
+  --font-input: "Lexend", system-ui, sans-serif;
+  --radius-pill: 9999px;
+  --radius-btn: 0.75rem;
+  --radius-row: 0.875rem;
+}

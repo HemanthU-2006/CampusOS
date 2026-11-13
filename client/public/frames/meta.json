@@ -1,0 +1,7 @@
+﻿{
+  "generatedAt": "2026-11-13T18:30:35Z",
+  "mobilePath": "/frames/mob/f_%04d.webp",
+  "desktopPath": "/frames/desk/f_%04d.webp",
+  "fps": 15,
+  "frameCount": 150
+}

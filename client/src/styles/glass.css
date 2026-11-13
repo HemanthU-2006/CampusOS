@@ -1,0 +1,109 @@
+/* Glassmorphism Utilities */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.glass-nav {
+  background: rgba(20, 20, 20, 0.65);
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.glass-input {
+  background: rgba(27, 27, 27, 0.7);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Landing & Auth Background: Central radial green glow (#1D2E13 fading to page) + 5 stepped vertical green light bars on each side */
+.bg-glow-landing {
+  background-color: var(--color-page);
+  background-image: 
+    radial-gradient(ellipse 70% 50% at 50% 0%, rgba(29, 46, 19, 0.85) 0%, rgba(9, 9, 9, 0.95) 75%, var(--color-page) 100%);
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* 5 stepped vertical light bars on each side */
+.landing-light-bars {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.landing-light-bars::before,
+.landing-light-bars::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 280px;
+  opacity: 0.7;
+}
+
+/* Left 5 stepped bars */
+.landing-light-bars::before {
+  left: 0;
+  background: 
+    linear-gradient(to right,
+      rgba(131, 243, 77, 0.12) 0px, rgba(131, 243, 77, 0.12) 1.5px, transparent 1.5px, transparent 40px,
+      rgba(131, 243, 77, 0.10) 40px, rgba(131, 243, 77, 0.10) 41.5px, transparent 41.5px, transparent 90px,
+      rgba(131, 243, 77, 0.08) 90px, rgba(131, 243, 77, 0.08) 91.5px, transparent 91.5px, transparent 150px,
+      rgba(131, 243, 77, 0.05) 150px, rgba(131, 243, 77, 0.05) 151.5px, transparent 151.5px, transparent 210px,
+      rgba(131, 243, 77, 0.03) 210px, rgba(131, 243, 77, 0.03) 211.5px, transparent 211.5px
+    );
+  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.4) 50%, transparent 90%);
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.4) 50%, transparent 90%);
+}
+
+/* Right 5 stepped bars */
+.landing-light-bars::after {
+  right: 0;
+  background: 
+    linear-gradient(to left,
+      rgba(131, 243, 77, 0.12) 0px, rgba(131, 243, 77, 0.12) 1.5px, transparent 1.5px, transparent 40px,
+      rgba(131, 243, 77, 0.10) 40px, rgba(131, 243, 77, 0.10) 41.5px, transparent 41.5px, transparent 90px,
+      rgba(131, 243, 77, 0.08) 90px, rgba(131, 243, 77, 0.08) 91.5px, transparent 91.5px, transparent 150px,
+      rgba(131, 243, 77, 0.05) 150px, rgba(131, 243, 77, 0.05) 151.5px, transparent 151.5px, transparent 210px,
+      rgba(131, 243, 77, 0.03) 210px, rgba(131, 243, 77, 0.03) 211.5px, transparent 211.5px
+    );
+  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.4) 50%, transparent 90%);
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.4) 50%, transparent 90%);
+}
+
+/* App Background: Plain #090909 with very subtle top glow */
+.bg-app-ambient {
+  background-color: var(--color-page);
+  background-image: radial-gradient(ellipse 80% 30% at 50% 0%, rgba(29, 46, 19, 0.35) 0%, transparent 70%);
+  background-repeat: no-repeat;
+}
+
+/* Lime glows */
+.glow-lime {
+  box-shadow: 0 0 20px -2px rgba(131, 243, 77, 0.35);
+}
+
+.glow-lime-sm {
+  box-shadow: 0 0 12px -1px rgba(131, 243, 77, 0.25);
+}
+
+.glow-lime-lg {
+  box-shadow: 0 0 40px -4px rgba(131, 243, 77, 0.45);
+}
+
+/* Pill card border lime hover effect */
+.pill-hover-glow {
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.pill-hover-glow:hover {
+  border-color: rgba(131, 243, 77, 0.45);
+  box-shadow: 0 0 24px -6px rgba(131, 243, 77, 0.2);
+  transform: translateY(-2px);
+}

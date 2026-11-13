@@ -1,0 +1,46 @@
+@import "tailwindcss";
+@import "./tokens.css";
+@import "./glass.css";
+
+/* Base Resets & Global Styles */
+* {
+  border-color: var(--color-rule);
+}
+
+html, body {
+  background-color: var(--color-page);
+  color: #FFFFFF;
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Custom subtle scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-page);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-ring);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-rule);
+}
+
+/* Respect prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
