@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
 import {
   Wrench,
   AlertTriangle,
@@ -9,95 +7,64 @@ import {
   Plus,
   Star,
   MapPin,
-  MessageSquare,
-  Sparkles,
-  ShieldAlert,
+  ArrowRight,
+  Upload,
+  Check,
+  Search,
+  Camera,
 } from 'lucide-react';
 import { useAuth } from '@/features/auth/AuthContext';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
-import { Select } from '@/components/ui/Select';
 import { Textarea } from '@/components/ui/Textarea';
-import { Badge, BadgeVariant } from '@/components/ui/Badge';
+import { Badge } from '@/components/ui/Badge';
 import { Modal } from '@/components/ui/Modal';
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/Table';
 import { toast } from 'sonner';
 import { DEFAULT_TICKETS, MaintenanceTicketItem } from '../api';
-import { createTicketFormSchema, CreateTicketFormData } from '../schemas';
 
 export const MaintenancePage: React.FC = () => {
   const { user } = useAuth();
   const isMaintenanceStaff = user?.role === 'maintenance' || user?.role === 'admin';
 
   const [tickets, setTickets] = useState<MaintenanceTicketItem[]>(DEFAULT_TICKETS);
-  const [activeTab, setActiveTab] = useState<'all' | 'assigned_to_me' | 'resolved'>('all');
+  const [activeTab, setActiveTab] = useState<'all' | 'my_tasks' | 'done'>('all');
+  const [searchTerm, setSearchTerm] = useState('');
+
+  // 3-field form state
   const [createModalOpen, setCreateModalOpen] = useState(false);
+  const [whatIsWrong, setWhatIsWrong] = useState('');
+  const [whereIsIt, setWhereIsIt] = useState('');
+  const [photoName, setPhotoName] = useState<string | null>(null);
 
-  // Status update modal state
-  const [statusModalOpen, setStatusModalOpen] = useState(false);
-  const [activeTicket, setActiveTicket] = useState<MaintenanceTicketItem | null>(null);
-  const [targetStatus, setTargetStatus] = useState<'in_progress' | 'resolved'>('in_progress');
-  const [statusComment, setStatusComment] = useState('');
+  // Detail Modal State with 4-step timeline
+  const [selectedTicketForDetail, setSelectedTicketForDetail] = useState<MaintenanceTicketItem | null>(null);
 
-  // Rating modal state
-  const [ratingModalOpen, setRatingModalOpen] = useState(false);
-  const [ratingTarget, setRatingTarget] = useState<MaintenanceTicketItem | null>(null);
-  const [selectedRating, setSelectedRating] = useState(5);
-  const [ratingFeedback, setRatingFeedback] = useState('');
+  // Quick staff resolution modal
+  const [resolveNote, setResolveNote] = useState('');
 
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm<CreateTicketFormData>({
-    resolver: zodResolver(createTicketFormSchema),
-    defaultValues: {
-      title: '',
-      description: '',
-      category: 'electrical',
-      priority: 'medium',
-      location: '',
-    },
-  });
-
-  const getStatusBadgeVariant = (status: MaintenanceTicketItem['status']): BadgeVariant => {
-    switch (status) {
-      case 'open':
-        return 'pending';
-      case 'assigned':
-        return 'info';
-      case 'in_progress':
-        return 'lime';
-      case 'resolved':
-        return 'approved';
-      case 'closed':
-        return 'neutral';
-      default:
-        return 'neutral';
+  const handleCreateSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!whatIsWrong.trim()) {
+      toast.error('Please describe what is wrong');
+      return;
     }
-  };
+    if (!whereIsIt.trim()) {
+      toast.error('Please specify the location');
+      return;
+    }
 
-  const handleCreateSubmit = (data: CreateTicketFormData) => {
     const newTicket: MaintenanceTicketItem = {
       _id: `tick-${Date.now()}`,
-      title: data.title,
-      description: data.description,
-      category: data.category,
-      priority: data.priority,
+      title: whatIsWrong,
+      description: whatIsWrong,
+      category: 'other',
+      priority: 'medium', // Default to Normal
       status: 'open',
-      location: data.location,
+      location: whereIsIt,
       reportedBy: {
         _id: user?._id || 'user-curr',
-        name: user?.name || 'Priya Patel (Student)',
-        email: user?.email || 'student@campus.edu',
+        name: user?.name || 'You',
+        email: user?.email || 'user@campus.edu',
         role: user?.role || 'student',
       },
       comments: [],
@@ -106,422 +73,498 @@ export const MaintenancePage: React.FC = () => {
 
     setTickets([newTicket, ...tickets]);
     setCreateModalOpen(false);
-    reset();
-    toast.success('Ticket Logged Successfully!', {
-      description: 'Facilities dispatch team has received your ticket.',
+    setWhatIsWrong('');
+    setWhereIsIt('');
+    setPhotoName(null);
+    toast.success('Problem reported!', {
+      description: 'Campus maintenance team has been notified.',
     });
   };
 
-  const openStatusModal = (ticket: MaintenanceTicketItem, status: 'in_progress' | 'resolved') => {
-    setActiveTicket(ticket);
-    setTargetStatus(status);
-    setStatusComment('');
-    setStatusModalOpen(true);
-  };
-
-  const confirmStatusUpdate = () => {
-    if (!activeTicket) return;
-
+  const advanceTicketStep = (ticketId: string, nextStatus: MaintenanceTicketItem['status']) => {
     setTickets((prev) =>
-      prev.map((t) =>
-        t._id === activeTicket._id
-          ? {
-              ...t,
-              status: targetStatus,
-              resolutionNotes: targetStatus === 'resolved' ? statusComment : t.resolutionNotes,
-              resolvedAt: targetStatus === 'resolved' ? new Date().toISOString() : t.resolvedAt,
-              comments: statusComment
-                ? [
-                    ...t.comments,
-                    {
-                      author: { name: user?.name || 'Suresh Kumar', role: 'maintenance' },
-                      content: statusComment,
-                      createdAt: new Date().toISOString(),
-                    },
-                  ]
-                : t.comments,
-            }
-          : t
-      )
+      prev.map((t) => {
+        if (t._id === ticketId) {
+          const updated = {
+            ...t,
+            status: nextStatus,
+            resolvedAt: nextStatus === 'resolved' ? new Date().toISOString() : t.resolvedAt,
+          };
+          if (selectedTicketForDetail && selectedTicketForDetail._id === ticketId) {
+            setSelectedTicketForDetail(updated);
+          }
+          return updated;
+        }
+        return t;
+      })
     );
 
-    setStatusModalOpen(false);
-    toast.success(`Ticket Updated to ${targetStatus.replace('_', ' ').toUpperCase()}!`, {
-      description: `Notification dispatched to ${activeTicket.reportedBy.name}.`,
-    });
+    const label =
+      nextStatus === 'in_progress' ? 'marked In progress' : nextStatus === 'resolved' ? 'marked Done' : 'updated';
+    toast.success(`Task ${label}!`);
   };
 
-  const openRatingModal = (ticket: MaintenanceTicketItem) => {
-    setRatingTarget(ticket);
-    setSelectedRating(5);
-    setRatingFeedback('');
-    setRatingModalOpen(true);
-  };
-
-  const confirmRating = () => {
-    if (!ratingTarget) return;
-
+  const handleRateTicket = (ticketId: string, rating: number) => {
     setTickets((prev) =>
-      prev.map((t) =>
-        t._id === ratingTarget._id
-          ? {
-              ...t,
-              status: 'closed',
-              rating: selectedRating,
-              feedback: ratingFeedback,
-            }
-          : t
-      )
+      prev.map((t) => {
+        if (t._id === ticketId) {
+          const updated = { ...t, status: 'closed' as const, rating };
+          if (selectedTicketForDetail && selectedTicketForDetail._id === ticketId) {
+            setSelectedTicketForDetail(updated);
+          }
+          return updated;
+        }
+        return t;
+      })
     );
+    toast.success('Thank you for rating the repair!');
+  };
 
-    setRatingModalOpen(false);
-    toast.success('Rating Submitted! (+15 pts awarded to technician)', {
-      description: `Thank you for confirming resolution of '${ratingTarget.title}'.`,
-    });
+  const getTimelineStepIndex = (status: MaintenanceTicketItem['status']) => {
+    switch (status) {
+      case 'open':
+        return 1;
+      case 'assigned':
+        return 2;
+      case 'in_progress':
+        return 3;
+      case 'resolved':
+      case 'closed':
+        return 4;
+      default:
+        return 1;
+    }
   };
 
   const filteredTickets = tickets.filter((t) => {
-    if (activeTab === 'assigned_to_me') {
-      return t.assignedTo?._id === user?._id || isMaintenanceStaff;
+    const q = searchTerm.toLowerCase();
+    const matchesSearch =
+      !searchTerm.trim() ||
+      t.title.toLowerCase().includes(q) ||
+      t.location.toLowerCase().includes(q);
+
+    if (!matchesSearch) return false;
+
+    if (activeTab === 'my_tasks') {
+      return isMaintenanceStaff
+        ? t.status === 'assigned' || t.status === 'in_progress'
+        : t.reportedBy._id === user?._id;
     }
-    if (activeTab === 'resolved') {
+    if (activeTab === 'done') {
       return t.status === 'resolved' || t.status === 'closed';
     }
     return true;
   });
 
   return (
-    <div className="space-y-8 pb-16">
-      {/* Header */}
+    <div className="space-y-6 pb-12">
+      {/* 1. Header with One Main Action */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <div className="flex items-center gap-2 mb-1">
-            <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-              Maintenance &amp; Facilities
-            </h1>
-            <Badge variant="lime">Live Dispatch SLA</Badge>
-          </div>
-          <p className="text-xs sm:text-sm text-white/60">
-            Rapid facility issue ticketing, staff dispatch, and student resolution sign-off.
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+            Campus Repairs
+          </h1>
+          <p className="text-sm text-white/60 mt-0.5">
+            Report broken equipment or campus issues for repair.
           </p>
         </div>
 
         <Button
           variant="lime"
+          size="lg"
           onClick={() => setCreateModalOpen(true)}
-          className="shadow-[0_0_20px_rgba(131,243,77,0.35)]"
+          className="shadow-[0_0_20px_rgba(131,243,77,0.35)] shrink-0 min-h-[44px]"
         >
-          <Plus className="w-4 h-4 mr-1.5" /> Report Campus Issue
+          <Plus className="w-4 h-4 mr-1.5" /> Report a problem
         </Button>
       </div>
 
-      {/* Tabs */}
-      <div className="flex items-center gap-1.5 p-1 rounded-btn bg-card border border-ring/80 w-fit">
-        <button
-          type="button"
-          onClick={() => setActiveTab('all')}
-          className={`px-4 py-2 rounded-btn text-xs font-semibold transition-all cursor-pointer ${
-            activeTab === 'all'
-              ? 'bg-lime text-lime-ink shadow-[0_0_12px_rgba(131,243,77,0.3)]'
-              : 'text-white/70 hover:text-white'
-          }`}
-        >
-          All Tickets ({tickets.length})
-        </button>
-        {isMaintenanceStaff && (
+      {/* 2. Top Tabs */}
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 border-b border-ring/60 pb-3">
+        <div className="flex items-center gap-2">
           <button
             type="button"
-            onClick={() => setActiveTab('assigned_to_me')}
-            className={`px-4 py-2 rounded-btn text-xs font-semibold transition-all cursor-pointer flex items-center gap-1.5 ${
-              activeTab === 'assigned_to_me'
+            onClick={() => setActiveTab('all')}
+            className={`px-4 py-2 rounded-btn text-xs font-semibold min-h-[40px] transition-all cursor-pointer ${
+              activeTab === 'all'
                 ? 'bg-lime text-lime-ink shadow-[0_0_12px_rgba(131,243,77,0.3)]'
-                : 'text-amber-300 hover:text-amber-200'
+                : 'text-white/70 hover:text-white hover:bg-white/[0.05]'
             }`}
           >
-            <Wrench className="w-3.5 h-3.5" />
-            <span>Assigned Work Orders</span>
+            All Reports ({tickets.length})
           </button>
-        )}
-        <button
-          type="button"
-          onClick={() => setActiveTab('resolved')}
-          className={`px-4 py-2 rounded-btn text-xs font-semibold transition-all cursor-pointer ${
-            activeTab === 'resolved'
-              ? 'bg-lime text-lime-ink shadow-[0_0_12px_rgba(131,243,77,0.3)]'
-              : 'text-white/70 hover:text-white'
-          }`}
-        >
-          Resolved &amp; Closed
-        </button>
+          <button
+            type="button"
+            onClick={() => setActiveTab('my_tasks')}
+            className={`px-4 py-2 rounded-btn text-xs font-semibold min-h-[40px] transition-all cursor-pointer ${
+              activeTab === 'my_tasks'
+                ? 'bg-lime text-lime-ink shadow-[0_0_12px_rgba(131,243,77,0.3)]'
+                : 'text-white/70 hover:text-white hover:bg-white/[0.05]'
+            }`}
+          >
+            {isMaintenanceStaff ? 'My Assigned Tasks' : 'My Reports'}
+          </button>
+          <button
+            type="button"
+            onClick={() => setActiveTab('done')}
+            className={`px-4 py-2 rounded-btn text-xs font-semibold min-h-[40px] transition-all cursor-pointer ${
+              activeTab === 'done'
+                ? 'bg-lime text-lime-ink shadow-[0_0_12px_rgba(131,243,77,0.3)]'
+                : 'text-white/70 hover:text-white hover:bg-white/[0.05]'
+            }`}
+          >
+            Done &amp; Closed
+          </button>
+        </div>
+
+        <div className="relative w-full sm:w-64">
+          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-white/40 pointer-events-none" />
+          <input
+            type="text"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            placeholder="Search problems or places..."
+            className="w-full bg-white/[0.07] border border-white/15 text-white text-xs rounded-pill pl-9 pr-3 py-2 outline-none focus:border-lime"
+          />
+        </div>
       </div>
 
-      {/* Tickets Table */}
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead>Issue / Subject</TableHead>
-            <TableHead>Location</TableHead>
-            <TableHead>Priority</TableHead>
-            <TableHead>Status</TableHead>
-            <TableHead>Assigned Staff</TableHead>
-            <TableHead className="text-right">Action</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {filteredTickets.map((ticket) => (
-            <TableRow key={ticket._id}>
-              <TableCell>
-                <div className="font-semibold text-white">{ticket.title}</div>
-                <div className="text-xs text-white/60 line-clamp-1 max-w-sm">
-                  {ticket.description}
-                </div>
-                <div className="text-[10px] text-white/40 mt-1 uppercase font-mono">
-                  Category: {ticket.category} · By {ticket.reportedBy.name}
-                </div>
-              </TableCell>
-              <TableCell>
-                <div className="flex items-center gap-1.5 text-xs text-white/80">
-                  <MapPin className="w-3.5 h-3.5 text-lime shrink-0" />
-                  <span>{ticket.location}</span>
-                </div>
-              </TableCell>
-              <TableCell>
-                <Badge
-                  variant={
-                    ticket.priority === 'critical' || ticket.priority === 'high'
-                      ? 'overdue'
-                      : 'pending'
-                  }
-                  dot
-                >
-                  {ticket.priority.toUpperCase()}
-                </Badge>
-              </TableCell>
-              <TableCell>
-                <Badge variant={getStatusBadgeVariant(ticket.status)} dot>
-                  {ticket.status.replace('_', ' ')}
-                </Badge>
-                {ticket.rating && (
-                  <div className="flex items-center gap-0.5 mt-1 text-amber-300 text-xs">
-                    {'★'.repeat(ticket.rating)}
-                    <span className="text-[10px] text-white/50 ml-1">({ticket.rating}/5)</span>
+      {/* 3. Ticket List (Simple, Clear Cards with 4-5 key fields) */}
+      <div className="space-y-3">
+        {filteredTickets.length === 0 ? (
+          <div className="p-12 rounded-2xl bg-card border border-ring/60 text-center space-y-3">
+            <CheckCircle2 className="w-8 h-8 text-lime mx-auto" />
+            <p className="text-sm font-semibold text-white">No reports found</p>
+            <p className="text-xs text-white/50 max-w-sm mx-auto">
+              Everything in this section is running smoothly. Click below if you need to report an issue.
+            </p>
+            <Button variant="lime" size="sm" onClick={() => setCreateModalOpen(true)}>
+              Report a problem
+            </Button>
+          </div>
+        ) : (
+          filteredTickets.map((ticket) => {
+            const stepIndex = getTimelineStepIndex(ticket.status);
+            const isDone = ticket.status === 'resolved' || ticket.status === 'closed';
+
+            return (
+              <div
+                key={ticket._id}
+                onClick={() => setSelectedTicketForDetail(ticket)}
+                className="p-5 rounded-2xl bg-card border border-ring/80 hover:border-lime/40 transition-colors cursor-pointer flex flex-col md:flex-row md:items-center justify-between gap-4"
+              >
+                <div className="space-y-1.5 flex-1 min-w-0">
+                  <div className="flex items-center gap-2">
+                    <h3 className="text-base font-bold text-white truncate">{ticket.title}</h3>
+                    <Badge
+                      variant={
+                        isDone
+                          ? 'approved'
+                          : ticket.status === 'in_progress'
+                          ? 'lime'
+                          : ticket.status === 'assigned'
+                          ? 'info'
+                          : 'pending'
+                      }
+                    >
+                      {ticket.status === 'open'
+                        ? 'Reported'
+                        : ticket.status === 'assigned'
+                        ? 'Assigned'
+                        : ticket.status === 'in_progress'
+                        ? 'In progress'
+                        : 'Done'}
+                    </Badge>
                   </div>
-                )}
-              </TableCell>
-              <TableCell>
-                {ticket.assignedTo ? (
-                  <div className="text-xs text-white font-medium">
-                    {ticket.assignedTo.name}
+
+                  <div className="flex items-center gap-2 text-xs text-white/60">
+                    <MapPin className="w-3.5 h-3.5 text-lime shrink-0" />
+                    <span className="truncate">{ticket.location}</span>
+                    <span>·</span>
+                    <span>Time to fix: ~3h</span>
                   </div>
-                ) : (
-                  <span className="text-xs text-amber-400 italic">Unassigned</span>
-                )}
-              </TableCell>
-              <TableCell className="text-right">
-                <div className="flex items-center justify-end gap-1.5">
-                  {/* Maintenance staff actions */}
-                  {isMaintenanceStaff && ticket.status !== 'resolved' && ticket.status !== 'closed' && (
+
+                  <p className="text-xs text-lime font-medium">
+                    {ticket.status === 'open'
+                      ? 'Next step: Waiting for staff assignment'
+                      : ticket.status === 'assigned'
+                      ? `Next step: Assigned to ${ticket.assignedTo?.name || 'facilities staff'}`
+                      : ticket.status === 'in_progress'
+                      ? 'Next step: Repair underway'
+                      : ticket.rating
+                      ? `Rated: ${'★'.repeat(ticket.rating)}`
+                      : 'Next step: Ready for your rating'}
+                  </p>
+                </div>
+
+                <div className="flex items-center gap-2 shrink-0">
+                  {/* Staff actions */}
+                  {isMaintenanceStaff && !isDone && (
                     <>
                       {ticket.status === 'open' || ticket.status === 'assigned' ? (
                         <Button
                           variant="outline"
                           size="sm"
-                          onClick={() => openStatusModal(ticket, 'in_progress')}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            advanceTicketStep(ticket._id, 'in_progress');
+                          }}
                         >
-                          Start Work
+                          Start work
                         </Button>
                       ) : (
                         <Button
                           variant="lime"
                           size="sm"
-                          onClick={() => openStatusModal(ticket, 'resolved')}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            advanceTicketStep(ticket._id, 'resolved');
+                          }}
                         >
-                          Mark Resolved
+                          <Check className="w-3.5 h-3.5 mr-1" /> Mark Done
                         </Button>
                       )}
                     </>
                   )}
 
-                  {/* Student rate action if resolved */}
+                  {/* Student rate button */}
                   {ticket.status === 'resolved' && !ticket.rating && (
                     <Button
                       variant="lime"
                       size="sm"
-                      onClick={() => openRatingModal(ticket)}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setSelectedTicketForDetail(ticket);
+                      }}
                       className="shadow-[0_0_12px_rgba(131,243,77,0.3)]"
                     >
-                      <Star className="w-3.5 h-3.5 mr-1" /> Rate Work
+                      <Star className="w-3.5 h-3.5 mr-1" /> Rate fix
                     </Button>
                   )}
 
-                  {ticket.status === 'closed' && (
-                    <span className="text-xs text-white/40">Closed</span>
-                  )}
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setSelectedTicketForDetail(ticket);
+                    }}
+                  >
+                    View details <ArrowRight className="w-3.5 h-3.5 ml-1" />
+                  </Button>
                 </div>
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+              </div>
+            );
+          })
+        )}
+      </div>
 
-      {/* Create Ticket Modal */}
+      {/* 4. Simple 3-Field Problem Reporting Modal */}
       <Modal
         isOpen={createModalOpen}
         onClose={() => setCreateModalOpen(false)}
-        title="Report Campus Facility Issue"
-        description="Submit repair or safety issue for urgent facility inspection."
+        title="Report a problem"
+        description="Tell us what is broken so campus facilities can inspect and fix it."
         size="md"
       >
-        <form onSubmit={handleSubmit(handleCreateSubmit)} className="space-y-4">
+        <form onSubmit={handleCreateSubmit} className="space-y-4">
           <Input
-            label="Issue Summary"
-            placeholder="e.g. Water leak near projector rack in Turing Hall"
-            error={errors.title?.message}
-            {...register('title')}
+            label="1. What is wrong?"
+            placeholder="e.g. AC leaking water, projector not turning on, door latch broken"
+            value={whatIsWrong}
+            onChange={(e) => setWhatIsWrong(e.target.value)}
           />
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <Select
-              label="Facility Category"
-              error={errors.category?.message}
-              options={[
-                { value: 'electrical', label: 'Electrical & Lighting' },
-                { value: 'plumbing', label: 'Plumbing & Water' },
-                { value: 'hvac', label: 'HVAC & Air Conditioning' },
-                { value: 'it_hardware', label: 'Network & Lab Hardware' },
-                { value: 'furniture', label: 'Furniture & Seating' },
-                { value: 'cleaning', label: 'Cleaning & Sanitation' },
-                { value: 'other', label: 'Other Facility Concern' },
-              ]}
-              {...register('category')}
-            />
+          <Input
+            label="2. Where is it?"
+            placeholder="e.g. CS Block 2nd Floor, Room 204 near rear window"
+            value={whereIsIt}
+            onChange={(e) => setWhereIsIt(e.target.value)}
+          />
 
-            <Select
-              label="Urgency / Priority"
-              error={errors.priority?.message}
-              options={[
-                { value: 'low', label: 'Low (Within 48 hours)' },
-                { value: 'medium', label: 'Medium (Within 12 hours)' },
-                { value: 'high', label: 'High (Within 4 hours)' },
-                { value: 'critical', label: 'Critical / Safety Hazard (Immediate)' },
-              ]}
-              {...register('priority')}
-            />
+          <div>
+            <label className="block text-xs font-semibold text-white/80 mb-1.5">
+              3. Photo of problem (optional)
+            </label>
+            <div className="border border-dashed border-ring/80 rounded-xl p-4 text-center hover:border-lime/40 transition-colors cursor-pointer bg-white/[0.02]">
+              <input
+                type="file"
+                accept="image/*"
+                className="hidden"
+                id="photo-upload"
+                onChange={(e) => {
+                  if (e.target.files?.[0]) {
+                    setPhotoName(e.target.files[0].name);
+                  }
+                }}
+              />
+              <label htmlFor="photo-upload" className="cursor-pointer block space-y-1">
+                <Camera className="w-6 h-6 text-white/40 mx-auto" />
+                <p className="text-xs text-white/70">
+                  {photoName ? (
+                    <span className="text-lime font-medium">{photoName}</span>
+                  ) : (
+                    'Click to attach photo from phone or computer'
+                  )}
+                </p>
+              </label>
+            </div>
           </div>
 
-          <Input
-            label="Exact Campus Location"
-            placeholder="e.g. CS Block 2nd Floor, Room 204 near back door"
-            error={errors.location?.message}
-            {...register('location')}
-          />
-
-          <Textarea
-            label="Detailed Description"
-            placeholder="Explain symptoms, severity, and any immediate precautions taken..."
-            rows={3}
-            error={errors.description?.message}
-            {...register('description')}
-          />
-
-          <div className="flex items-center justify-end gap-3 pt-3 border-t border-ring/60">
-            <Button
-              type="button"
-              variant="ghost"
-              onClick={() => setCreateModalOpen(false)}
-            >
+          <div className="flex justify-end gap-2 pt-3 border-t border-ring/60">
+            <Button type="button" variant="ghost" onClick={() => setCreateModalOpen(false)}>
               Cancel
             </Button>
             <Button type="submit" variant="lime">
-              Log Maintenance Ticket
+              Submit report
             </Button>
           </div>
         </form>
       </Modal>
 
-      {/* Staff Update Status Modal */}
-      <Modal
-        isOpen={statusModalOpen}
-        onClose={() => setStatusModalOpen(false)}
-        title={`Update Ticket to ${targetStatus.replace('_', ' ').toUpperCase()}`}
-        description={`Log technician progress for '${activeTicket?.title}'.`}
-        size="sm"
-        footer={
-          <>
-            <Button variant="ghost" onClick={() => setStatusModalOpen(false)}>
-              Cancel
-            </Button>
-            <Button variant="lime" onClick={confirmStatusUpdate}>
-              Confirm Update
-            </Button>
-          </>
-        }
-      >
-        <div className="space-y-3">
-          <Textarea
-            label={targetStatus === 'resolved' ? 'Resolution Summary Notes' : 'Progress Comment'}
-            placeholder={
-              targetStatus === 'resolved'
-                ? 'e.g. Replaced faulty 2-inch drainage valve. Lines pressurized and tested.'
-                : 'e.g. Arrived on site with repair tools. Inspecting conduit.'
-            }
-            value={statusComment}
-            onChange={(e) => setStatusComment(e.target.value)}
-            rows={3}
-          />
-        </div>
-      </Modal>
+      {/* 5. Ticket Detail Side Panel / Modal with 4-Step Timeline & Star Rating */}
+      {selectedTicketForDetail && (
+        <Modal
+          isOpen={true}
+          onClose={() => setSelectedTicketForDetail(null)}
+          title={selectedTicketForDetail.title}
+          description={`Reported by ${selectedTicketForDetail.reportedBy.name} · ${selectedTicketForDetail.location}`}
+          size="md"
+        >
+          <div className="space-y-5">
+            {/* 4-Step Timeline: Reported -> Assigned -> In progress -> Done */}
+            <div className="p-4 rounded-xl bg-row border border-ring/60">
+              <p className="text-xs font-bold text-white mb-3">Repair Progress</p>
+              <div className="flex items-center justify-between text-xs">
+                {/* Step 1: Reported */}
+                <div className="flex flex-col items-center text-center">
+                  <div className="w-7 h-7 rounded-full bg-lime text-lime-ink font-bold flex items-center justify-center text-xs shadow-[0_0_10px_rgba(131,243,77,0.3)]">
+                    ✓
+                  </div>
+                  <span className="text-[11px] text-white font-medium mt-1">Reported</span>
+                </div>
 
-      {/* Student 5-Star Rating Modal */}
-      <Modal
-        isOpen={ratingModalOpen}
-        onClose={() => setRatingModalOpen(false)}
-        title="Rate Maintenance Service"
-        description={`Confirm work completed for '${ratingTarget?.title}'.`}
-        size="sm"
-        footer={
-          <>
-            <Button variant="ghost" onClick={() => setRatingModalOpen(false)}>
-              Cancel
-            </Button>
-            <Button variant="lime" onClick={confirmRating}>
-              Submit Rating &amp; Close Ticket
-            </Button>
-          </>
-        }
-      >
-        <div className="space-y-4 text-center">
-          <div className="flex items-center justify-center gap-2">
-            {[1, 2, 3, 4, 5].map((star) => (
-              <button
-                key={star}
-                type="button"
-                onClick={() => setSelectedRating(star)}
-                className={`text-2xl transition-transform hover:scale-125 cursor-pointer ${
-                  star <= selectedRating ? 'text-amber-300' : 'text-white/20'
-                }`}
+                <div
+                  className={`h-0.5 flex-1 mx-1.5 ${
+                    getTimelineStepIndex(selectedTicketForDetail.status) >= 2 ? 'bg-lime' : 'bg-ring'
+                  }`}
+                />
+
+                {/* Step 2: Assigned */}
+                <div className="flex flex-col items-center text-center">
+                  <div
+                    className={`w-7 h-7 rounded-full font-bold flex items-center justify-center text-xs ${
+                      getTimelineStepIndex(selectedTicketForDetail.status) >= 2
+                        ? 'bg-lime text-lime-ink'
+                        : 'bg-card border border-ring text-white/40'
+                    }`}
+                  >
+                    {getTimelineStepIndex(selectedTicketForDetail.status) >= 2 ? '✓' : '2'}
+                  </div>
+                  <span className="text-[11px] text-white/80 font-medium mt-1">Assigned</span>
+                </div>
+
+                <div
+                  className={`h-0.5 flex-1 mx-1.5 ${
+                    getTimelineStepIndex(selectedTicketForDetail.status) >= 3 ? 'bg-lime' : 'bg-ring'
+                  }`}
+                />
+
+                {/* Step 3: In progress */}
+                <div className="flex flex-col items-center text-center">
+                  <div
+                    className={`w-7 h-7 rounded-full font-bold flex items-center justify-center text-xs ${
+                      getTimelineStepIndex(selectedTicketForDetail.status) >= 3
+                        ? 'bg-lime text-lime-ink'
+                        : 'bg-card border border-ring text-white/40'
+                    }`}
+                  >
+                    {getTimelineStepIndex(selectedTicketForDetail.status) >= 3 ? '✓' : '3'}
+                  </div>
+                  <span className="text-[11px] text-white/80 font-medium mt-1">In progress</span>
+                </div>
+
+                <div
+                  className={`h-0.5 flex-1 mx-1.5 ${
+                    getTimelineStepIndex(selectedTicketForDetail.status) >= 4 ? 'bg-lime' : 'bg-ring'
+                  }`}
+                />
+
+                {/* Step 4: Done */}
+                <div className="flex flex-col items-center text-center">
+                  <div
+                    className={`w-7 h-7 rounded-full font-bold flex items-center justify-center text-xs ${
+                      getTimelineStepIndex(selectedTicketForDetail.status) >= 4
+                        ? 'bg-lime text-lime-ink'
+                        : 'bg-card border border-ring text-white/40'
+                    }`}
+                  >
+                    {getTimelineStepIndex(selectedTicketForDetail.status) >= 4 ? '✓' : '4'}
+                  </div>
+                  <span className="text-[11px] text-white/80 font-medium mt-1">Done</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Field Details */}
+            <div className="space-y-2 text-xs">
+              <div className="flex justify-between py-1.5 border-b border-ring/40">
+                <span className="text-white/50">Location:</span>
+                <span className="text-white font-medium">{selectedTicketForDetail.location}</span>
+              </div>
+              <div className="flex justify-between py-1.5 border-b border-ring/40">
+                <span className="text-white/50">Assigned Technician:</span>
+                <span className="text-white">
+                  {selectedTicketForDetail.assignedTo?.name || 'Facilities Supervisor'}
+                </span>
+              </div>
+              <div className="flex justify-between py-1.5 border-b border-ring/40">
+                <span className="text-white/50">Time to fix:</span>
+                <span className="text-lime font-mono">Under 4 hours</span>
+              </div>
+            </div>
+
+            {/* Interactive 5-Star Rating Section when ticket reaches Done */}
+            {(selectedTicketForDetail.status === 'resolved' ||
+              selectedTicketForDetail.status === 'closed') && (
+              <div className="p-4 rounded-xl bg-card border border-ring/80 text-center space-y-2">
+                <p className="text-xs font-bold text-white">How was this repair handled?</p>
+                <div className="flex items-center justify-center gap-2">
+                  {[1, 2, 3, 4, 5].map((star) => (
+                    <button
+                      key={star}
+                      type="button"
+                      onClick={() => handleRateTicket(selectedTicketForDetail._id, star)}
+                      className={`text-2xl transition-transform hover:scale-125 cursor-pointer ${
+                        (selectedTicketForDetail.rating || 0) >= star
+                          ? 'text-amber-300'
+                          : 'text-white/20'
+                      }`}
+                    >
+                      ★
+                    </button>
+                  ))}
+                </div>
+                <p className="text-[11px] text-white/50">
+                  {selectedTicketForDetail.rating
+                    ? `Thank you! You rated this fix ${selectedTicketForDetail.rating} out of 5 stars.`
+                    : 'Click a star to submit your rating'}
+                </p>
+              </div>
+            )}
+
+            <div className="flex justify-end pt-2 border-t border-ring/60">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setSelectedTicketForDetail(null)}
               >
-                ★
-              </button>
-            ))}
+                Close
+              </Button>
+            </div>
           </div>
-          <p className="text-xs text-white/70 font-semibold">
-            {selectedRating === 5
-              ? 'Excellent (+15 activity points for staff)'
-              : selectedRating === 4
-              ? 'Good resolution'
-              : 'Satisfactory'}
-          </p>
-
-          <Textarea
-            label="Feedback (Optional)"
-            placeholder="Help us improve campus facility turnaround times..."
-            value={ratingFeedback}
-            onChange={(e) => setRatingFeedback(e.target.value)}
-            rows={2}
-          />
-        </div>
-      </Modal>
+        </Modal>
+      )}
     </div>
   );
 };

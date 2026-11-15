@@ -36,49 +36,8 @@ export interface BookingItem {
   createdAt: string;
 }
 
-// Fallback initial demo venues
-export const DEFAULT_VENUES: VenueItem[] = [
-  {
-    _id: 'v-1',
-    name: 'Main Auditorium (Hall A)',
-    code: 'AUD-A',
-    capacity: 450,
-    building: 'Academic Block 1',
-    floor: 1,
-    amenities: ['4K Projector', 'Stage Lights', 'Surround Sound', 'Central AC', 'Wireless Mics'],
-    isAvailable: true,
-  },
-  {
-    _id: 'v-2',
-    name: 'Alan Turing Seminar Hall',
-    code: 'SEM-TUR',
-    capacity: 120,
-    building: 'Computer Science Complex',
-    floor: 2,
-    amenities: ['Smart Podium', 'Dual Projectors', 'Recording Camera', 'AC'],
-    isAvailable: true,
-  },
-  {
-    _id: 'v-3',
-    name: 'Innovation & Robotics Lab',
-    code: 'LAB-INNOV',
-    capacity: 60,
-    building: 'R&D Center',
-    floor: 3,
-    amenities: ['High-speed LAN', '3D Printers', 'Soldering Stations', 'Oscilloscopes'],
-    isAvailable: true,
-  },
-  {
-    _id: 'v-4',
-    name: 'Open Air Amphitheatre',
-    code: 'AMPHI-01',
-    capacity: 600,
-    building: 'Student Activity Hub',
-    floor: 0,
-    amenities: ['Floodlights', 'Tiered Seating', 'Acoustic Wall'],
-    isAvailable: true,
-  },
-];
+// Default empty venues list; real facilities will be configured by administrators
+export const DEFAULT_VENUES: VenueItem[] = [];
 
 export const bookingApi = {
   getVenues: async (search?: string): Promise<VenueItem[]> => {

@@ -53,12 +53,14 @@ export const RegisterPage: React.FC = () => {
       <div className="relative z-10 w-full max-w-lg p-6 sm:p-8 rounded-2xl bg-card/85 backdrop-blur-2xl border border-rule shadow-[0_20px_60px_rgba(0,0,0,0.8)]">
         {/* Logo & Headline */}
         <div className="text-center space-y-2 mb-6">
-          <Link to="/" className="inline-flex items-center gap-2 group mb-2">
-            <div className="w-9 h-9 rounded-full bg-lime/10 border border-lime/30 flex items-center justify-center text-lime group-hover:shadow-[0_0_16px_rgba(131,243,77,0.4)] transition-all">
-              <Sparkles className="w-5 h-5" />
-            </div>
+          <Link to="/" className="inline-flex items-center gap-2.5 group mb-2">
+            <img
+              src="/sjbit-emblem.png"
+              alt="SJBIT Emblem"
+              className="w-10 h-10 rounded-full object-cover bg-white p-0.5 border border-amber-400/40 shadow-[0_0_12px_rgba(251,191,36,0.3)] group-hover:scale-105 transition-transform"
+            />
             <span className="font-extrabold text-xl tracking-tight text-white group-hover:text-lime transition-colors">
-              Campus<span className="text-lime">OS</span>
+              SJBIT <span className="text-lime">CampusOS</span>
             </span>
           </Link>
           <h1 className="text-2xl font-extrabold text-white tracking-tight">Create an Account</h1>
@@ -118,18 +120,28 @@ export const RegisterPage: React.FC = () => {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <Input
-              label="Department / School"
-              placeholder="e.g. Computer Science"
-              leftIcon={<Building className="w-4 h-4" />}
-              error={errors.department?.message}
+            <Select
+              label="Branch / Department (SJBIT)"
+              options={[
+                { value: 'Civil Engineering', label: 'Civil Engineering (CV)' },
+                { value: 'Mechanical Engineering', label: 'Mechanical Engineering (ME)' },
+                { value: 'Electrical & Electronics Engineering', label: 'Electrical & Electronics (EEE)' },
+                { value: 'Electronics & Communication Engineering', label: 'Electronics & Communication (ECE)' },
+                { value: 'Computer Science & Engineering', label: 'Computer Science & Engineering (CSE)' },
+                { value: 'Information Science & Engineering', label: 'Information Science & Engineering (ISE)' },
+                { value: 'Artificial Intelligence & Machine Learning', label: 'AI & Machine Learning (AI&ML)' },
+                { value: 'Computer Science & Engineering (Data Science)', label: 'CSE - Data Science (CS-DS)' },
+                { value: 'Master of Business Administration', label: 'MBA (Management Studies)' },
+                { value: 'Master of Computer Applications', label: 'MCA (Computer Applications)' },
+                { value: 'Basic Sciences & Humanities', label: 'Basic Sciences & Humanities' },
+              ]}
               {...register('department')}
             />
 
             {selectedRole === 'student' ? (
               <Input
-                label="Roll / Student ID"
-                placeholder="e.g. CS-2024-042"
+                label="VTU USN / Student ID"
+                placeholder="e.g. 1JB23CS108 / 1JB23CV012"
                 leftIcon={<Hash className="w-4 h-4" />}
                 error={errors.rollNumber?.message}
                 {...register('rollNumber')}

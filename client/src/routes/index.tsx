@@ -14,6 +14,8 @@ import { ResourcesPage } from '@/features/resources/pages/ResourcesPage';
 import { LostFoundPage } from '@/features/lostfound/pages/LostFoundPage';
 import { AttendancePage } from '@/features/attendance/pages/AttendancePage';
 import { AnalyticsPage } from '@/features/analytics/pages/AnalyticsPage';
+import { AdminBoardPage } from '@/features/admin/pages/AdminBoardPage';
+import { ContactPage } from '@/features/contact/pages/ContactPage';
 import { LandingPage } from '@/features/landing/pages/LandingPage';
 import { Button } from '@/components/ui/Button';
 import { PillCard } from '@/components/ui/PillCard';
@@ -40,7 +42,7 @@ const LandingHeroPlaceholder: React.FC = () => {
       <div className="flex flex-wrap items-center justify-center gap-4 pt-4">
         <Link to="/login">
           <Button variant="lime" size="lg" className="shadow-[0_0_24px_rgba(131,243,77,0.4)]">
-            Sign In / Quick Demo <ArrowRight className="w-4 h-4 ml-1.5" />
+            Sign In to Portal <ArrowRight className="w-4 h-4 ml-1.5" />
           </Button>
         </Link>
         <Link to="/dashboard">
@@ -85,7 +87,7 @@ export const router = createBrowserRouter([
     element: <PublicLayout />,
     children: [
       { index: true, element: <LandingPage /> },
-      { path: 'styleguide', element: <StyleguidePage /> },
+      { path: 'contact', element: <ContactPage /> },
     ],
   },
   // Dedicated Auth Pages
@@ -98,10 +100,11 @@ export const router = createBrowserRouter([
     element: <AppLayout />,
     children: [
       { path: 'dashboard', element: <DashboardPage /> },
-      { path: 'venues', element: <VenuesPage /> },
+      { path: 'admin', element: <AdminBoardPage /> },
+      { path: 'venues', element: <Navigate to="/dashboard" replace /> },
       { path: 'events', element: <EventsPage /> },
       { path: 'clubs', element: <ClubsPage /> },
-      { path: 'resources', element: <ResourcesPage /> },
+      { path: 'resources', element: <Navigate to="/dashboard" replace /> },
       { path: 'lost-found', element: <LostFoundPage /> },
       { path: 'attendance', element: <AttendancePage /> },
       { path: 'maintenance', element: <MaintenancePage /> },

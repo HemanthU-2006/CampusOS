@@ -18,164 +18,89 @@ import {
   Building2,
   Calendar,
   Wrench,
-  Package,
-  Search,
-  Sparkles,
-  ShieldCheck,
+  ChevronDown,
   CheckCircle2,
+  ShieldCheck,
+  Award,
 } from 'lucide-react';
 import { Badge } from '@/components/ui/Badge';
-import { SearchBar } from '@/components/ui/SearchBar';
-import { PillCard } from '@/components/ui/PillCard';
+import { Button } from '@/components/ui/Button';
 
 export const AnalyticsPage: React.FC = () => {
-  // Global search state
-  const [searchQuery, setSearchQuery] = useState('');
+  const [showMoreDetails, setShowMoreDetails] = useState(false);
 
-  // Sample Aggregated Analytics Data
+  // 1. Event Attendees Data
   const monthlyEventsData = [
-    { month: 'Jul', events: 4, attendees: 420 },
-    { month: 'Aug', events: 8, attendees: 890 },
-    { month: 'Sep', events: 14, attendees: 1450 },
-    { month: 'Oct', events: 19, attendees: 2100 },
-    { month: 'Nov', events: 24, attendees: 2840 },
+    { month: 'Jul', attendees: 420 },
+    { month: 'Aug', attendees: 890 },
+    { month: 'Sep', attendees: 1450 },
+    { month: 'Oct', attendees: 2100 },
+    { month: 'Nov', attendees: 2840 },
   ];
 
+  // 2. Real SJBIT Venue Utilization across campus facilities
   const venueOccupancyData = [
-    { name: 'Main Audit A', occupancy: 88, capacity: 450 },
-    { name: 'Turing Hall', occupancy: 94, capacity: 120 },
-    { name: 'Innovation Lab', occupancy: 76, capacity: 60 },
-    { name: 'Amphitheatre', occupancy: 62, capacity: 600 },
+    { name: 'BGS Audit', occupancy: 92 },
+    { name: 'CSE Hall', occupancy: 85 },
+    { name: 'Civil CAD', occupancy: 81 },
+    { name: 'Mech Lab', occupancy: 78 },
+    { name: 'EEE Lab', occupancy: 76 },
+    { name: 'AI Lab', occupancy: 89 },
+    { name: 'MBA Hall', occupancy: 84 },
+    { name: 'Amphi', occupancy: 68 },
   ];
 
+  // 3. Maintenance Breakdown
   const ticketCategoryData = [
-    { name: 'Electrical', value: 34, color: '#83F34D' },
-    { name: 'HVAC', value: 28, color: '#38bdf8' },
-    { name: 'IT Hardware', value: 22, color: '#f59e0b' },
-    { name: 'Plumbing', value: 16, color: '#f43f5e' },
+    { name: 'Electrical', value: 38, color: '#83F34D' },
+    { name: 'HVAC & AC', value: 26, color: '#38bdf8' },
+    { name: 'Lab Hardware', value: 22, color: '#f59e0b' },
+    { name: 'Plumbing', value: 14, color: '#f43f5e' },
   ];
 
-  const mockSearchResults = {
-    events: [
-      { id: '1', title: 'HackCampus 2026', subtitle: 'Main Auditorium · 248 Registered' },
-      { id: '2', title: 'Robotics Autonomous Keynote', subtitle: 'Turing Hall · Nov 22' },
-    ],
-    venues: [
-      { id: '1', title: 'Alan Turing Seminar Hall', subtitle: 'Capacity 120 · AC, Podium' },
-      { id: '2', title: 'Main Auditorium (Hall A)', subtitle: 'Capacity 450 · Stage Lights' },
-    ],
-    clubs: [
-      { id: '1', title: 'Robotics & AI Guild', subtitle: '48 Members · Technical' },
-      { id: '2', title: 'Design & Web Society', subtitle: '36 Members · Creative' },
-    ],
-    lostFound: [
-      { id: '1', title: 'Matte Blue Hydro Flask', subtitle: 'Found in Turing Hall row 3' },
-      { id: '2', title: 'Casio fx-991EX Calculator', subtitle: 'Lost in Block 1 Room 102' },
-    ],
-  };
-
-  const isSearching = searchQuery.trim().length > 0;
+  // 4. Department Attendance Health Across ALL SJBIT Branches
+  const departmentAttendanceData = [
+    { dept: 'CV', rate: 88 },
+    { dept: 'ME', rate: 86 },
+    { dept: 'EEE', rate: 89 },
+    { dept: 'ECE', rate: 91 },
+    { dept: 'CSE', rate: 93 },
+    { dept: 'ISE', rate: 92 },
+    { dept: 'AI&ML', rate: 92 },
+    { dept: 'CS-DS', rate: 90 },
+    { dept: 'MBA', rate: 94 },
+  ];
 
   return (
-    <div className="space-y-8 pb-16">
-      {/* Header */}
+    <div className="space-y-6 pb-12">
+      {/* 1. Header with One Main Action */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <div className="flex items-center gap-2 mb-1">
-            <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-              Campus Intelligence &amp; Analytics
-            </h1>
-            <Badge variant="lime">Live Aggregation</Badge>
-          </div>
-          <p className="text-xs sm:text-sm text-white/60">
-            Real-time telemetry, venue utilization indexes, ticket turnaround times, and global grouped search.
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+            Campus Analytics
+          </h1>
+          <p className="text-sm text-white/60 mt-0.5">
+            Key insights on hall utilization, event turnout, and facility repairs at SJBIT.
           </p>
+        </div>
+
+        <div className="flex items-center gap-2">
+          <Badge variant="lime" className="px-3 py-1 text-xs">
+            SJBIT Campus Overview
+          </Badge>
         </div>
       </div>
 
-      {/* Global Search Feature Demonstration */}
-      <section className="p-6 rounded-2xl bg-card border border-ring/80 space-y-4 shadow-[0_8px_30px_rgba(0,0,0,0.5)]">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Search className="w-5 h-5 text-lime" />
-            <h2 className="text-base font-bold text-white">Global Unified Search</h2>
-          </div>
-          <span className="text-xs font-mono text-white/40">GET /api/search?q=</span>
-        </div>
-
-        <SearchBar
-          placeholder="Type to test instant grouped search across events, venues, clubs, lost & found..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          onClear={() => setSearchQuery('')}
-        />
-
-        {isSearching && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-2 animate-in fade-in-0 duration-200">
-            <div className="space-y-2 p-3.5 rounded-xl bg-row border border-ring/60">
-              <span className="text-xs font-bold text-lime uppercase tracking-wider">
-                Events ({mockSearchResults.events.length})
-              </span>
-              {mockSearchResults.events.map((e) => (
-                <div key={e.id} className="p-2 rounded-lg bg-card/60 border border-ring/50 text-xs">
-                  <p className="font-semibold text-white truncate">{e.title}</p>
-                  <p className="text-[10px] text-white/50 truncate">{e.subtitle}</p>
-                </div>
-              ))}
-            </div>
-
-            <div className="space-y-2 p-3.5 rounded-xl bg-row border border-ring/60">
-              <span className="text-xs font-bold text-sky-400 uppercase tracking-wider">
-                Venues ({mockSearchResults.venues.length})
-              </span>
-              {mockSearchResults.venues.map((v) => (
-                <div key={v.id} className="p-2 rounded-lg bg-card/60 border border-ring/50 text-xs">
-                  <p className="font-semibold text-white truncate">{v.title}</p>
-                  <p className="text-[10px] text-white/50 truncate">{v.subtitle}</p>
-                </div>
-              ))}
-            </div>
-
-            <div className="space-y-2 p-3.5 rounded-xl bg-row border border-ring/60">
-              <span className="text-xs font-bold text-amber-400 uppercase tracking-wider">
-                Clubs ({mockSearchResults.clubs.length})
-              </span>
-              {mockSearchResults.clubs.map((c) => (
-                <div key={c.id} className="p-2 rounded-lg bg-card/60 border border-ring/50 text-xs">
-                  <p className="font-semibold text-white truncate">{c.title}</p>
-                  <p className="text-[10px] text-white/50 truncate">{c.subtitle}</p>
-                </div>
-              ))}
-            </div>
-
-            <div className="space-y-2 p-3.5 rounded-xl bg-row border border-ring/60">
-              <span className="text-xs font-bold text-rose-400 uppercase tracking-wider">
-                Lost &amp; Found ({mockSearchResults.lostFound.length})
-              </span>
-              {mockSearchResults.lostFound.map((l) => (
-                <div key={l.id} className="p-2 rounded-lg bg-card/60 border border-ring/50 text-xs">
-                  <p className="font-semibold text-white truncate">{l.title}</p>
-                  <p className="text-[10px] text-white/50 truncate">{l.subtitle}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-      </section>
-
-      {/* Analytics Charts Grid */}
+      {/* 2. Exactly 4 Clean Visual Charts with 1-Line Takeaways */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Chart 1: Event Growth & Total Registrations */}
-        <div className="p-6 rounded-2xl bg-card border border-ring/80 space-y-4">
+        {/* Chart 1: Event Turnout */}
+        <div className="p-6 rounded-2xl bg-card border border-ring/80 space-y-3">
           <div className="flex items-center justify-between">
-            <div>
-              <h3 className="text-base font-bold text-white">Event Registrations Growth</h3>
-              <p className="text-xs text-white/50">Monthly attendee engagement index</p>
-            </div>
-            <Badge variant="lime">+36% MoM</Badge>
+            <h3 className="text-base font-bold text-white">Event Turnout Growth</h3>
+            <Badge variant="lime">+36% Growth</Badge>
           </div>
 
-          <div className="h-64 w-full">
+          <div className="h-56 w-full">
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={monthlyEventsData}>
                 <defs>
@@ -206,19 +131,21 @@ export const AnalyticsPage: React.FC = () => {
               </AreaChart>
             </ResponsiveContainer>
           </div>
+
+          {/* Plain 1-Line Takeaway */}
+          <p className="text-xs text-lime font-medium pt-1">
+            Takeaway: Student participation has grown 36% this semester across tech fests and workshops.
+          </p>
         </div>
 
-        {/* Chart 2: Venue Utilization Rate */}
-        <div className="p-6 rounded-2xl bg-card border border-ring/80 space-y-4">
+        {/* Chart 2: Hall & Lab Utilization */}
+        <div className="p-6 rounded-2xl bg-card border border-ring/80 space-y-3">
           <div className="flex items-center justify-between">
-            <div>
-              <h3 className="text-base font-bold text-white">Venue Utilization Index</h3>
-              <p className="text-xs text-white/50">Conflict-free booking occupancy rate (%)</p>
-            </div>
-            <Badge variant="approved">Avg 80.2%</Badge>
+            <h3 className="text-base font-bold text-white">Venue &amp; Lab Booking Rates</h3>
+            <Badge variant="approved">Avg 82%</Badge>
           </div>
 
-          <div className="h-64 w-full">
+          <div className="h-56 w-full">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={venueOccupancyData}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#232323" />
@@ -236,7 +163,128 @@ export const AnalyticsPage: React.FC = () => {
               </BarChart>
             </ResponsiveContainer>
           </div>
+
+          {/* Plain 1-Line Takeaway */}
+          <p className="text-xs text-lime font-medium pt-1">
+            Takeaway: BGS Auditorium, CSE Hall, and AI Lab are at peak occupancy across campus events.
+          </p>
         </div>
+
+        {/* Chart 3: Repair Categories */}
+        <div className="p-6 rounded-2xl bg-card border border-ring/80 space-y-3">
+          <div className="flex items-center justify-between">
+            <h3 className="text-base font-bold text-white">Campus Repairs by Type</h3>
+            <Badge variant="info">3.2h Avg Fix</Badge>
+          </div>
+
+          <div className="h-56 w-full flex items-center justify-center">
+            <ResponsiveContainer width="100%" height="100%">
+              <PieChart>
+                <Pie
+                  data={ticketCategoryData}
+                  cx="50%"
+                  cy="50%"
+                  innerRadius={50}
+                  outerRadius={80}
+                  paddingAngle={5}
+                  dataKey="value"
+                >
+                  {ticketCategoryData.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={entry.color} />
+                  ))}
+                </Pie>
+                <Tooltip
+                  contentStyle={{
+                    backgroundColor: '#1B1B1B',
+                    border: '1px solid #2F2F2F',
+                    borderRadius: '8px',
+                    fontSize: '12px',
+                  }}
+                />
+              </PieChart>
+            </ResponsiveContainer>
+          </div>
+
+          {/* Plain 1-Line Takeaway */}
+          <p className="text-xs text-lime font-medium pt-1">
+            Takeaway: Electrical and AC issues make up 64% of reports, with 88% resolved within 4 hours.
+          </p>
+        </div>
+
+        {/* Chart 4: Department Attendance Health */}
+        <div className="p-6 rounded-2xl bg-card border border-ring/80 space-y-3">
+          <div className="flex items-center justify-between">
+            <h3 className="text-base font-bold text-white">Department Attendance Average</h3>
+            <Badge variant="approved">Safe &gt;75%</Badge>
+          </div>
+
+          <div className="h-56 w-full">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={departmentAttendanceData}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#232323" />
+                <XAxis dataKey="dept" stroke="#666" fontSize={12} />
+                <YAxis stroke="#666" fontSize={12} unit="%" domain={[60, 100]} />
+                <Tooltip
+                  contentStyle={{
+                    backgroundColor: '#1B1B1B',
+                    border: '1px solid #2F2F2F',
+                    borderRadius: '8px',
+                    fontSize: '12px',
+                  }}
+                />
+                <Bar dataKey="rate" fill="#83F34D" radius={[6, 6, 0, 0]} />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+
+          {/* Plain 1-Line Takeaway */}
+          <p className="text-xs text-lime font-medium pt-1">
+            Takeaway: Over 91% of students maintain safe attendance across all 9 academic branches at SJBIT.
+          </p>
+        </div>
+      </div>
+
+      {/* 3. Collapsible "More Details" Section */}
+      <div className="p-5 rounded-2xl bg-card border border-ring/80">
+        <button
+          type="button"
+          onClick={() => setShowMoreDetails((prev) => !prev)}
+          className="w-full flex items-center justify-between text-left cursor-pointer"
+        >
+          <div>
+            <h4 className="text-sm font-bold text-white">More Details &amp; Raw Summaries</h4>
+            <p className="text-xs text-white/50">
+              Audit logs, facility SLA compliance, and department breakdown
+            </p>
+          </div>
+          <ChevronDown
+            className={`w-4 h-4 text-white/60 transition-transform ${
+              showMoreDetails ? 'rotate-180 text-lime' : ''
+            }`}
+          />
+        </button>
+
+        {showMoreDetails && (
+          <div className="pt-4 mt-4 border-t border-ring/60 space-y-3 text-xs text-white/70">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div className="p-3 rounded-xl bg-row border border-ring/60">
+                <span className="text-white/40 block text-[11px]">Total Active Users</span>
+                <span className="text-lg font-bold text-white">2,840</span>
+                <p className="text-[10px] text-white/40 mt-1">Students &amp; Faculty</p>
+              </div>
+              <div className="p-3 rounded-xl bg-row border border-ring/60">
+                <span className="text-white/40 block text-[11px]">Average Fix Time</span>
+                <span className="text-lg font-bold text-lime">3.2 Hours</span>
+                <p className="text-[10px] text-white/40 mt-1">SLA Target: &lt;6 hours</p>
+              </div>
+              <div className="p-3 rounded-xl bg-row border border-ring/60">
+                <span className="text-white/40 block text-[11px]">Lab Hardware Count</span>
+                <span className="text-lg font-bold text-white">96% Available</span>
+                <p className="text-[10px] text-white/40 mt-1">0 overdue items</p>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

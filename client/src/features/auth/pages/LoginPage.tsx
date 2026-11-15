@@ -1,17 +1,18 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Link, useNavigate } from 'react-router-dom';
-import { Sparkles, ArrowRight, ShieldCheck, UserCheck, Wrench, Users, GraduationCap, Lock, Mail } from 'lucide-react';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { Sparkles, ArrowRight, ShieldCheck, Lock, Mail } from 'lucide-react';
 import { loginSchema, LoginFormData } from '../schemas';
 import { useAuth } from '../AuthContext';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
-import { Badge } from '@/components/ui/Badge';
 
 export const LoginPage: React.FC = () => {
-  const { login, setDemoUser, isLoading } = useAuth();
+  const { login, isLoading } = useAuth();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const isAdminParam = searchParams.get('role') === 'admin';
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   const {
@@ -31,15 +32,14 @@ export const LoginPage: React.FC = () => {
     setErrorMsg(null);
     try {
       await login(data);
-      navigate('/dashboard');
+      if (isAdminParam || data.email.toLowerCase().includes('admin') || data.email.toLowerCase().includes('principal')) {
+        navigate('/admin');
+      } else {
+        navigate('/dashboard');
+      }
     } catch (err: any) {
       setErrorMsg(err.response?.data?.message || err.message || 'Invalid email or password');
     }
-  };
-
-  const handleQuickDemo = (role: 'admin' | 'faculty' | 'club_head' | 'maintenance' | 'student') => {
-    setDemoUser(role);
-    navigate('/dashboard');
   };
 
   return (
@@ -51,19 +51,36 @@ export const LoginPage: React.FC = () => {
       <div className="relative z-10 w-full max-w-md p-6 sm:p-8 rounded-2xl bg-card/85 backdrop-blur-2xl border border-rule shadow-[0_20px_60px_rgba(0,0,0,0.8)]">
         {/* Logo & Headline */}
         <div className="text-center space-y-2 mb-6">
-          <Link to="/" className="inline-flex items-center gap-2 group mb-2">
-            <div className="w-9 h-9 rounded-full bg-lime/10 border border-lime/30 flex items-center justify-center text-lime group-hover:shadow-[0_0_16px_rgba(131,243,77,0.4)] transition-all">
-              <Sparkles className="w-5 h-5" />
-            </div>
+          <Link to="/" className="inline-flex items-center gap-2.5 group mb-2">
+            <img
+              src="/sjbit-emblem.png"
+              alt="SJBIT Emblem"
+              className="w-10 h-10 rounded-full object-cover bg-white p-0.5 border border-amber-400/40 shadow-[0_0_12px_rgba(251,191,36,0.3)] group-hover:scale-105 transition-transform"
+            />
             <span className="font-extrabold text-xl tracking-tight text-white group-hover:text-lime transition-colors">
-              Campus<span className="text-lime">OS</span>
+              SJBIT <span className="text-lime">CampusOS</span>
             </span>
           </Link>
-          <h1 className="text-2xl font-extrabold text-white tracking-tight">Welcome Back</h1>
+          <h1 className="text-2xl font-extrabold text-white tracking-tight">
+            {isAdminParam ? 'Administrator Portal' : 'SJBIT CampusOS'}
+          </h1>
           <p className="text-xs text-white/60">
-            Sign in to access your campus operations dashboard.
+            {isAdminParam
+              ? 'Authorized access for the Office of the Principal and Campus Administration.'
+              : 'Sign in to access your SJBIT student or staff portal.'}
           </p>
         </div>
+
+        {/* Administrator Indicator Banner if navigated via Admin Portal */}
+        {isAdminParam && (
+          <div className="mb-4 p-3 rounded-xl bg-rose-500/10 border border-rose-500/30 flex items-center gap-2.5 text-xs text-rose-300">
+            <ShieldCheck className="w-4 h-4 text-rose-400 shrink-0" />
+            <div>
+              <p className="font-semibold text-white">Administrator Access Mode</p>
+              <p className="text-[11px] text-white/60">Governing all 9 SJBIT engineering &amp; management departments</p>
+            </div>
+          </div>
+        )}
 
         {errorMsg && (
           <div className="mb-4 p-3 rounded-lg bg-red-500/10 border border-red-500/30 text-xs text-red-300">
@@ -74,9 +91,9 @@ export const LoginPage: React.FC = () => {
         {/* Login Form */}
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <Input
-            label="Campus Email"
+            label={isAdminParam ? 'Administrator Email' : 'Campus Email'}
             type="email"
-            placeholder="student@campus.edu"
+            placeholder={isAdminParam ? 'admin@sjbit.edu.in' : 'student@sjbit.edu.in'}
             leftIcon={<Mail className="w-4 h-4" />}
             error={errors.email?.message}
             {...register('email')}
@@ -98,84 +115,31 @@ export const LoginPage: React.FC = () => {
             className="w-full mt-2 font-bold shadow-[0_0_24px_rgba(131,243,77,0.35)]"
             isLoading={isSubmitting || isLoading}
           >
-            Sign In to CampusOS <ArrowRight className="w-4 h-4 ml-1.5" />
+            {isAdminParam ? 'Sign In to Administrator Board' : 'Sign In to CampusOS'} <ArrowRight className="w-4 h-4 ml-1.5" />
           </Button>
         </form>
 
-        {/* Quick Role Switcher for Evaluators */}
-        <div className="mt-6 pt-5 border-t border-ring/60 space-y-3">
-          <div className="flex items-center justify-between">
-            <span className="text-[11px] font-semibold text-white/50 uppercase tracking-wider">
-              Quick Demo Access (1-Click)
-            </span>
-            <Badge variant="lime" className="text-[10px] py-0">Demo Mode</Badge>
-          </div>
-
-          <div className="grid grid-cols-2 gap-2 text-xs">
-            <button
-              type="button"
-              onClick={() => handleQuickDemo('student')}
-              className="flex items-center gap-2 p-2 rounded-lg bg-row/80 hover:bg-row border border-ring/60 hover:border-lime/40 text-left transition-colors cursor-pointer"
+        {/* Switcher between Student/Faculty and Admin */}
+        <div className="mt-5 pt-4 border-t border-ring/60 flex items-center justify-between text-xs">
+          {isAdminParam ? (
+            <Link
+              to="/login"
+              className="text-white/60 hover:text-white transition-colors flex items-center gap-1"
             >
-              <GraduationCap className="w-4 h-4 text-lime shrink-0" />
-              <div className="truncate">
-                <p className="font-semibold text-white truncate">Student</p>
-                <p className="text-[10px] text-white/50 truncate">Priya Patel</p>
-              </div>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => handleQuickDemo('faculty')}
-              className="flex items-center gap-2 p-2 rounded-lg bg-row/80 hover:bg-row border border-ring/60 hover:border-lime/40 text-left transition-colors cursor-pointer"
+              ← Student / Staff Sign-In
+            </Link>
+          ) : (
+            <Link
+              to="/login?role=admin"
+              className="text-rose-400 hover:text-rose-300 transition-colors flex items-center gap-1"
             >
-              <UserCheck className="w-4 h-4 text-emerald-400 shrink-0" />
-              <div className="truncate">
-                <p className="font-semibold text-white truncate">Faculty</p>
-                <p className="text-[10px] text-white/50 truncate">Dr. Jenkins</p>
-              </div>
-            </button>
+              <ShieldCheck className="w-3.5 h-3.5" />
+              Administrator Sign-In →
+            </Link>
+          )}
 
-            <button
-              type="button"
-              onClick={() => handleQuickDemo('club_head')}
-              className="flex items-center gap-2 p-2 rounded-lg bg-row/80 hover:bg-row border border-ring/60 hover:border-lime/40 text-left transition-colors cursor-pointer"
-            >
-              <Users className="w-4 h-4 text-amber-400 shrink-0" />
-              <div className="truncate">
-                <p className="font-semibold text-white truncate">Club Head</p>
-                <p className="text-[10px] text-white/50 truncate">Rohan Sharma</p>
-              </div>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => handleQuickDemo('maintenance')}
-              className="flex items-center gap-2 p-2 rounded-lg bg-row/80 hover:bg-row border border-ring/60 hover:border-lime/40 text-left transition-colors cursor-pointer"
-            >
-              <Wrench className="w-4 h-4 text-blue-400 shrink-0" />
-              <div className="truncate">
-                <p className="font-semibold text-white truncate">Maintenance</p>
-                <p className="text-[10px] text-white/50 truncate">Suresh Kumar</p>
-              </div>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => handleQuickDemo('admin')}
-              className="col-span-2 flex items-center justify-center gap-2 p-2 rounded-lg bg-row/80 hover:bg-row border border-ring/60 hover:border-lime/40 text-center transition-colors cursor-pointer"
-            >
-              <ShieldCheck className="w-4 h-4 text-rose-400" />
-              <span className="font-semibold text-white">Campus Administrator (Arjun Mehta)</span>
-            </button>
-          </div>
-        </div>
-
-        {/* Footer Link */}
-        <div className="mt-6 text-center text-xs text-white/60">
-          Don't have an account yet?{' '}
           <Link to="/register" className="text-lime font-semibold hover:underline">
-            Register now
+            Register new account
           </Link>
         </div>
       </div>

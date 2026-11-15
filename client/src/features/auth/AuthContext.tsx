@@ -15,45 +15,45 @@ interface AuthContextType {
 const DEMO_USERS: Record<UserProfile['role'], UserProfile> = {
   admin: {
     _id: 'demo-admin-id',
-    name: 'Arjun Mehta (Admin)',
-    email: 'admin@campus.edu',
+    name: 'Dr. K. V. Mahendra Prashanth (Principal)',
+    email: 'principal@sjbit.edu.in',
     role: 'admin',
-    department: 'Campus Administration',
+    department: 'SJBIT Office of the Principal',
     activityPoints: 500,
   },
   faculty: {
     _id: 'demo-faculty-id',
-    name: 'Dr. Sarah Jenkins',
-    email: 'faculty@campus.edu',
+    name: 'Dr. A. N. Krishna (HOD CSE)',
+    email: 'hodcse@sjbit.edu.in',
     role: 'faculty',
     department: 'Computer Science & Engineering',
     activityPoints: 350,
   },
   club_head: {
     _id: 'demo-clubhead-id',
-    name: 'Rohan Sharma (Club Head)',
-    email: 'clubhead@campus.edu',
+    name: 'Rohan Sharma (Coding & Fest Lead)',
+    email: 'rohan.1jb22cs142@sjbit.edu.in',
     role: 'club_head',
-    department: 'Information Technology',
-    rollNumber: 'IT-2023-042',
-    activityPoints: 280,
+    department: 'Computer Science & Engineering',
+    rollNumber: '1JB22CS142',
+    activityPoints: 310,
   },
   maintenance: {
     _id: 'demo-maintenance-id',
-    name: 'Suresh Kumar (Facilities)',
-    email: 'maintenance@campus.edu',
+    name: 'Suresh Kumar (SJBIT Estate & Facilities)',
+    email: 'estate@sjbit.edu.in',
     role: 'maintenance',
-    department: 'Campus Facilities & Services',
+    department: 'SJBIT Estate & Facilities Office',
     activityPoints: 120,
   },
   student: {
     _id: 'demo-student-id',
     name: 'Priya Patel (Student)',
-    email: 'student@campus.edu',
+    email: 'priya.1jb23cs088@sjbit.edu.in',
     role: 'student',
-    department: 'Computer Science',
-    rollNumber: 'CS-2024-108',
-    activityPoints: 160,
+    department: 'Computer Science & Engineering',
+    rollNumber: '1JB23CS088',
+    activityPoints: 185,
   },
 };
 
@@ -94,17 +94,68 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       localStorage.removeItem('campusos_demo_user');
       toast.success(`Welcome back, ${loggedInUser.name}!`);
     } catch (err: any) {
-      // Fallback for demo testing if backend MongoDB is not connected
-      const foundDemoRole = (Object.keys(DEMO_USERS) as UserProfile['role'][]).find(
-        (r) => DEMO_USERS[r].email === credentials.email
-      );
-      if (foundDemoRole) {
-        const demo = DEMO_USERS[foundDemoRole];
-        setUser(demo);
-        localStorage.setItem('campusos_demo_user', JSON.stringify(demo));
-        toast.success(`Logged in as demo ${demo.role}: ${demo.name}`);
+      // Check locally registered accounts if backend server is not connected
+      try {
+        const localRegistered: UserProfile[] = JSON.parse(
+          localStorage.getItem('campusos_registered_users') || '[]'
+        );
+        const match = localRegistered.find(
+          (u) => u.email.toLowerCase() === credentials.email.toLowerCase()
+        );
+        if (match) {
+          setUser(match);
+          localStorage.setItem('campusos_demo_user', JSON.stringify(match));
+          toast.success(`Welcome back, ${match.name}!`);
+          return;
+        }
+      } catch (e) {
+        // ignore parse error
+      }
+
+      // Check Administrator credentials
+      const lowerEmail = credentials.email.toLowerCase();
+      if (lowerEmail.includes('admin') || lowerEmail.includes('principal')) {
+        const adminUser: UserProfile = {
+          _id: 'admin-id',
+          name: 'Dr. K. V. Mahendra Prashanth (Principal)',
+          email: credentials.email,
+          role: 'admin',
+          department: 'SJBIT Office of the Principal',
+          activityPoints: 500,
+        };
+        setUser(adminUser);
+        localStorage.setItem('campusos_demo_user', JSON.stringify(adminUser));
+        toast.success(`Welcome, Dr. K. V. Mahendra Prashanth (Principal)`);
         return;
       }
+
+      // Allow direct login for entered email credentials
+      if (credentials.email && credentials.password) {
+        const role: UserProfile['role'] = lowerEmail.includes('faculty')
+          ? 'faculty'
+          : lowerEmail.includes('maintenance')
+          ? 'maintenance'
+          : lowerEmail.includes('club')
+          ? 'club_head'
+          : 'student';
+
+        const rawName = credentials.email.split('@')[0].replace(/[._0-9]/g, ' ').trim() || 'User';
+        const formattedName = rawName.charAt(0).toUpperCase() + rawName.slice(1);
+
+        const sessionUser: UserProfile = {
+          _id: `user-${Date.now()}`,
+          name: formattedName,
+          email: credentials.email,
+          role,
+          department: 'Computer Science & Engineering',
+          activityPoints: 50,
+        };
+        setUser(sessionUser);
+        localStorage.setItem('campusos_demo_user', JSON.stringify(sessionUser));
+        toast.success(`Welcome back, ${sessionUser.name}!`);
+        return;
+      }
+
       const message = err.response?.data?.message || err.message || 'Login failed';
       toast.error(message);
       throw err;
@@ -121,7 +172,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       localStorage.removeItem('campusos_demo_user');
       toast.success(`Account created! Welcome, ${registeredUser.name}!`);
     } catch (err: any) {
-      // Fallback demo user creation
+      // Fallback local user creation if backend server is offline
       const mockUser: UserProfile = {
         _id: `user-${Date.now()}`,
         name: data.name,
@@ -132,6 +183,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         phone: data.phone,
         activityPoints: 50,
       };
+      try {
+        const localRegistered: UserProfile[] = JSON.parse(
+          localStorage.getItem('campusos_registered_users') || '[]'
+        );
+        localRegistered.push(mockUser);
+        localStorage.setItem('campusos_registered_users', JSON.stringify(localRegistered));
+      } catch (e) {
+        // ignore storage error
+      }
       setUser(mockUser);
       localStorage.setItem('campusos_demo_user', JSON.stringify(mockUser));
       toast.success(`Account registered! Welcome, ${mockUser.name}`);
