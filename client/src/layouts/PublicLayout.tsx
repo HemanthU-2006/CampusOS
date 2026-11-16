@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, Outlet } from 'react-router-dom';
 import { Button } from '@/components/ui/Button';
 import {
@@ -16,6 +16,7 @@ import {
   Phone,
   Compass,
   ArrowRight,
+  Layers,
 } from 'lucide-react';
 import { CampusAIAssistant } from '@/components/CampusAIAssistant';
 
@@ -25,96 +26,119 @@ export const PublicLayout: React.FC = () => {
   const [deptDropdownOpen, setDeptDropdownOpen] = useState(false);
   const [admissionsDropdownOpen, setAdmissionsDropdownOpen] = useState(false);
   const [placementsDropdownOpen, setPlacementsDropdownOpen] = useState(false);
+  const [campusDropdownOpen, setCampusDropdownOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 15);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
-    <div className="min-h-screen bg-glow-landing relative flex flex-col text-white selection:bg-lime selection:text-lime-ink">
+    <div className="min-h-screen bg-glow-landing relative flex flex-col text-white selection:bg-lime selection:text-lime-ink animate-fade-in">
       {/* Subtle top ambient glow */}
       <div
         className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[600px] bg-[radial-gradient(ellipse_at_top,rgba(131,243,77,0.06),transparent_70%)] pointer-events-none z-0"
         aria-hidden="true"
       />
 
-      {/* Official Top Institutional Bar (Modeled after https://www.sjbit.edu.in/) */}
-      <div className="relative z-50 w-full bg-[#080808]/95 border-b border-white/10 py-1.5 px-4 text-[11px] text-white/70 backdrop-blur-md">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-1.5">
-          <div className="flex flex-wrap items-center justify-center md:justify-start gap-2 text-center md:text-left">
-            <span className="text-amber-400 font-bold tracking-wider">|| JAI SRI GURUDEV ||</span>
-            <span className="hidden sm:inline text-white/20">|</span>
-            <span className="font-medium text-white/80">
+      {/* TOP ANNOUNCEMENT STRIP (~36px height, 1px bottom border, single font, muted gold & badges) */}
+      <div className="relative z-50 w-full bg-[#080808]/90 border-b border-white/[0.08] h-9 px-4 sm:px-6 flex items-center backdrop-blur-md">
+        <div className="max-w-7xl mx-auto w-full flex items-center justify-between text-[11px] leading-none">
+          {/* Left: Jai Sri Gurudev & Institutional Affiliation */}
+          <div className="flex items-center gap-2.5">
+            <span className="text-amber-300/85 uppercase font-semibold tracking-[0.08em] text-[10px]">
+              Jai Sri Gurudev
+            </span>
+            <span className="hidden md:inline text-white/15">|</span>
+            <span className="hidden md:inline text-gray-400 font-medium">
               Sri Adichunchanagiri Shikshana Trust ®
             </span>
-            <span className="hidden lg:inline text-white/20">|</span>
-            <span className="hidden lg:inline text-white/60">
+            <span className="hidden lg:inline text-white/15">|</span>
+            <span className="hidden lg:inline text-gray-500 font-normal">
               Autonomous Institute under VTU, Belagavi
             </span>
           </div>
 
-          <div className="flex flex-wrap items-center justify-center gap-3 text-[11px] text-white/60">
+          {/* Right: Utility Links & Badges */}
+          <div className="flex items-center gap-2.5 text-[#9CA3AF]">
             <a
               href="https://turiya.co/360/SJBIT/"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-white/70 hover:text-lime transition-colors inline-flex items-center gap-1 font-medium"
+              className="hover:text-white transition-colors duration-150 inline-flex items-center gap-1 font-medium"
             >
-              360° Tour <ExternalLink className="w-2.5 h-2.5" />
+              360° Tour <ExternalLink className="w-2.5 h-2.5 opacity-60" />
             </a>
-            <span className="text-white/20">|</span>
+            <span className="text-white/15">|</span>
             <a
               href="https://www.sjbit.edu.in/nirf.php"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-white/70 hover:text-lime transition-colors font-medium"
+              className="hover:text-white transition-colors duration-150 font-medium"
             >
               NIRF
             </a>
-            <span className="text-white/20">|</span>
+            <span className="text-white/15">|</span>
             <a
               href="https://www.sjbit.edu.in/alumni.php"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-white/70 hover:text-lime transition-colors font-medium"
+              className="hover:text-white transition-colors duration-150 font-medium"
             >
               Alumni
             </a>
-            <span className="text-white/20">|</span>
-            <span className="text-emerald-400 font-semibold inline-flex items-center gap-1">
-              <Award className="w-3 h-3" /> NAAC 'A+'
+            <span className="hidden sm:inline text-white/15">|</span>
+            <span className="px-2 py-0.5 rounded-full border border-white/10 bg-white/[0.03] text-[10px] font-medium text-gray-300">
+              NAAC 'A+'
             </span>
-            <span className="text-white/20 hidden sm:inline">|</span>
-            <span className="hidden sm:inline font-mono font-semibold text-lime">
-              CET: E115 | COMED-K: E107
+            <span className="hidden sm:inline-flex px-2 py-0.5 rounded-full border border-white/10 bg-white/[0.03] text-[10px] font-medium text-gray-300">
+              CET: E115
+            </span>
+            <span className="hidden sm:inline-flex px-2 py-0.5 rounded-full border border-white/10 bg-white/[0.03] text-[10px] font-medium text-gray-300">
+              COMED-K: E107
             </span>
           </div>
         </div>
       </div>
 
-      {/* Main Navigation Bar (With Authentic SJBIT Structure) */}
-      <header className="sticky top-0 z-40 px-4 sm:px-6 max-w-7xl mx-auto w-full pt-3">
-        <nav className="glass-nav rounded-2xl px-4 sm:px-6 py-2.5 flex items-center justify-between shadow-[0_12px_40px_rgba(0,0,0,0.6)] border border-ring/80">
-          {/* Official SJBIT Logo & Brand */}
-          <Link to="/" className="flex items-center gap-3 group shrink-0">
+      {/* MAIN NAVBAR (Sticky, Glassmorphism, Shrink on scroll, One Accent Green) */}
+      <header className="sticky top-0 z-40 px-4 sm:px-6 max-w-7xl mx-auto w-full pt-2.5 transition-all duration-300 ease-out">
+        <nav
+          className={`w-full rounded-[14px] border border-white/[0.08] shadow-[0_8px_30px_rgba(0,0,0,0.35)] backdrop-blur-[16px] backdrop-saturate-[140%] flex items-center justify-between px-4 sm:px-5 transition-all duration-300 ease-out ${
+            isScrolled ? 'h-[60px] bg-[#0a0a0a]/90' : 'h-[72px] bg-[#0a0a0a]/70'
+          }`}
+        >
+          {/* Logo block: 44px logo, brand text in semibold white, brand green CampusOS, tiny autonomous pill */}
+          <Link
+            to="/"
+            className="flex items-center gap-3 shrink-0 focus-visible:ring-2 focus-visible:ring-lime focus-visible:ring-offset-2 focus-visible:ring-offset-[#090909] rounded-lg outline-none"
+          >
             <img
               src="/sjbit-emblem.png"
               alt="SJBIT Emblem"
-              className="w-10 h-10 rounded-full object-cover border border-amber-400/40 p-0.5 bg-white shadow-[0_0_12px_rgba(251,191,36,0.25)] group-hover:scale-105 transition-transform"
+              className="w-11 h-11 rounded-full object-cover border border-white/10 p-0.5 bg-white shadow-[0_0_12px_rgba(255,255,255,0.06)] group-hover:scale-105 transition-transform"
             />
-            <div>
-              <div className="flex items-center gap-1.5">
-                <span className="font-extrabold text-base tracking-tight text-white group-hover:text-lime transition-colors">
+            <div className="flex flex-col">
+              <div className="flex items-center gap-2">
+                <span className="font-semibold text-[15px] tracking-tight text-white">
                   SJBIT <span className="text-lime">CampusOS</span>
                 </span>
-                <span className="hidden sm:inline text-[9px] px-1.5 py-0.5 rounded bg-amber-400/15 border border-amber-400/30 text-amber-300 font-semibold uppercase">
+                <span className="text-[9px] px-1.5 py-0.5 rounded-full border border-white/15 text-gray-300 font-medium tracking-wider uppercase">
                   Autonomous
                 </span>
               </div>
-              <span className="text-[10px] text-white/50 block font-normal leading-tight truncate max-w-[180px] sm:max-w-none">
+              <span className="text-[12px] text-gray-400 font-normal leading-tight">
                 SJB Institute of Technology · Bengaluru
               </span>
             </div>
           </Link>
 
-          {/* Desktop Navigation Links with Dropdowns (Modeled after https://www.sjbit.edu.in/) */}
-          <div className="hidden xl:flex items-center gap-4 text-xs font-medium text-white/80">
+          {/* Desktop Navigation Links (No wrap, 14px font, equal 4px gaps, clean glass dropdowns, collapsed below 1100px) */}
+          <div className="hidden min-[1100px]:flex items-center gap-1 text-[14px] font-medium tracking-[0.01em]">
             {/* 1. About Us Dropdown */}
             <div
               className="relative"
@@ -123,40 +147,45 @@ export const PublicLayout: React.FC = () => {
             >
               <button
                 type="button"
-                className="hover:text-lime transition-colors flex items-center gap-1 py-2 cursor-pointer"
+                className="flex items-center gap-1 px-3.5 py-2 text-[#D1D5DB] hover:text-white hover:bg-white/[0.06] rounded-[8px] transition-all duration-150 ease-out whitespace-nowrap cursor-pointer focus-visible:ring-2 focus-visible:ring-lime focus-visible:ring-offset-2 focus-visible:ring-offset-[#090909] outline-none"
               >
-                About Us <ChevronDown className="w-3 h-3 text-white/40" />
+                About Us{' '}
+                <ChevronDown
+                  className={`w-3 h-3 text-gray-400 transition-transform duration-200 ${
+                    aboutDropdownOpen ? 'rotate-180' : ''
+                  }`}
+                />
               </button>
               {aboutDropdownOpen && (
-                <div className="absolute top-full left-0 w-64 rounded-xl bg-[#111216]/95 border border-white/15 p-2 shadow-2xl backdrop-blur-xl animate-fade-in space-y-1">
+                <div className="absolute top-full left-0 w-64 rounded-[12px] bg-[#0d0d0f]/95 border border-white/[0.08] p-2 shadow-[0_12px_36px_rgba(0,0,0,0.5)] backdrop-blur-xl animate-fade-in space-y-1 z-50">
                   <a
                     href="/#overview"
-                    className="block px-3 py-2 rounded-lg hover:bg-white/10 hover:text-white transition-colors"
+                    className="block px-3 py-2 rounded-[8px] hover:bg-white/[0.06] text-gray-300 hover:text-white transition-colors"
                   >
-                    <span className="font-bold text-white block">Exceptional Leadership</span>
-                    <span className="text-[10px] text-white/50">Founders, Swamijis &amp; Principal</span>
+                    <span className="font-medium text-white block text-[13px]">Exceptional Leadership</span>
+                    <span className="text-[11px] text-gray-400">Founders, Swamijis &amp; Principal</span>
                   </a>
                   <a
                     href="https://www.sjbit.edu.in/sri-adhichunchanagiri-shikshana-trust.php"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="block px-3 py-2 rounded-lg hover:bg-white/10 hover:text-white transition-colors"
+                    className="block px-3 py-2 rounded-[8px] hover:bg-white/[0.06] text-gray-300 hover:text-white transition-colors"
                   >
-                    <span className="font-bold text-white block flex items-center justify-between">
-                      Adichunchanagiri Trust <ExternalLink className="w-3 h-3 text-white/40" />
+                    <span className="font-medium text-white block text-[13px] flex items-center justify-between">
+                      Adichunchanagiri Trust <ExternalLink className="w-3 h-3 text-gray-400" />
                     </span>
-                    <span className="text-[10px] text-white/50">Sri Adichunchanagiri Shikshana Trust®</span>
+                    <span className="text-[11px] text-gray-400">Sri Adichunchanagiri Shikshana Trust®</span>
                   </a>
                   <a
                     href="https://www.sjbit.edu.in/accreditation-and-ranking.php"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="block px-3 py-2 rounded-lg hover:bg-white/10 hover:text-white transition-colors"
+                    className="block px-3 py-2 rounded-[8px] hover:bg-white/[0.06] text-gray-300 hover:text-white transition-colors"
                   >
-                    <span className="font-bold text-white block flex items-center justify-between">
-                      Accreditation &amp; Ranking <ExternalLink className="w-3 h-3 text-white/40" />
+                    <span className="font-medium text-white block text-[13px] flex items-center justify-between">
+                      Accreditation &amp; Ranking <ExternalLink className="w-3 h-3 text-gray-400" />
                     </span>
-                    <span className="text-[10px] text-white/50">NAAC A+, NBA, ISO 9001:2015</span>
+                    <span className="text-[11px] text-gray-400">NAAC A+, NBA, ISO 9001:2015</span>
                   </a>
                 </div>
               )}
@@ -170,81 +199,90 @@ export const PublicLayout: React.FC = () => {
             >
               <button
                 type="button"
-                className="hover:text-lime transition-colors flex items-center gap-1 py-2 cursor-pointer"
+                className="flex items-center gap-1 px-3.5 py-2 text-[#D1D5DB] hover:text-white hover:bg-white/[0.06] rounded-[8px] transition-all duration-150 ease-out whitespace-nowrap cursor-pointer focus-visible:ring-2 focus-visible:ring-lime focus-visible:ring-offset-2 focus-visible:ring-offset-[#090909] outline-none"
               >
-                9 Branches <ChevronDown className="w-3 h-3 text-white/40" />
+                9 Branches{' '}
+                <ChevronDown
+                  className={`w-3 h-3 text-gray-400 transition-transform duration-200 ${
+                    deptDropdownOpen ? 'rotate-180' : ''
+                  }`}
+                />
               </button>
               {deptDropdownOpen && (
-                <div className="absolute top-full left-0 w-80 rounded-xl bg-[#111216]/95 border border-white/15 p-3 shadow-2xl backdrop-blur-xl animate-fade-in">
-                  <div className="text-[10px] font-bold text-white/40 uppercase tracking-wider mb-2 px-1">
+                <div className="absolute top-full left-0 w-80 rounded-[12px] bg-[#0d0d0f]/95 border border-white/[0.08] p-3 shadow-[0_12px_36px_rgba(0,0,0,0.5)] backdrop-blur-xl animate-fade-in z-50">
+                  <div className="text-[10px] font-semibold text-gray-400 uppercase tracking-wider mb-2 px-1">
                     Autonomous Engineering &amp; Management Branches
                   </div>
-                  <div className="grid grid-cols-2 gap-1 text-xs">
+                  <div className="grid grid-cols-2 gap-1 text-[13px]">
                     <a
                       href="/#branches"
-                      className="px-2.5 py-1.5 rounded-lg hover:bg-white/10 hover:text-lime transition-colors"
+                      className="px-2.5 py-1.5 rounded-[8px] hover:bg-white/[0.06] text-gray-300 hover:text-white transition-colors"
                     >
-                      <span className="font-bold text-white">CSE</span> · Computer Science
+                      <span className="font-medium text-white">CSE</span> · Computer Science
                     </a>
                     <Link
                       to="/faculty/ise"
-                      className="px-2.5 py-1.5 rounded-lg bg-amber-400/10 text-amber-300 font-bold hover:bg-amber-400/20 transition-colors"
+                      className="px-2.5 py-1.5 rounded-[8px] hover:bg-white/[0.06] text-gray-300 hover:text-white transition-colors flex items-center justify-between"
                     >
-                      <span>ISE Faculty</span> (41) ★
+                      <span className="font-medium text-white">ISE Faculty</span>
+                      <span className="text-[11px] text-lime font-semibold">41</span>
                     </Link>
                     <a
                       href="/#branches"
-                      className="px-2.5 py-1.5 rounded-lg hover:bg-white/10 hover:text-lime transition-colors"
+                      className="px-2.5 py-1.5 rounded-[8px] hover:bg-white/[0.06] text-gray-300 hover:text-white transition-colors"
                     >
-                      <span className="font-bold text-white">AI&amp;ML</span> · Artificial Intel
+                      <span className="font-medium text-white">AI&amp;ML</span> · Artificial Intel
                     </a>
                     <a
                       href="/#branches"
-                      className="px-2.5 py-1.5 rounded-lg hover:bg-white/10 hover:text-lime transition-colors"
+                      className="px-2.5 py-1.5 rounded-[8px] hover:bg-white/[0.06] text-gray-300 hover:text-white transition-colors"
                     >
-                      <span className="font-bold text-white">CS-DS</span> · Data Science
+                      <span className="font-medium text-white">CS-DS</span> · Data Science
                     </a>
                     <a
                       href="/#branches"
-                      className="px-2.5 py-1.5 rounded-lg hover:bg-white/10 hover:text-lime transition-colors"
+                      className="px-2.5 py-1.5 rounded-[8px] hover:bg-white/[0.06] text-gray-300 hover:text-white transition-colors"
                     >
-                      <span className="font-bold text-white">ECE</span> · Electronics &amp; Comm
+                      <span className="font-medium text-white">ECE</span> · Electronics &amp; Comm
                     </a>
                     <a
                       href="/#branches"
-                      className="px-2.5 py-1.5 rounded-lg hover:bg-white/10 hover:text-lime transition-colors"
+                      className="px-2.5 py-1.5 rounded-[8px] hover:bg-white/[0.06] text-gray-300 hover:text-white transition-colors"
                     >
-                      <span className="font-bold text-white">EEE</span> · Electrical &amp; Elec
+                      <span className="font-medium text-white">EEE</span> · Electrical &amp; Elec
                     </a>
                     <a
                       href="/#branches"
-                      className="px-2.5 py-1.5 rounded-lg hover:bg-white/10 hover:text-lime transition-colors"
+                      className="px-2.5 py-1.5 rounded-[8px] hover:bg-white/[0.06] text-gray-300 hover:text-white transition-colors"
                     >
-                      <span className="font-bold text-white">MECH</span> · Mechanical
+                      <span className="font-medium text-white">MECH</span> · Mechanical
                     </a>
                     <a
                       href="/#branches"
-                      className="px-2.5 py-1.5 rounded-lg hover:bg-white/10 hover:text-lime transition-colors"
+                      className="px-2.5 py-1.5 rounded-[8px] hover:bg-white/[0.06] text-gray-300 hover:text-white transition-colors"
                     >
-                      <span className="font-bold text-white">CIVIL</span> · Civil Engineering
+                      <span className="font-medium text-white">CIVIL</span> · Civil Engineering
                     </a>
                     <a
                       href="/#branches"
-                      className="col-span-2 px-2.5 py-1.5 rounded-lg hover:bg-white/10 hover:text-lime transition-colors"
+                      className="col-span-2 px-2.5 py-1.5 rounded-[8px] hover:bg-white/[0.06] text-gray-300 hover:text-white transition-colors"
                     >
-                      <span className="font-bold text-white">MBA</span> · Department of Management Studies
+                      <span className="font-medium text-white">MBA</span> · Department of Management Studies
                     </a>
                   </div>
                 </div>
               )}
             </div>
 
-            {/* 3. Highlighted ISE Faculty Link */}
+            {/* 3. Subtle Outlined ISE Faculty Pill with Count Badge */}
             <Link
               to="/faculty/ise"
-              className="px-2.5 py-1 rounded-lg bg-amber-400/15 border border-amber-400/30 text-amber-300 hover:text-white hover:bg-amber-400/25 font-bold transition-all"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-white/15 hover:border-lime/40 text-[#D1D5DB] hover:text-white text-[13px] font-medium transition-all duration-150 focus-visible:ring-2 focus-visible:ring-lime focus-visible:ring-offset-2 focus-visible:ring-offset-[#090909] outline-none"
             >
-              ISE Faculty (41)
+              <span>ISE Faculty</span>
+              <span className="px-1.5 py-0.5 rounded-full bg-white/10 text-lime text-[11px] font-semibold leading-none">
+                41
+              </span>
             </Link>
 
             {/* 4. Admissions Dropdown */}
@@ -255,31 +293,36 @@ export const PublicLayout: React.FC = () => {
             >
               <button
                 type="button"
-                className="hover:text-lime transition-colors flex items-center gap-1 py-2 cursor-pointer"
+                className="flex items-center gap-1 px-3.5 py-2 text-[#D1D5DB] hover:text-white hover:bg-white/[0.06] rounded-[8px] transition-all duration-150 ease-out whitespace-nowrap cursor-pointer focus-visible:ring-2 focus-visible:ring-lime focus-visible:ring-offset-2 focus-visible:ring-offset-[#090909] outline-none"
               >
-                Admissions <ChevronDown className="w-3 h-3 text-white/40" />
+                Admissions{' '}
+                <ChevronDown
+                  className={`w-3 h-3 text-gray-400 transition-transform duration-200 ${
+                    admissionsDropdownOpen ? 'rotate-180' : ''
+                  }`}
+                />
               </button>
               {admissionsDropdownOpen && (
-                <div className="absolute top-full left-0 w-64 rounded-xl bg-[#111216]/95 border border-white/15 p-3 shadow-2xl backdrop-blur-xl animate-fade-in space-y-2">
-                  <div className="text-[10px] font-bold text-white/40 uppercase tracking-wider px-1">
+                <div className="absolute top-full left-0 w-64 rounded-[12px] bg-[#0d0d0f]/95 border border-white/[0.08] p-3 shadow-[0_12px_36px_rgba(0,0,0,0.5)] backdrop-blur-xl animate-fade-in space-y-2 z-50">
+                  <div className="text-[10px] font-semibold text-gray-400 uppercase tracking-wider px-1">
                     Official Counseling Codes
                   </div>
-                  <div className="space-y-1.5 text-xs text-white/80">
-                    <div className="p-2 rounded bg-white/5 flex items-center justify-between font-mono">
-                      <span>CET Code:</span> <strong className="text-lime">E115</strong>
+                  <div className="space-y-1.5 text-[12px] text-gray-300">
+                    <div className="p-2 rounded-[8px] bg-white/[0.04] flex items-center justify-between">
+                      <span>CET Code:</span> <strong className="text-white">E115</strong>
                     </div>
-                    <div className="p-2 rounded bg-white/5 flex items-center justify-between font-mono">
-                      <span>COMED-K:</span> <strong className="text-lime">E107</strong>
+                    <div className="p-2 rounded-[8px] bg-white/[0.04] flex items-center justify-between">
+                      <span>COMED-K:</span> <strong className="text-white">E107</strong>
                     </div>
-                    <div className="p-2 rounded bg-white/5 flex items-center justify-between font-mono">
-                      <span>MBA / MCA:</span> <strong className="text-lime">B288 / C547MC</strong>
+                    <div className="p-2 rounded-[8px] bg-white/[0.04] flex items-center justify-between">
+                      <span>MBA / MCA:</span> <strong className="text-white">B288 / C547MC</strong>
                     </div>
                   </div>
                   <a
                     href="https://www.sjbit.edu.in/admissions.php"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="block text-center text-xs text-lime hover:underline font-semibold pt-1"
+                    className="block text-center text-[12px] text-lime hover:underline font-medium pt-1"
                   >
                     View Official Admission Portal →
                   </a>
@@ -295,84 +338,122 @@ export const PublicLayout: React.FC = () => {
             >
               <button
                 type="button"
-                className="hover:text-lime transition-colors flex items-center gap-1 py-2 cursor-pointer"
+                className="flex items-center gap-1 px-3.5 py-2 text-[#D1D5DB] hover:text-white hover:bg-white/[0.06] rounded-[8px] transition-all duration-150 ease-out whitespace-nowrap cursor-pointer focus-visible:ring-2 focus-visible:ring-lime focus-visible:ring-offset-2 focus-visible:ring-offset-[#090909] outline-none"
               >
-                Placements <ChevronDown className="w-3 h-3 text-white/40" />
+                Placements{' '}
+                <ChevronDown
+                  className={`w-3 h-3 text-gray-400 transition-transform duration-200 ${
+                    placementsDropdownOpen ? 'rotate-180' : ''
+                  }`}
+                />
               </button>
               {placementsDropdownOpen && (
-                <div className="absolute top-full left-0 w-64 rounded-xl bg-[#111216]/95 border border-white/15 p-2 shadow-2xl backdrop-blur-xl animate-fade-in space-y-1">
+                <div className="absolute top-full left-0 w-64 rounded-[12px] bg-[#0d0d0f]/95 border border-white/[0.08] p-2 shadow-[0_12px_36px_rgba(0,0,0,0.5)] backdrop-blur-xl animate-fade-in space-y-1 z-50">
                   <a
                     href="/#partners"
-                    className="block px-3 py-2 rounded-lg hover:bg-white/10 hover:text-white transition-colors"
+                    className="block px-3 py-2 rounded-[8px] hover:bg-white/[0.06] text-gray-300 hover:text-white transition-colors"
                   >
-                    <span className="font-bold text-white block">350+ Recruiting Partners</span>
-                    <span className="text-[10px] text-white/50">Cisco, Oracle, TCS, Infosys, Bosch</span>
+                    <span className="font-medium text-white block text-[13px]">350+ Recruiting Partners</span>
+                    <span className="text-[11px] text-gray-400">Cisco, Oracle, TCS, Infosys, Bosch</span>
                   </a>
                   <a
                     href="https://www.sjbit.edu.in/center-of-excellence.php"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="block px-3 py-2 rounded-lg hover:bg-white/10 hover:text-white transition-colors"
+                    className="block px-3 py-2 rounded-[8px] hover:bg-white/[0.06] text-gray-300 hover:text-white transition-colors"
                   >
-                    <span className="font-bold text-white block flex items-center justify-between">
-                      Centers of Excellence <ExternalLink className="w-3 h-3 text-white/40" />
+                    <span className="font-medium text-white block text-[13px] flex items-center justify-between">
+                      Centers of Excellence <ExternalLink className="w-3 h-3 text-gray-400" />
                     </span>
-                    <span className="text-[10px] text-white/50">20+ Advanced Industry Hubs</span>
+                    <span className="text-[11px] text-gray-400">20+ Advanced Industry Hubs</span>
                   </a>
                 </div>
               )}
             </div>
 
-            {/* 6. Life @ SJBIT */}
-            <a href="/#life-at-sjbit" className="hover:text-white transition-colors">
-              Life @ SJBIT
-            </a>
+            {/* 6. Merged "Campus Life" Dropdown (Life @ SJBIT + Campus Modules) */}
+            <div
+              className="relative"
+              onMouseEnter={() => setCampusDropdownOpen(true)}
+              onMouseLeave={() => setCampusDropdownOpen(false)}
+            >
+              <button
+                type="button"
+                className="flex items-center gap-1 px-3.5 py-2 text-[#D1D5DB] hover:text-white hover:bg-white/[0.06] rounded-[8px] transition-all duration-150 ease-out whitespace-nowrap cursor-pointer focus-visible:ring-2 focus-visible:ring-lime focus-visible:ring-offset-2 focus-visible:ring-offset-[#090909] outline-none"
+              >
+                Campus Life{' '}
+                <ChevronDown
+                  className={`w-3 h-3 text-gray-400 transition-transform duration-200 ${
+                    campusDropdownOpen ? 'rotate-180' : ''
+                  }`}
+                />
+              </button>
+              {campusDropdownOpen && (
+                <div className="absolute top-full left-0 w-64 rounded-[12px] bg-[#0d0d0f]/95 border border-white/[0.08] p-2 shadow-[0_12px_36px_rgba(0,0,0,0.5)] backdrop-blur-xl animate-fade-in space-y-1 z-50">
+                  <a
+                    href="/#life-at-sjbit"
+                    className="block px-3 py-2 rounded-[8px] hover:bg-white/[0.06] text-gray-300 hover:text-white transition-colors"
+                  >
+                    <span className="font-medium text-white block text-[13px]">Life @ SJBIT</span>
+                    <span className="text-[11px] text-gray-400">Hostels, Library, Cultural Hubs &amp; Sports</span>
+                  </a>
+                  <a
+                    href="/#modules"
+                    className="block px-3 py-2 rounded-[8px] hover:bg-white/[0.06] text-gray-300 hover:text-white transition-colors"
+                  >
+                    <span className="font-medium text-white block text-[13px]">Campus Modules</span>
+                    <span className="text-[11px] text-gray-400">Venues, Events, Resources &amp; Maintenance</span>
+                  </a>
+                </div>
+              )}
+            </div>
 
-            {/* 7. Campus Modules */}
-            <a href="/#modules" className="hover:text-white transition-colors">
-              Campus Modules
-            </a>
-
-            {/* 8. Contact Us */}
+            {/* 7. Contact Us */}
             <Link
               to="/contact"
-              className="hover:text-white text-lime transition-colors font-semibold"
+              className="px-3.5 py-2 text-[#D1D5DB] hover:text-white hover:bg-white/[0.06] rounded-[8px] transition-all duration-150 ease-out whitespace-nowrap focus-visible:ring-2 focus-visible:ring-lime focus-visible:ring-offset-2 focus-visible:ring-offset-[#090909] outline-none"
             >
               Contact Us
             </Link>
           </div>
 
-          {/* Action CTAs */}
-          <div className="flex items-center gap-2">
-            <Link to="/login?role=admin">
-              <Button
-                variant="ghost"
-                size="sm"
-                className="text-xs text-rose-300 hover:text-white hover:bg-rose-500/10 hidden sm:inline-flex items-center font-bold"
+          {/* Action CTAs: Identical 40px heights, 10px gaps, single primary green Register button */}
+          <div className="flex items-center gap-2.5">
+            {/* Admin Portal (Ghost/Outline with small shield icon in neutral white) */}
+            <Link to="/login?role=admin" className="hidden sm:inline-block">
+              <button
+                type="button"
+                className="h-10 px-3.5 rounded-[10px] text-[13px] font-medium text-gray-300 hover:text-white border border-white/10 hover:border-white/20 hover:bg-white/[0.06] inline-flex items-center gap-1.5 transition-all duration-150 whitespace-nowrap focus-visible:ring-2 focus-visible:ring-lime focus-visible:ring-offset-2 focus-visible:ring-offset-[#090909] outline-none cursor-pointer"
               >
-                <ShieldCheck className="w-3.5 h-3.5 mr-1 text-rose-400" />
-                Admin Portal
-              </Button>
-            </Link>
-            <Link to="/login">
-              <Button variant="outline" size="sm" className="text-xs border-ring/80 font-semibold">
-                Sign In
-              </Button>
-            </Link>
-            <Link to="/register">
-              <Button
-                variant="lime"
-                size="sm"
-                className="text-xs font-bold shadow-[0_0_12px_rgba(131,243,77,0.35)]"
-              >
-                Register
-              </Button>
+                <ShieldCheck className="w-3.5 h-3.5 text-white/80" />
+                <span>Admin Portal</span>
+              </button>
             </Link>
 
-            {/* Mobile Hamburger Toggle */}
+            {/* Sign In (Secondary Ghost Button) */}
+            <Link to="/login" className="hidden sm:inline-block">
+              <button
+                type="button"
+                className="h-10 px-4 rounded-[10px] text-[13px] font-medium text-gray-300 hover:text-white hover:bg-white/[0.06] inline-flex items-center justify-center transition-all duration-150 whitespace-nowrap focus-visible:ring-2 focus-visible:ring-lime focus-visible:ring-offset-2 focus-visible:ring-offset-[#090909] outline-none cursor-pointer"
+              >
+                Sign In
+              </button>
+            </Link>
+
+            {/* Register (The ONLY solid filled primary green button) */}
+            <Link to="/register">
+              <button
+                type="button"
+                className="h-10 px-4 rounded-[10px] bg-lime text-black font-semibold text-[13px] shadow-[0_0_20px_rgba(74,222,128,0.25)] hover:-translate-y-[1px] hover:shadow-[0_0_24px_rgba(131,243,77,0.35)] transition-all duration-150 inline-flex items-center justify-center whitespace-nowrap focus-visible:ring-2 focus-visible:ring-lime focus-visible:ring-offset-2 focus-visible:ring-offset-[#090909] outline-none cursor-pointer"
+              >
+                Register
+              </button>
+            </Link>
+
+            {/* Mobile Hamburger Toggle (Collapsed below 1100px) */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="xl:hidden p-2 rounded-lg bg-white/5 hover:bg-white/15 text-white/80 transition-colors ml-1"
+              className="min-[1100px]:hidden h-10 w-10 flex items-center justify-center rounded-[10px] border border-white/10 bg-white/[0.04] hover:bg-white/[0.08] text-gray-300 hover:text-white transition-colors cursor-pointer focus-visible:ring-2 focus-visible:ring-lime focus-visible:ring-offset-2 focus-visible:ring-offset-[#090909] outline-none"
               aria-label="Toggle navigation menu"
             >
               {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -382,68 +463,87 @@ export const PublicLayout: React.FC = () => {
 
         {/* Mobile Navigation Drawer */}
         {mobileMenuOpen && (
-          <div className="xl:hidden mt-2 p-4 rounded-2xl bg-[#101115]/95 border border-white/15 backdrop-blur-xl shadow-2xl space-y-3 animate-fade-in text-xs">
-            <div className="grid grid-cols-2 gap-2 pb-3 border-b border-white/10">
+          <div className="min-[1100px]:hidden mt-2 p-4 rounded-[14px] bg-[#0d0d0f]/95 border border-white/[0.08] backdrop-blur-xl shadow-2xl space-y-3 animate-fade-in text-[13px]">
+            <div className="grid grid-cols-2 gap-2 pb-3 border-b border-white/[0.08]">
               <a
                 href="/#overview"
                 onClick={() => setMobileMenuOpen(false)}
-                className="p-2.5 rounded-lg bg-white/5 hover:bg-white/10 text-white font-semibold flex items-center gap-2"
+                className="p-2.5 rounded-[8px] bg-white/[0.03] hover:bg-white/[0.08] text-white font-medium flex items-center gap-2"
               >
-                <GraduationCap className="w-4 h-4 text-amber-400" /> Leadership
+                <GraduationCap className="w-4 h-4 text-white/70" /> Leadership
               </a>
               <Link
                 to="/faculty/ise"
                 onClick={() => setMobileMenuOpen(false)}
-                className="p-2.5 rounded-lg bg-amber-400/15 border border-amber-400/30 text-amber-300 font-bold flex items-center gap-2"
+                className="p-2.5 rounded-[8px] bg-white/[0.03] hover:bg-white/[0.08] text-white font-medium flex items-center justify-between"
               >
-                <Users className="w-4 h-4 text-amber-400" /> ISE Faculty (41)
+                <span className="flex items-center gap-2">
+                  <Users className="w-4 h-4 text-white/70" /> ISE Faculty
+                </span>
+                <span className="text-[11px] text-lime font-semibold">41</span>
               </Link>
               <a
                 href="/#branches"
                 onClick={() => setMobileMenuOpen(false)}
-                className="p-2.5 rounded-lg bg-white/5 hover:bg-white/10 text-white font-semibold flex items-center gap-2"
+                className="p-2.5 rounded-[8px] bg-white/[0.03] hover:bg-white/[0.08] text-white font-medium flex items-center gap-2"
               >
-                <Building2 className="w-4 h-4 text-lime" /> 9 Branches
+                <Building2 className="w-4 h-4 text-white/70" /> 9 Branches
               </a>
               <a
                 href="/#partners"
                 onClick={() => setMobileMenuOpen(false)}
-                className="p-2.5 rounded-lg bg-white/5 hover:bg-white/10 text-white font-semibold flex items-center gap-2"
+                className="p-2.5 rounded-[8px] bg-white/[0.03] hover:bg-white/[0.08] text-white font-medium flex items-center gap-2"
               >
-                <Briefcase className="w-4 h-4 text-sky-400" /> Placements
+                <Briefcase className="w-4 h-4 text-white/70" /> Placements
               </a>
               <a
                 href="/#life-at-sjbit"
                 onClick={() => setMobileMenuOpen(false)}
-                className="p-2.5 rounded-lg bg-white/5 hover:bg-white/10 text-white font-semibold flex items-center gap-2"
+                className="p-2.5 rounded-[8px] bg-white/[0.03] hover:bg-white/[0.08] text-white font-medium flex items-center gap-2"
               >
-                <BookOpen className="w-4 h-4 text-rose-400" /> Life @ SJBIT
+                <BookOpen className="w-4 h-4 text-white/70" /> Life @ SJBIT
+              </a>
+              <a
+                href="/#modules"
+                onClick={() => setMobileMenuOpen(false)}
+                className="p-2.5 rounded-[8px] bg-white/[0.03] hover:bg-white/[0.08] text-white font-medium flex items-center gap-2"
+              >
+                <Layers className="w-4 h-4 text-white/70" /> Campus Modules
               </a>
               <Link
                 to="/contact"
                 onClick={() => setMobileMenuOpen(false)}
-                className="p-2.5 rounded-lg bg-white/5 hover:bg-white/10 text-lime font-bold flex items-center gap-2"
+                className="col-span-2 p-2.5 rounded-[8px] bg-white/[0.03] hover:bg-white/[0.08] text-white font-medium flex items-center gap-2"
               >
-                <Phone className="w-4 h-4 text-lime" /> Contact Us
+                <Phone className="w-4 h-4 text-white/70" /> Contact SJBIT Administration
               </Link>
             </div>
 
             <div className="flex flex-col gap-2 pt-1">
               <Link to="/login?role=admin" onClick={() => setMobileMenuOpen(false)}>
-                <Button variant="ghost" size="sm" className="w-full text-xs text-rose-300 font-bold">
-                  <ShieldCheck className="w-4 h-4 mr-1 text-rose-400" /> Admin Office Portal
-                </Button>
+                <button
+                  type="button"
+                  className="w-full h-10 px-3.5 rounded-[10px] text-[13px] font-medium text-gray-300 hover:text-white border border-white/10 hover:bg-white/[0.06] inline-flex items-center justify-center gap-1.5 transition-all"
+                >
+                  <ShieldCheck className="w-4 h-4 text-white/80" /> Admin Office Portal
+                </button>
               </Link>
               <div className="grid grid-cols-2 gap-2">
                 <Link to="/login" onClick={() => setMobileMenuOpen(false)}>
-                  <Button variant="outline" size="sm" className="w-full text-xs font-semibold">
+                  <button
+                    type="button"
+                    className="w-full h-10 px-4 rounded-[10px] text-[13px] font-medium text-gray-300 hover:text-white border border-white/10 hover:bg-white/[0.06] transition-all"
+                  >
                     Sign In
-                  </Button>
+                  </button>
                 </Link>
                 <Link to="/register" onClick={() => setMobileMenuOpen(false)}>
-                  <Button variant="lime" size="sm" className="w-full text-xs font-bold">
+                  <button
+                    type="button"
+                    className="w-full h-10 px-4 rounded-[10px] bg-lime text-black font-semibold text-[13px] shadow-[0_0_20px_rgba(74,222,128,0.25)] transition-all"
+                  >
                     Register
-                  </Button>
+                  </button>
                 </Link>
               </div>
             </div>
