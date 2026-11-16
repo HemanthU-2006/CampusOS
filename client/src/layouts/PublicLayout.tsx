@@ -274,18 +274,7 @@ export const PublicLayout: React.FC = () => {
               )}
             </div>
 
-            {/* 3. Subtle Outlined ISE Faculty Pill with Count Badge */}
-            <Link
-              to="/faculty/ise"
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-white/15 hover:border-lime/40 text-[#D1D5DB] hover:text-white text-[13px] font-medium transition-all duration-150 focus-visible:ring-2 focus-visible:ring-lime focus-visible:ring-offset-2 focus-visible:ring-offset-[#090909] outline-none"
-            >
-              <span>ISE Faculty</span>
-              <span className="px-1.5 py-0.5 rounded-full bg-white/10 text-lime text-[11px] font-semibold leading-none">
-                41
-              </span>
-            </Link>
-
-            {/* 4. Admissions Dropdown */}
+            {/* 3. Admissions Dropdown */}
             <div
               className="relative"
               onMouseEnter={() => setAdmissionsDropdownOpen(true)}
