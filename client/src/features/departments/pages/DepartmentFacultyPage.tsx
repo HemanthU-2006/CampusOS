@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import { SJBIT_BRANCHES } from '../data/branchesData';
 import { getFacultyByBranch, FacultyMember } from '../data/allFacultyData';
@@ -80,6 +80,10 @@ export const DepartmentFacultyPage: React.FC<{ defaultDept?: string }> = ({ defa
   const [activeTab, setActiveTab] = useState<'teaching' | 'non-teaching'>('teaching');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedFaculty, setSelectedFaculty] = useState<FacultyMember | null>(null);
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [currentBranch.code]);
 
   // Fetch full faculty roster for the selected department
   const branchFaculty = useMemo(() => {

@@ -90,7 +90,10 @@ export function Departments({ departments, onSelectBranch }) {
                   <a href={`#branches`} className="arrow-link">Branch Details <ArrowRight size={16} /></a>
                 )}
                 {d.faculty && (
-                  <a href="/faculty/ise" className="arrow-link">
+                  <a
+                    href={d.rawBranch?.facultyRoute || d.facultyRoute || `/faculty/${d.code.toLowerCase().replace('&', '')}`}
+                    className="arrow-link"
+                  >
                     View Faculty ({d.faculty}) <ArrowRight size={16} />
                   </a>
                 )}

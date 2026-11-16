@@ -53,7 +53,7 @@ export default function Header() {
               {n.menu && <ChevronDown size={12} />}
             </a>
           ))}
-          <a href="/faculty/ise" className="link badge-link">ISE Faculty <span className="count">41</span></a>
+          <a href="/faculty" className="link badge-link">Faculty Directory <span className="count">209</span></a>
         </nav>
 
         <div className="actions">

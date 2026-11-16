@@ -34,6 +34,7 @@ export const LandingPage: React.FC = () => {
     hod: b.hod,
     location: b.block,
     faculty: b.facultyCount,
+    facultyRoute: b.facultyRoute,
     rawBranch: b,
   }));
 
