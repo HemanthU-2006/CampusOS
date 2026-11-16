@@ -20,7 +20,6 @@ const LEADERS = [
     name: "Jagadguru Sri Sri Sri Dr. Balagangadharanatha Maha Swamiji",
     role: "Founder President",
     img: "/leadership/balagangadharanatha-swamiji.png",
-    featured: true,
   },
   {
     name: "Sri Sri Sri Dr. Nirmalanandanatha Maha Swamiji",
@@ -31,11 +30,6 @@ const LEADERS = [
     name: "Sri Sri Dr. Prakashanatha Swamiji",
     role: "Managing Director",
     img: "/leadership/prakashanatha-swamiji.png",
-  },
-  {
-    name: "Dr. K. V. Mahendra Prashanth",
-    role: "Principal",
-    img: "/leadership/mahendra-prashanth.png",
   },
 ];
 
@@ -49,7 +43,7 @@ export function Leadership() {
       />
       <div className="leaders">
         {LEADERS.map((p, i) => (
-          <Reveal key={p.name} delay={i * 0.08} className={p.featured ? "leader-wrap featured" : "leader-wrap"}>
+          <Reveal key={p.name} delay={i * 0.08} className="leader-wrap">
             <SpotlightCard className="leader">
               <div className="portrait">
                 <img src={p.img} alt={p.name} loading="lazy" />
