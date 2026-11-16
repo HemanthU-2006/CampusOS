@@ -19,6 +19,8 @@ import {
   Layers,
 } from 'lucide-react';
 import { CampusAIAssistant } from '@/components/CampusAIAssistant';
+import { SmoothScroll, ScrollProgress, FilmGrain } from '@/components/cinematic';
+import '../cinematic.css';
 
 export const PublicLayout: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -39,6 +41,10 @@ export const PublicLayout: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-glow-landing relative flex flex-col text-white selection:bg-lime selection:text-lime-ink animate-fade-in">
+      <SmoothScroll />
+      <ScrollProgress />
+      <FilmGrain />
+
       {/* Subtle top ambient glow */}
       <div
         className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[600px] bg-[radial-gradient(ellipse_at_top,rgba(131,243,77,0.06),transparent_70%)] pointer-events-none z-0"
@@ -137,8 +143,8 @@ export const PublicLayout: React.FC = () => {
             </div>
           </Link>
 
-          {/* Desktop Navigation Links (No wrap, 14px font, equal 4px gaps, clean glass dropdowns, collapsed below 1100px) */}
-          <div className="hidden min-[1100px]:flex items-center gap-1 text-[14px] font-medium tracking-[0.01em]">
+          {/* Desktop Navigation Links (No wrap, 14px font, equal gaps, clean glass dropdowns, collapsed below 1280px) */}
+          <div className="hidden xl:flex items-center gap-0.5 text-[14px] font-medium tracking-[0.01em]">
             {/* 1. About Us Dropdown */}
             <div
               className="relative"
@@ -406,10 +412,10 @@ export const PublicLayout: React.FC = () => {
             </Link>
           </div>
 
-          {/* Action CTAs: Identical 40px heights, 10px gaps, single primary green Register button */}
-          <div className="flex items-center gap-2.5">
-            {/* Admin Portal (Ghost/Outline with small shield icon in neutral white) */}
-            <Link to="/login?role=admin" className="hidden sm:inline-block">
+          {/* Action CTAs: shrink-0 guarantees Register is NEVER clipped, identical 40px height, clean spacing */}
+          <div className="flex items-center gap-2 shrink-0">
+            {/* Admin Portal (Ghost/Outline with small shield icon in neutral white, visible on wide screens) */}
+            <Link to="/login?role=admin" className="hidden 2xl:inline-block">
               <button
                 type="button"
                 className="h-10 px-3.5 rounded-[10px] text-[13px] font-medium text-gray-300 hover:text-white border border-white/10 hover:border-white/20 hover:bg-white/[0.06] inline-flex items-center gap-1.5 transition-all duration-150 whitespace-nowrap focus-visible:ring-2 focus-visible:ring-lime focus-visible:ring-offset-2 focus-visible:ring-offset-[#090909] outline-none cursor-pointer"
@@ -423,26 +429,26 @@ export const PublicLayout: React.FC = () => {
             <Link to="/login" className="hidden sm:inline-block">
               <button
                 type="button"
-                className="h-10 px-4 rounded-[10px] text-[13px] font-medium text-gray-300 hover:text-white hover:bg-white/[0.06] inline-flex items-center justify-center transition-all duration-150 whitespace-nowrap focus-visible:ring-2 focus-visible:ring-lime focus-visible:ring-offset-2 focus-visible:ring-offset-[#090909] outline-none cursor-pointer"
+                className="h-10 px-3.5 rounded-[10px] text-[13px] font-medium text-gray-300 hover:text-white hover:bg-white/[0.06] inline-flex items-center justify-center transition-all duration-150 whitespace-nowrap focus-visible:ring-2 focus-visible:ring-lime focus-visible:ring-offset-2 focus-visible:ring-offset-[#090909] outline-none cursor-pointer"
               >
                 Sign In
               </button>
             </Link>
 
-            {/* Register (The ONLY solid filled primary green button) */}
-            <Link to="/register">
+            {/* Register (The ONLY solid filled primary green button - shrink-0 ensures full visibility) */}
+            <Link to="/register" className="shrink-0">
               <button
                 type="button"
-                className="h-10 px-4 rounded-[10px] bg-lime text-black font-semibold text-[13px] shadow-[0_0_20px_rgba(74,222,128,0.25)] hover:-translate-y-[1px] hover:shadow-[0_0_24px_rgba(131,243,77,0.35)] transition-all duration-150 inline-flex items-center justify-center whitespace-nowrap focus-visible:ring-2 focus-visible:ring-lime focus-visible:ring-offset-2 focus-visible:ring-offset-[#090909] outline-none cursor-pointer"
+                className="h-10 px-4 rounded-[10px] bg-lime text-black font-semibold text-[13px] shadow-[0_0_20px_rgba(74,222,128,0.25)] hover:-translate-y-[1px] hover:shadow-[0_0_24px_rgba(131,243,77,0.35)] transition-all duration-150 inline-flex items-center justify-center whitespace-nowrap focus-visible:ring-2 focus-visible:ring-lime focus-visible:ring-offset-2 focus-visible:ring-offset-[#090909] outline-none cursor-pointer shrink-0"
               >
                 Register
               </button>
             </Link>
 
-            {/* Mobile Hamburger Toggle (Collapsed below 1100px) */}
+            {/* Mobile Hamburger Toggle (Collapsed below 1280px) */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="min-[1100px]:hidden h-10 w-10 flex items-center justify-center rounded-[10px] border border-white/10 bg-white/[0.04] hover:bg-white/[0.08] text-gray-300 hover:text-white transition-colors cursor-pointer focus-visible:ring-2 focus-visible:ring-lime focus-visible:ring-offset-2 focus-visible:ring-offset-[#090909] outline-none"
+              className="xl:hidden h-10 w-10 flex items-center justify-center rounded-[10px] border border-white/10 bg-white/[0.04] hover:bg-white/[0.08] text-gray-300 hover:text-white transition-colors cursor-pointer focus-visible:ring-2 focus-visible:ring-lime focus-visible:ring-offset-2 focus-visible:ring-offset-[#090909] outline-none shrink-0"
               aria-label="Toggle navigation menu"
             >
               {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -452,7 +458,7 @@ export const PublicLayout: React.FC = () => {
 
         {/* Mobile Navigation Drawer */}
         {mobileMenuOpen && (
-          <div className="min-[1100px]:hidden mt-2 p-4 rounded-[14px] bg-[#0d0d0f]/95 border border-white/[0.08] backdrop-blur-xl shadow-2xl space-y-3 animate-fade-in text-[13px]">
+          <div className="xl:hidden mt-2 p-4 rounded-[14px] bg-[#0d0d0f]/95 border border-white/[0.08] backdrop-blur-xl shadow-2xl space-y-3 animate-fade-in text-[13px]">
             <div className="grid grid-cols-2 gap-2 pb-3 border-b border-white/[0.08]">
               <a
                 href="/#overview"

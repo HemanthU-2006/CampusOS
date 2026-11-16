@@ -1,51 +1,55 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
-  Sparkles,
-  Building2,
   Calendar,
-  Package,
   Users,
   Search,
   UserCheck,
   Wrench,
-  ArrowRight,
-  ShieldCheck,
-  CheckCircle2,
-  Zap,
-  Award,
-  GraduationCap,
-  BookOpen,
-  MapPin,
-  ExternalLink,
-  Briefcase,
-  Library,
   Flame,
   FileCheck,
   Activity,
   HeartHandshake,
   Clock,
   ChevronRight,
+  ExternalLink,
+  ShieldCheck,
 } from 'lucide-react';
-import { Button } from '@/components/ui/Button';
 import { PillCard } from '@/components/ui/PillCard';
 import { Badge } from '@/components/ui/Badge';
+import { Button } from '@/components/ui/Button';
 import { SJBIT_BRANCHES, DepartmentBranch } from '@/features/departments/data/branchesData';
 import { BranchDetailsModal } from '@/features/departments/components/BranchDetailsModal';
+import Hero from '@/components/Hero';
+import { Leadership, Departments, Infrastructure, FinalCTA } from '@/components/Sections';
 
 export const LandingPage: React.FC = () => {
   const [selectedBranch, setSelectedBranch] = useState<DepartmentBranch | null>(null);
+
+  // Map the verified 9 SJBIT branches to the cinematic Departments component format
+  const departmentsData = SJBIT_BRANCHES.map((b) => ({
+    code: b.code,
+    name: b.name,
+    hod: b.hod,
+    location: b.block,
+    faculty: b.facultyCount,
+    rawBranch: b,
+  }));
+
+  const handleSelectBranch = (dept: any) => {
+    const found = dept.rawBranch || SJBIT_BRANCHES.find((b) => b.code === dept.code);
+    if (found) {
+      setSelectedBranch(found);
+    }
+  };
+
   return (
     <div className="text-white selection:bg-lime selection:text-lime-ink">
       {/* =========================================================================
-          1. CINEMATIC HERO SECTION FOR SJBIT
+          1. CINEMATIC HERO (With existing drone video preserved unchanged)
           ========================================================================= */}
-      <section
-        id="hero"
-        className="relative min-h-screen w-full flex flex-col justify-center items-center overflow-hidden px-4 sm:px-6 pt-24 pb-20"
-      >
-        {/* Fullscreen Background Video (Continuous Smooth Drone View) */}
-        <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none select-none">
+      <Hero
+        background={
           <video
             autoPlay
             loop
@@ -56,773 +60,39 @@ export const LandingPage: React.FC = () => {
           >
             <source src="/media/clip.mp4" type="video/mp4" />
           </video>
-        </div>
-
-        {/* Cinematic Vignette Fading into #090909 */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/35 via-40% to-[#090909] to-95% pointer-events-none" />
-
-        {/* Central Ambient Glow - Calibrated Balanced Middle Ground */}
-        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] bg-[radial-gradient(ellipse,rgba(131,243,77,0.05),transparent_70%)] pointer-events-none" />
-
-        {/* Hero Content Stage */}
-        <div className="relative z-10 max-w-5xl mx-auto text-center space-y-7">
-          {/* Official SJBIT Seal & Institutional Header */}
-          <div className="inline-flex items-center gap-3 px-5 py-2.5 rounded-2xl bg-black/75 border border-amber-400/40 text-left shadow-[0_8px_30px_rgba(0,0,0,0.6)] backdrop-blur-xl hover:border-amber-400/60 transition-colors">
-            <img
-              src="/sjbit-emblem.png"
-              alt="SJBIT Official Emblem"
-              className="w-12 h-12 sm:w-14 sm:h-14 rounded-full object-cover bg-white p-0.5 border-2 border-amber-400/70 shadow-md shrink-0"
-            />
-            <div>
-              <span className="text-[10px] sm:text-[11px] font-bold text-amber-400 uppercase tracking-widest block leading-tight">
-                || JAI SRI GURUDEV || Sri Adichunchanagiri Shikshana Trust ®
-              </span>
-              <span className="font-extrabold text-white text-base sm:text-lg tracking-tight block leading-tight mt-0.5">
-                SJB INSTITUTE OF TECHNOLOGY
-              </span>
-              <span className="text-[11px] sm:text-xs text-white/80 block leading-tight mt-0.5">
-                Autonomous Institute under VTU · NAAC 'A+' Grade · NBA Accredited
-              </span>
-            </div>
-          </div>
-
-          {/* Hero Headline */}
-          <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white leading-[1.08] drop-shadow-2xl">
-            Run SJBIT Campus <br />
-            <span className="text-lime">Smarter, Faster.</span>
-          </h1>
-
-          {/* Subtitle */}
-          <p className="text-base sm:text-xl text-white/85 max-w-2xl mx-auto leading-relaxed drop-shadow-md">
-            Campus tech fests, student clubs, branch academic tracking, and fast repair resolution
-            across all 9 SJBIT engineering &amp; management branches.
-          </p>
-
-          {/* Action CTAs */}
-          <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
-            <Link to="/login">
-              <Button
-                variant="lime"
-                size="lg"
-                className="shadow-md shadow-lime/20 hover:shadow-lime/35 hover:-translate-y-0.5 transition-all font-bold text-sm sm:text-base px-7 min-h-[48px]"
-              >
-                Sign In to Portal <ArrowRight className="w-4 h-4 ml-1.5" />
-              </Button>
-            </Link>
-            <Link to="/login?role=admin">
-              <Button
-                variant="white"
-                size="lg"
-                className="font-bold text-sm sm:text-base px-6 backdrop-blur-md min-h-[48px] bg-card/80 border border-ring hover:border-lime/40 hover:-translate-y-0.5 transition-all"
-              >
-                <ShieldCheck className="w-4 h-4 mr-1.5 text-lime" />
-                Administrator Portal
-              </Button>
-            </Link>
-            <Link to="/register">
-              <Button
-                variant="outline"
-                size="lg"
-                className="font-semibold text-sm sm:text-base px-6 border-white/20 hover:border-white/40 hover:-translate-y-0.5 transition-all min-h-[48px]"
-              >
-                Student Registration
-              </Button>
-            </Link>
-          </div>
-
-          {/* Hero Recognition Logos Strip (From Official Banner) */}
-          <div className="pt-4 max-w-3xl mx-auto">
-            <div className="p-3.5 sm:p-4 rounded-2xl bg-card/80 border border-white/15 backdrop-blur-md shadow-xl space-y-3">
-              <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-7">
-                <img
-                  src="/recognitions/naac.png"
-                  alt="NAAC A+"
-                  className="h-8 sm:h-9 w-auto object-contain bg-white/95 rounded p-1 shadow-sm"
-                  title="Accredited by NAAC with 'A+' Grade (CGPA 3.46)"
-                />
-                <img
-                  src="/recognitions/nba.png"
-                  alt="NBA Accredited"
-                  className="h-8 sm:h-9 w-auto object-contain bg-white/95 rounded p-1 shadow-sm"
-                  title="NBA Accredited Programmes"
-                />
-                <div className="h-8 sm:h-9 px-2 rounded bg-white/95 flex flex-col justify-center items-center shadow-sm">
-                  <span className="font-extrabold text-blue-900 text-[11px] leading-none">ISO</span>
-                  <span className="text-[8px] text-slate-700 font-bold leading-none mt-0.5">
-                    9001:2015
-                  </span>
-                </div>
-                <img
-                  src="/recognitions/vtu.png"
-                  alt="VTU Autonomous"
-                  className="h-8 sm:h-9 w-auto object-contain bg-white/95 rounded p-1 shadow-sm"
-                  title="Autonomous under VTU, Belagavi"
-                />
-                <img
-                  src="/recognitions/aicte.png"
-                  alt="AICTE"
-                  className="h-8 sm:h-9 w-auto object-contain bg-white/95 rounded p-1 shadow-sm"
-                  title="Approved by AICTE New Delhi"
-                />
-                <img
-                  src="/recognitions/nirf.png"
-                  alt="NIRF Ranked"
-                  className="h-8 sm:h-9 w-auto object-contain bg-white/95 rounded p-1 shadow-sm"
-                  title="Ranked in Innovation by NIRF"
-                />
-                <img
-                  src="/recognitions/iic.png"
-                  alt="Institution's Innovation Council"
-                  className="h-8 sm:h-9 w-auto object-contain bg-white/95 rounded p-1 shadow-sm"
-                  title="Institution's Innovation Council - MoE"
-                />
-              </div>
-
-              {/* Official Admission Counseling Codes */}
-              <div className="pt-2.5 border-t border-white/10 flex flex-wrap items-center justify-center gap-x-5 gap-y-1.5 text-[11px] sm:text-xs text-white/80 font-semibold">
-                <span>
-                  CET: <strong className="text-lime">E115</strong>
-                </span>
-                <span className="text-white/30 hidden sm:inline">|</span>
-                <span>
-                  COMED-K: <strong className="text-lime">E107</strong>
-                </span>
-                <span className="text-white/30 hidden sm:inline">|</span>
-                <span>
-                  MBA: <strong className="text-lime">B288</strong>
-                </span>
-                <span className="text-white/30 hidden sm:inline">|</span>
-                <span>
-                  M.Tech: <strong className="text-lime">T871</strong>
-                </span>
-                <span className="text-white/30 hidden sm:inline">|</span>
-                <span>
-                  MCA: <strong className="text-lime">C547MC</strong>
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Scroll Prompt */}
-        <div className="relative z-10 pt-16 flex flex-col items-center gap-2 text-white/60 text-xs font-medium tracking-wider">
-          <a
-            href="#overview"
-            className="group flex flex-col items-center gap-2 hover:text-lime transition-colors"
-          >
-            <span className="group-hover:tracking-widest transition-all">
-              EXPLORE SJBIT OVERVIEW
-            </span>
-            <div className="w-6 h-10 rounded-full border border-white/20 flex items-start justify-center p-1.5 group-hover:border-lime transition-colors">
-              <div className="w-1.5 h-2.5 rounded-full bg-lime animate-bounce" />
-            </div>
-          </a>
-        </div>
-      </section>
+        }
+      />
 
       {/* =========================================================================
-          OFFICIAL RECOGNITIONS, ACCREDITATIONS & COUNSELING CODES
+          2. EXCEPTIONAL LEADERSHIP & VISION (Cinematic Spotlight Cards)
           ========================================================================= */}
-      <section className="relative z-30 max-w-7xl mx-auto px-4 sm:px-8 -mt-6 mb-8">
-        <div className="rounded-2xl bg-[#131418] p-5 sm:p-6 shadow-xl border border-white/10 backdrop-blur-xl">
-          {/* Recognition Logos Row */}
-          <div className="flex flex-wrap items-center justify-around sm:justify-between gap-4 sm:gap-6 px-2 sm:px-4">
-            <div
-              className="flex items-center justify-center p-2 rounded-xl bg-white/95 shadow-sm hover:scale-105 transition-transform"
-              title="NAAC 'A+' Grade Accredited"
-            >
-              <img
-                src="/recognitions/naac.png"
-                alt="NAAC A+ Accredited"
-                className="h-9 sm:h-11 w-auto object-contain"
-              />
-            </div>
-            <div
-              className="flex items-center justify-center p-2 rounded-xl bg-white/95 shadow-sm hover:scale-105 transition-transform"
-              title="NBA Accredited Programmes"
-            >
-              <img
-                src="/recognitions/nba.png"
-                alt="NBA Accredited"
-                className="h-9 sm:h-11 w-auto object-contain"
-              />
-            </div>
-            <div
-              className="flex items-center justify-center p-2 rounded-xl bg-white/95 shadow-sm hover:scale-105 transition-transform"
-              title="ISO 9001:2015 Certified"
-            >
-              <div className="h-9 sm:h-11 px-3 rounded-lg border-2 border-blue-900/30 flex flex-col justify-center items-center text-center bg-blue-50/50">
-                <span className="font-extrabold text-blue-900 text-xs sm:text-sm tracking-tight leading-none">
-                  ISO
-                </span>
-                <span className="text-[9px] text-slate-700 font-bold leading-none mt-0.5">
-                  9001:2015
-                </span>
-              </div>
-            </div>
-            <div
-              className="flex items-center justify-center p-2 rounded-xl bg-white/95 shadow-sm hover:scale-105 transition-transform"
-              title="Affiliated to Visvesvaraya Technological University"
-            >
-              <img
-                src="/recognitions/vtu.png"
-                alt="VTU Autonomous"
-                className="h-9 sm:h-11 w-auto object-contain"
-              />
-            </div>
-            <div
-              className="flex items-center justify-center p-2 rounded-xl bg-white/95 shadow-sm hover:scale-105 transition-transform"
-              title="Approved by AICTE New Delhi"
-            >
-              <img
-                src="/recognitions/aicte.png"
-                alt="AICTE Approved"
-                className="h-9 sm:h-11 w-auto object-contain"
-              />
-            </div>
-            <div
-              className="flex items-center justify-center p-2 rounded-xl bg-white/95 shadow-sm hover:scale-105 transition-transform"
-              title="NIRF Ranked Institution"
-            >
-              <img
-                src="/recognitions/nirf.png"
-                alt="NIRF Ranked"
-                className="h-9 sm:h-11 w-auto object-contain"
-              />
-            </div>
-            <div
-              className="flex items-center justify-center p-2 rounded-xl bg-white/95 shadow-sm hover:scale-105 transition-transform"
-              title="Institution's Innovation Council - MoE"
-            >
-              <img
-                src="/recognitions/iic.png"
-                alt="Institution's Innovation Council"
-                className="h-9 sm:h-11 w-auto object-contain"
-              />
-            </div>
-            <div
-              className="flex items-center justify-center p-2 rounded-xl bg-white/95 shadow-sm hover:scale-105 transition-transform"
-              title="QS I-GAUGE Gold Rated"
-            >
-              <img
-                src="/recognitions/qs-iguage.png"
-                alt="QS I-GAUGE Gold"
-                className="h-9 sm:h-11 w-auto object-contain"
-              />
-            </div>
-          </div>
-
-          {/* Official Counseling Codes Row (From Official Banner) */}
-          <div className="mt-4 pt-3.5 border-t border-white/10 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs sm:text-sm font-bold text-white/80 tracking-wide text-center">
-            <span>
-              CET Code: <strong className="text-lime">E115</strong>
-            </span>
-            <span className="text-white/20 hidden sm:inline">|</span>
-            <span>
-              COMED-K: <strong className="text-lime">E107</strong>
-            </span>
-            <span className="text-white/20 hidden sm:inline">|</span>
-            <span>
-              MBA: <strong className="text-lime">B288</strong>
-            </span>
-            <span className="text-white/20 hidden sm:inline">|</span>
-            <span>
-              M.Tech: <strong className="text-lime">T871</strong>
-            </span>
-            <span className="text-white/20 hidden sm:inline">|</span>
-            <span>
-              MCA: <strong className="text-lime">C547MC</strong>
-            </span>
-          </div>
-        </div>
-      </section>
+      <Leadership />
 
       {/* =========================================================================
-          2. INSTITUTIONAL OVERVIEW & EXCEPTIONAL LEADERSHIP (From https://www.sjbit.edu.in/)
+          3. ALL 9 SJBIT DEPARTMENTS (Cinematic Grid with Interactive Details Modal)
           ========================================================================= */}
-      <section
-        id="overview"
-        className="relative z-20 max-w-7xl mx-auto px-4 sm:px-8 py-20 space-y-12 border-t border-ring/40"
-      >
-        <div className="text-center space-y-3 max-w-3xl mx-auto">
-          <Badge variant="lime" className="mx-auto uppercase tracking-wider text-[11px]">
-            Institutional Heritage
-          </Badge>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
-            Exceptional Leadership &amp; Vision
-          </h2>
-          <p className="text-sm text-white/70 leading-relaxed">
-            Established under the divine aegis of{' '}
-            <strong className="text-white">Sri Adichunchanagiri Shikshana Trust ®</strong>, SJBIT
-            has evolved into one of Karnataka's premier autonomous institutions, combining academic
-            rigor, holistic human values, and world-class infrastructure.
-          </p>
-        </div>
-
-        {/* 4 Leadership Cards with Authentic Swamiji Portraits */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-          {/* Card 1: Founder President */}
-          <div className="p-5 rounded-2xl bg-[#141519] border border-white/10 hover:border-amber-400/50 transition-all duration-300 space-y-4 shadow-md hover:-translate-y-1 flex flex-col justify-between group">
-            <div className="space-y-3.5">
-              <div className="relative overflow-hidden rounded-xl border-2 border-amber-400/50 shadow-md aspect-[4/5] bg-[#0c0d10] flex items-center justify-center">
-                <img
-                  src="/leadership/balagangadharanatha-swamiji.png"
-                  alt="Jagadguru Sri Sri Sri Dr. Balagangadharanatha Maha Swamiji"
-                  className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300"
-                />
-                <span className="absolute bottom-2 left-2 bg-black/80 backdrop-blur-md px-2 py-0.5 rounded text-[9px] font-bold text-amber-400 uppercase tracking-wider border border-amber-400/30">
-                  Founder President
-                </span>
-              </div>
-              <div>
-                <h3 className="text-sm sm:text-base font-extrabold text-white tracking-tight leading-snug">
-                  Jagadguru Sri Sri Sri Dr. Balagangadharanatha Maha Swamiji
-                </h3>
-                <p className="text-xs text-white/60 mt-1 leading-relaxed">
-                  Padma Bhushan Awardee &amp; Visionary Founder, Sri Adichunchanagiri Shikshana
-                  Trust®
-                </p>
-              </div>
-            </div>
-            <div className="pt-3 border-t border-white/10 text-[11px] text-amber-300/90 font-medium">
-              Divine Inspiration &amp; Foundation
-            </div>
-          </div>
-
-          {/* Card 2: President */}
-          <div className="p-5 rounded-2xl bg-[#141519] border border-white/10 hover:border-lime/50 transition-all duration-300 space-y-4 shadow-md hover:-translate-y-1 flex flex-col justify-between group">
-            <div className="space-y-3.5">
-              <div className="relative overflow-hidden rounded-xl border-2 border-lime/50 shadow-md aspect-[4/5] bg-[#0c0d10] flex items-center justify-center">
-                <img
-                  src="/leadership/nirmalanandanatha-swamiji.png"
-                  alt="Sri Sri Sri Dr. Nirmalanandanatha Maha Swamiji"
-                  className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300"
-                />
-                <span className="absolute bottom-2 left-2 bg-black/80 backdrop-blur-md px-2 py-0.5 rounded text-[9px] font-bold text-lime uppercase tracking-wider border border-lime/30">
-                  President
-                </span>
-              </div>
-              <div>
-                <h3 className="text-sm sm:text-base font-extrabold text-white tracking-tight leading-snug">
-                  Sri Sri Sri Dr. Nirmalanandanatha Maha Swamiji
-                </h3>
-                <p className="text-xs text-white/60 mt-1 leading-relaxed">
-                  Pontiff &amp; President, Sri Adichunchanagiri Mahasamsthana Math &amp; Shikshana
-                  Trust®
-                </p>
-              </div>
-            </div>
-            <div className="pt-3 border-t border-white/10 text-[11px] text-lime font-medium">
-              Spiritual &amp; Educational Guiding Light
-            </div>
-          </div>
-
-          {/* Card 3: Managing Director */}
-          <div className="p-5 rounded-2xl bg-[#141519] border border-white/10 hover:border-blue-400/50 transition-all duration-300 space-y-4 shadow-md hover:-translate-y-1 flex flex-col justify-between group">
-            <div className="space-y-3.5">
-              <div className="relative overflow-hidden rounded-xl border-2 border-blue-400/50 shadow-md aspect-[4/5] bg-[#0c0d10] flex items-center justify-center">
-                <img
-                  src="/leadership/prakashanatha-swamiji.png"
-                  alt="Sri Sri Dr. Prakashanatha Swamiji"
-                  className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300"
-                />
-                <span className="absolute bottom-2 left-2 bg-black/80 backdrop-blur-md px-2 py-0.5 rounded text-[9px] font-bold text-sky-400 uppercase tracking-wider border border-blue-400/30">
-                  Managing Director
-                </span>
-              </div>
-              <div>
-                <h3 className="text-sm sm:text-base font-extrabold text-white tracking-tight leading-snug">
-                  Sri Sri Dr. Prakashanatha Swamiji
-                </h3>
-                <p className="text-xs text-white/60 mt-1 leading-relaxed">
-                  Managing Director, BGS &amp; SJB Group of Institutions and Hospitals
-                </p>
-              </div>
-            </div>
-            <div className="pt-3 border-t border-white/10 text-[11px] text-sky-300 font-medium">
-              Institutional Growth &amp; Development
-            </div>
-          </div>
-
-          {/* Card 4: Principal & Chief Administrator */}
-          <div className="p-5 rounded-2xl bg-[#141519] border border-white/10 hover:border-rose-400/50 transition-all duration-300 space-y-4 shadow-md hover:-translate-y-1 flex flex-col justify-between group">
-            <div className="space-y-3.5">
-              <div className="relative overflow-hidden rounded-xl border-2 border-rose-400/50 shadow-md aspect-[4/5] bg-[#0c0d10] flex items-center justify-center">
-                <img
-                  src="/leadership/mahendra-prashanth.png"
-                  alt="Dr. K. V. Mahendra Prashanth - Principal"
-                  className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300"
-                />
-                <span className="absolute bottom-2 left-2 bg-black/80 backdrop-blur-md px-2 py-0.5 rounded text-[9px] font-bold text-rose-400 uppercase tracking-wider border border-rose-400/30">
-                  Principal
-                </span>
-              </div>
-              <div>
-                <h3 className="text-sm sm:text-base font-extrabold text-white tracking-tight leading-snug">
-                  Dr. K. V. Mahendra Prashanth
-                </h3>
-                <p className="text-xs text-white/60 mt-1 leading-relaxed">
-                  Principal &amp; Chief Academic Officer, SJB Institute of Technology
-                </p>
-              </div>
-            </div>
-            <div className="pt-3 border-t border-white/10 flex items-center justify-between">
-              <span className="text-[11px] text-rose-300/80 font-medium">Principal Office</span>
-              <Link
-                to="/login?role=admin"
-                className="text-xs font-semibold text-rose-400 hover:text-white flex items-center gap-1 transition-colors"
-              >
-                Admin Portal →
-              </Link>
-            </div>
-          </div>
-        </div>
-
-        {/* 4 College Highlight Metrics */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-4">
-          <div className="p-4 rounded-xl bg-[#141519] border border-white/10 text-center space-y-1 hover:border-white/20 transition-all">
-            <h4 className="text-2xl sm:text-3xl font-extrabold text-white">50 Acres</h4>
-            <p className="text-xs text-white/60">Lush Green Campus in Kengeri</p>
-          </div>
-          <div className="p-4 rounded-xl bg-[#141519] border border-white/10 text-center space-y-1 hover:border-lime/30 transition-all">
-            <h4 className="text-2xl sm:text-3xl font-extrabold text-lime">NAAC 'A+'</h4>
-            <p className="text-xs text-white/60">VTU Autonomous Institution</p>
-          </div>
-          <div className="p-4 rounded-xl bg-[#141519] border border-white/10 text-center space-y-1 hover:border-white/20 transition-all">
-            <h4 className="text-2xl sm:text-3xl font-extrabold text-white">3,800+</h4>
-            <p className="text-xs text-white/60">Students Across 9 Branches</p>
-          </div>
-          <div className="p-4 rounded-xl bg-[#141519] border border-white/10 text-center space-y-1 hover:border-amber-400/30 transition-all">
-            <h4 className="text-2xl sm:text-3xl font-extrabold text-amber-400">20+</h4>
-            <p className="text-xs text-white/60">Industry Centers of Excellence</p>
-          </div>
-        </div>
-      </section>
+      <Departments
+        departments={departmentsData}
+        onSelectBranch={handleSelectBranch}
+      />
 
       {/* =========================================================================
-          3. ALL 9 SJBIT BRANCHES (Full Academic Scope with Authenticated HODs)
+          4. WORLD-CLASS CAMPUS INFRASTRUCTURE (Parallax Bento Grid)
           ========================================================================= */}
-      <section
-        id="branches"
-        className="relative z-20 max-w-7xl mx-auto px-4 sm:px-8 py-20 space-y-12 border-t border-ring/40"
-      >
-        <div className="text-center space-y-3 max-w-2xl mx-auto">
-          <Badge variant="lime" className="mx-auto">
-            Academic Scope
-          </Badge>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
-            All 9 SJBIT Departments
-          </h2>
-          <p className="text-sm text-white/60">
-            VTU Autonomous engineering &amp; management branches with specialized labs and dedicated
-            faculty leadership.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-          {[
-            {
-              code: 'CSE',
-              name: 'Computer Science & Engineering',
-              hod: 'Dr. Krishna A N',
-              block: 'Aryabhata Block, 2nd & 3rd Floors',
-              scheme: '2022 Scheme (VTU)',
-            },
-            {
-              code: 'ISE',
-              name: 'Information Science & Engineering',
-              hod: 'Dr. Gopalakrishna M T',
-              block: 'Aryabhata Block, 1st Floor',
-              scheme: '2022 Scheme (VTU)',
-            },
-            {
-              code: 'AI&ML',
-              name: 'Artificial Intelligence & Machine Learning',
-              hod: 'Dr. Abhilash C N',
-              block: 'Sir M.V. Block, 3rd Floor',
-              scheme: '2022 Scheme (VTU)',
-            },
-            {
-              code: 'CS-DS',
-              name: 'CSE (Data Science)',
-              hod: 'Dr. Chandrashekar D K (I/C)',
-              block: 'Sir M.V. Block, 2nd Floor',
-              scheme: '2022 Scheme (VTU)',
-            },
-            {
-              code: 'ECE',
-              name: 'Electronics & Communication Engineering',
-              hod: 'Dr. Chandrappa D N',
-              block: 'C.V. Raman Block, 2nd & 3rd Floors',
-              scheme: '2022 Scheme (VTU)',
-            },
-            {
-              code: 'EEE',
-              name: 'Electrical & Electronics Engineering',
-              hod: 'Dr. Chandrashekar M J',
-              block: 'C.V. Raman Block, 1st Floor',
-              scheme: '2022 Scheme (VTU)',
-            },
-            {
-              code: 'MECH',
-              name: 'Mechanical Engineering',
-              hod: 'Dr. Vitala H.R',
-              block: 'Mechanical Block & Central Workshops',
-              scheme: '2022 Scheme (VTU)',
-            },
-            {
-              code: 'CIVIL',
-              name: 'Civil Engineering',
-              hod: 'Dr. Prasad C S M V',
-              block: 'Civil Engineering Block & CAD Labs',
-              scheme: '2022 Scheme (VTU)',
-            },
-            {
-              code: 'MBA',
-              name: 'Department of Management Studies',
-              hod: 'Dr. Mamatha J',
-              block: 'MBA & PG Studies Block, 4th Floor',
-              scheme: 'Autonomous PG Scheme',
-            },
-          ].map((b) => (
-            <div
-              key={b.code}
-              className="p-5 rounded-2xl bg-[#141519] border border-white/10 hover:border-lime/40 transition-all duration-300 flex flex-col justify-between space-y-4 shadow-sm hover:-translate-y-1"
-            >
-              <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <span className="px-2.5 py-1 rounded-md bg-lime/10 border border-lime/30 text-lime font-mono font-bold text-xs">
-                    {b.code}
-                  </span>
-                  <span className="text-[10px] text-white/50">{b.scheme}</span>
-                </div>
-                <h3 className="font-extrabold text-base text-white tracking-tight">{b.name}</h3>
-                <p className="text-xs text-white/60">
-                  HOD: <strong className="text-white">{b.hod}</strong>
-                </p>
-                <p className="text-[11px] text-white/50">{b.block}</p>
-              </div>
-
-              <div className="pt-3 border-t border-white/10 flex items-center justify-between gap-2">
-                <button
-                  type="button"
-                  onClick={() => {
-                    const full = SJBIT_BRANCHES.find((item) => item.code === b.code) || null;
-                    setSelectedBranch(full);
-                  }}
-                  className="inline-flex items-center gap-1 text-xs text-lime hover:text-white font-semibold cursor-pointer group/btn transition-colors"
-                >
-                  Branch Details <ArrowRight className="w-3.5 h-3.5 group-hover/btn:translate-x-1 transition-transform" />
-                </button>
-
-                {b.code === 'ISE' ? (
-                  <Link
-                    to="/faculty/ise"
-                    className="inline-flex items-center gap-1 text-xs text-amber-400 hover:text-amber-300 font-bold group/btn transition-colors"
-                  >
-                    View Faculty (41) →
-                  </Link>
-                ) : (
-                  <span className="text-[10px] text-white/40 uppercase tracking-wider font-mono">
-                    VTU Autonomous
-                  </span>
-                )}
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
+      <Infrastructure />
 
       {/* =========================================================================
-          NEWS & LIVE ACADEMIC HIGHLIGHTS (Scraped from https://www.sjbit.edu.in/)
-          ========================================================================= */}
-      <section className="relative z-20 max-w-7xl mx-auto px-4 sm:px-8 py-16 space-y-10 border-t border-ring/40">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
-          <div className="space-y-2">
-            <Badge variant="lime" className="uppercase tracking-wider text-[11px]">
-              What's Happening in SJBIT
-            </Badge>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
-              Campus News &amp; Academic Milestones
-            </h2>
-            <p className="text-xs sm:text-sm text-white/60 max-w-2xl">
-              Certified Excellence. Major project exhibitions, international fests, industry MoUs,
-              and faculty development across our 50-acre Kengeri campus.
-            </p>
-          </div>
-
-          <a
-            href="https://www.sjbit.edu.in/news-and-events.php"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-xs font-semibold text-lime hover:underline flex items-center gap-1 shrink-0"
-          >
-            All Campus News &amp; Events <ExternalLink className="w-3 h-3" />
-          </a>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {[
-            {
-              title: 'Major Project Exhibition 2026',
-              category: 'Academic Innovation',
-              date: 'Graduating Batches',
-              desc: 'Annual intra-department capstone project showcase featuring prototype models validated by VTU & IIC.',
-              badgeColor: 'border-amber-400/30 text-amber-300 bg-amber-400/10',
-            },
-            {
-              title: 'VARCHASVA & ARNAAV 2026',
-              category: 'Techno-Cultural Fest',
-              date: 'Flagship Event',
-              desc: 'Inter-collegiate technical and cultural extravaganza drawing 5,000+ engineering delegates across Karnataka.',
-              badgeColor: 'border-lime/30 text-lime bg-lime/10',
-            },
-            {
-              title: 'Agentic AI & MCP Servers FDP',
-              category: 'Faculty Development',
-              date: 'CSE & ISE Departments',
-              desc: '6-day faculty immersion workshop on Large Language Models, Multi-Agent Swarms, and Model Context Protocol.',
-              badgeColor: 'border-sky-400/30 text-sky-300 bg-sky-400/10',
-            },
-            {
-              title: 'Industry MoU with PRDC Pvt Ltd',
-              category: 'Industry Partnership',
-              date: 'Smart Grid Research',
-              desc: 'Strategic collaboration between SJBIT EEE and Power Research & Development Consultants for EV simulation.',
-              badgeColor: 'border-rose-400/30 text-rose-300 bg-rose-400/10',
-            },
-          ].map((news, idx) => (
-            <div
-              key={idx}
-              className="p-5 rounded-2xl bg-[#141519] border border-white/10 hover:border-lime/30 transition-all duration-300 flex flex-col justify-between space-y-3 group hover:-translate-y-1 shadow-sm"
-            >
-              <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <span
-                    className={`text-[9px] font-bold px-2 py-0.5 rounded uppercase font-mono border ${news.badgeColor}`}
-                  >
-                    {news.category}
-                  </span>
-                  <span className="text-[10px] text-white/40 flex items-center gap-1">
-                    <Clock className="w-3 h-3" /> {news.date}
-                  </span>
-                </div>
-                <h3 className="font-extrabold text-sm text-white group-hover:text-lime transition-colors leading-snug">
-                  {news.title}
-                </h3>
-                <p className="text-xs text-white/60 leading-relaxed">{news.desc}</p>
-              </div>
-
-              <div className="pt-2 border-t border-white/5 flex items-center justify-between text-[11px] text-white/40">
-                <span>SJB Institute of Technology</span>
-                <span className="text-lime group-hover:translate-x-1 transition-transform">→</span>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* =========================================================================
-          4. LIFE @ SJBIT & CAMPUS INFRASTRUCTURE (From Main Website Dropdown)
-          ========================================================================= */}
-      <section
-        id="life-at-sjbit"
-        className="relative z-20 max-w-7xl mx-auto px-4 sm:px-8 py-20 space-y-12 border-t border-ring/40"
-      >
-        <div className="text-center space-y-3 max-w-2xl mx-auto">
-          <Badge variant="lime" className="mx-auto uppercase tracking-wider text-[11px]">
-            Life @ SJBIT
-          </Badge>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
-            World-Class Campus Infrastructure
-          </h2>
-          <p className="text-sm text-white/60">
-            High-tech centers of excellence, expansive library resources, modern hostels, and
-            industry collaborations.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-          <div className="p-6 rounded-2xl bg-card border border-ring/80 space-y-3">
-            <div className="w-10 h-10 rounded-xl bg-lime/10 border border-lime/30 flex items-center justify-center text-lime">
-              <Library className="w-5 h-5" />
-            </div>
-            <h3 className="font-bold text-white text-base">Central Library &amp; Info Centre</h3>
-            <p className="text-xs text-white/70 leading-relaxed">
-              45,000+ volumes, IEEE Xplore, ScienceDirect digital journals, automated barcode book
-              checkout, and NDLI club facilities.
-            </p>
-          </div>
-
-          <div className="p-6 rounded-2xl bg-card border border-ring/80 space-y-3">
-            <div className="w-10 h-10 rounded-xl bg-amber-400/10 border border-amber-400/30 flex items-center justify-center text-amber-400">
-              <Briefcase className="w-5 h-5" />
-            </div>
-            <h3 className="font-bold text-white text-base">Industry Collaboration CoEs</h3>
-            <p className="text-xs text-white/70 leading-relaxed">
-              Active technology labs co-sponsored by IBM, Cisco Networking Academy, Texas
-              Instruments, Bentley Systems, Ethnotech, and Google Cloud.
-            </p>
-          </div>
-
-          <div className="p-6 rounded-2xl bg-card border border-ring/80 space-y-3">
-            <div className="w-10 h-10 rounded-xl bg-blue-400/10 border border-blue-400/30 flex items-center justify-center text-blue-400">
-              <Building2 className="w-5 h-5" />
-            </div>
-            <h3 className="font-bold text-white text-base">BGS Cultural Auditorium</h3>
-            <p className="text-xs text-white/70 leading-relaxed">
-              2,500-seat acoustic auditorium hosting flagship tech symposiums, HackSJBIT, annual
-              fests, and international conferences.
-            </p>
-          </div>
-
-          <div className="p-6 rounded-2xl bg-card border border-ring/80 space-y-3">
-            <div className="w-10 h-10 rounded-xl bg-rose-400/10 border border-rose-400/30 flex items-center justify-center text-rose-400">
-              <Flame className="w-5 h-5" />
-            </div>
-            <h3 className="font-bold text-white text-base">Sports Arena &amp; Gymnasiums</h3>
-            <p className="text-xs text-white/70 leading-relaxed">
-              Cricket pavilion, football grounds, indoor badminton complex, basketball courts, and
-              regular VTU inter-collegiate tournaments.
-            </p>
-          </div>
-
-          <div className="p-6 rounded-2xl bg-card border border-ring/80 space-y-3">
-            <div className="w-10 h-10 rounded-xl bg-emerald-400/10 border border-emerald-400/30 flex items-center justify-center text-emerald-400">
-              <Building2 className="w-5 h-5" />
-            </div>
-            <h3 className="font-bold text-white text-base">Hostels &amp; Green Campus</h3>
-            <p className="text-xs text-white/70 leading-relaxed">
-              Safe on-campus residential hostels for 1,200+ students, 100% solar lighting, sewage
-              treatment plants, and rainwater harvesting.
-            </p>
-          </div>
-
-          <div className="p-6 rounded-2xl bg-card border border-ring/80 space-y-3">
-            <div className="w-10 h-10 rounded-xl bg-purple-400/10 border border-purple-400/30 flex items-center justify-center text-purple-400">
-              <Users className="w-5 h-5" />
-            </div>
-            <h3 className="font-bold text-white text-base">Student Guilds &amp; NSS</h3>
-            <p className="text-xs text-white/70 leading-relaxed">
-              Coding guilds, robotics clubs, Indian Concrete Institute chapters, Red Cross units,
-              and community extension programs.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* =========================================================================
-          5. INDUSTRY COLLABORATION & TOP RECRUITERS (From Official Website)
+          5. INDUSTRY COLLABORATIONS & TOP RECRUITERS
           ========================================================================= */}
       <section
         id="partners"
-        className="relative z-20 max-w-7xl mx-auto px-4 sm:px-8 py-20 space-y-12 border-t border-ring/40"
+        className="relative z-20 max-w-7xl mx-auto px-4 sm:px-8 py-20 space-y-12 border-t border-white/[0.08]"
       >
         <div className="text-center space-y-3 max-w-3xl mx-auto">
           <Badge variant="lime" className="mx-auto uppercase tracking-wider text-[11px]">
             Industry Collaborations &amp; Placements
           </Badge>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+          <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
             Bridging Academia &amp; Industry Excellence
           </h2>
           <p className="text-sm text-white/70 leading-relaxed">
@@ -832,7 +102,7 @@ export const LandingPage: React.FC = () => {
           </p>
         </div>
 
-        {/* 12 Industry Partner Logo Tiles (As in the official SJBIT portal) */}
+        {/* 12 Industry Partner Logo Tiles (As in official SJBIT portal) */}
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
           {[
             { name: 'Bentley', file: 'bentley.jpg' },
@@ -866,7 +136,7 @@ export const LandingPage: React.FC = () => {
         </div>
 
         {/* Placement Key Highlights */}
-        <div className="p-6 rounded-2xl bg-card border border-ring/80 flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="p-6 rounded-2xl bg-[#121412] border border-white/[0.08] flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="space-y-1 text-center md:text-left">
             <h4 className="text-lg font-extrabold text-white">
               Department Placement Drives &amp; Internships
@@ -877,19 +147,19 @@ export const LandingPage: React.FC = () => {
             </p>
           </div>
           <div className="flex flex-wrap items-center justify-center gap-2">
-            <span className="px-3 py-1.5 rounded-lg bg-row border border-ring/60 text-xs font-semibold text-white/80">
+            <span className="px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-xs font-semibold text-white/80">
               TCS
             </span>
-            <span className="px-3 py-1.5 rounded-lg bg-row border border-ring/60 text-xs font-semibold text-white/80">
+            <span className="px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-xs font-semibold text-white/80">
               Tech Mahindra
             </span>
-            <span className="px-3 py-1.5 rounded-lg bg-row border border-ring/60 text-xs font-semibold text-white/80">
+            <span className="px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-xs font-semibold text-white/80">
               Cognizant
             </span>
-            <span className="px-3 py-1.5 rounded-lg bg-row border border-ring/60 text-xs font-semibold text-white/80">
+            <span className="px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-xs font-semibold text-white/80">
               Mindtree
             </span>
-            <span className="px-3 py-1.5 rounded-lg bg-row border border-ring/60 text-xs font-semibold text-white/80">
+            <span className="px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-xs font-semibold text-white/80">
               JSW
             </span>
           </div>
@@ -897,24 +167,192 @@ export const LandingPage: React.FC = () => {
       </section>
 
       {/* =========================================================================
-          5. MODULES GRID FOR SJBIT
+          6. WHAT'S HAPPENING IN SJBIT (Live News & Milestones)
+          ========================================================================= */}
+      <section
+        id="news"
+        className="relative z-20 max-w-7xl mx-auto px-4 sm:px-8 py-20 space-y-12 border-t border-white/[0.08]"
+      >
+        <div className="text-center space-y-3 max-w-2xl mx-auto">
+          <Badge variant="lime" className="mx-auto uppercase tracking-wider text-[11px]">
+            Campus Pulse
+          </Badge>
+          <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
+            What's Happening in SJBIT
+          </h2>
+          <p className="text-sm text-white/70">
+            Live technical symposiums, capstone exhibitions, MoUs, and inter-collegiate festivals.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="p-6 rounded-2xl bg-[#121412] border border-white/[0.08] space-y-3 hover:border-lime/40 transition-colors flex flex-col justify-between">
+            <div className="space-y-3">
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-amber-400/10 text-amber-300 border border-amber-400/30 text-[10px] font-bold">
+                <Flame className="w-3 h-3 text-amber-400" /> Major Event
+              </span>
+              <h3 className="font-extrabold text-white text-base">
+                Major Project Exhibition 2026
+              </h3>
+              <p className="text-xs text-white/70 leading-relaxed">
+                Intra-department capstone project showcase judged by senior IEEE fellows and industry
+                leaders with cash awards.
+              </p>
+            </div>
+            <span className="text-[11px] text-white/50 flex items-center gap-1 pt-3 border-t border-white/[0.08]">
+              <Clock className="w-3 h-3 text-lime" /> Scheduled for May 2026
+            </span>
+          </div>
+
+          <div className="p-6 rounded-2xl bg-[#121412] border border-white/[0.08] space-y-3 hover:border-lime/40 transition-colors flex flex-col justify-between">
+            <div className="space-y-3">
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-rose-500/10 text-rose-300 border border-rose-500/30 text-[10px] font-bold">
+                <Flame className="w-3 h-3 text-rose-400" /> Flagship Fest
+              </span>
+              <h3 className="font-extrabold text-white text-base">
+                VARCHASVA &amp; ARNAAV 2026
+              </h3>
+              <p className="text-xs text-white/70 leading-relaxed">
+                Inter-collegiate national technical and cultural fiesta bringing 60+ engineering
+                colleges together.
+              </p>
+            </div>
+            <span className="text-[11px] text-white/50 flex items-center gap-1 pt-3 border-t border-white/[0.08]">
+              <Clock className="w-3 h-3 text-lime" /> Registrations Open via Portal
+            </span>
+          </div>
+
+          <div className="p-6 rounded-2xl bg-[#121412] border border-white/[0.08] space-y-3 hover:border-lime/40 transition-colors flex flex-col justify-between">
+            <div className="space-y-3">
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-sky-500/10 text-sky-300 border border-sky-500/30 text-[10px] font-bold">
+                <FileCheck className="w-3 h-3 text-sky-400" /> Faculty Development
+              </span>
+              <h3 className="font-extrabold text-white text-base">
+                6-Day FDP on Agentic AI &amp; Cloud
+              </h3>
+              <p className="text-xs text-white/70 leading-relaxed">
+                Hands-on training session for professors across CSE, ISE, and AI&amp;ML sponsored by
+                VTU Human Resource Center.
+              </p>
+            </div>
+            <span className="text-[11px] text-white/50 flex items-center gap-1 pt-3 border-t border-white/[0.08]">
+              <Clock className="w-3 h-3 text-lime" /> BGS Seminar Complex
+            </span>
+          </div>
+
+          <div className="p-6 rounded-2xl bg-[#121412] border border-white/[0.08] space-y-3 hover:border-lime/40 transition-colors flex flex-col justify-between">
+            <div className="space-y-3">
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-300 border border-emerald-500/30 text-[10px] font-bold">
+                <Activity className="w-3 h-3 text-emerald-400" /> Research MoU
+              </span>
+              <h3 className="font-extrabold text-white text-base">
+                MoU with PRDC Pvt Ltd
+              </h3>
+              <p className="text-xs text-white/70 leading-relaxed">
+                Joint technological initiative for Smart Grid, Renewable Energy, and EV Powertrain
+                simulation in EEE &amp; MECH.
+              </p>
+            </div>
+            <span className="text-[11px] text-white/50 flex items-center gap-1 pt-3 border-t border-white/[0.08]">
+              <Clock className="w-3 h-3 text-lime" /> Signed at Principal Secretariat
+            </span>
+          </div>
+        </div>
+      </section>
+
+      {/* =========================================================================
+          7. STUDENT SUPPORT & STATUTORY GOVERNANCE CELLS
+          ========================================================================= */}
+      <section
+        id="governance"
+        className="relative z-20 max-w-7xl mx-auto px-4 sm:px-8 py-20 space-y-12 border-t border-white/[0.08]"
+      >
+        <div className="text-center space-y-3 max-w-2xl mx-auto">
+          <Badge variant="lime" className="mx-auto uppercase tracking-wider text-[11px]">
+            Institutional Governance
+          </Badge>
+          <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
+            Student Support &amp; Welfare Cells
+          </h2>
+          <p className="text-sm text-white/70">
+            Fully statutory UGC and VTU compliant student grievance, anti-ragging, and counseling
+            support helplines.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="p-6 rounded-2xl bg-[#121412] border border-white/[0.08] space-y-3">
+            <div className="w-10 h-10 rounded-xl bg-lime/10 border border-lime/30 flex items-center justify-center text-lime">
+              <HeartHandshake className="w-5 h-5" />
+            </div>
+            <h3 className="font-extrabold text-white text-base">Proctoring System</h3>
+            <p className="text-xs text-white/70 leading-relaxed">
+              Every student is assigned a dedicated faculty mentor (1:20 ratio) for continuous
+              academic counsel and parent communication.
+            </p>
+            <span className="text-[11px] text-lime font-bold block">Bi-weekly Counsel Sessions</span>
+          </div>
+
+          <div className="p-6 rounded-2xl bg-[#121412] border border-white/[0.08] space-y-3">
+            <div className="w-10 h-10 rounded-xl bg-rose-500/10 border border-rose-500/30 flex items-center justify-center text-rose-400">
+              <ShieldCheck className="w-5 h-5" />
+            </div>
+            <h3 className="font-extrabold text-white text-base">Anti-Ragging Committee</h3>
+            <p className="text-xs text-white/70 leading-relaxed">
+              Strict UGC-compliant zero-tolerance policy. Monitored by campus security and dedicated
+              staff squads.
+            </p>
+            <span className="text-[11px] text-rose-300 font-bold block">
+              Toll-Free: 1800-180-5522
+            </span>
+          </div>
+
+          <div className="p-6 rounded-2xl bg-[#121412] border border-white/[0.08] space-y-3">
+            <div className="w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-purple-400">
+              <HeartHandshake className="w-5 h-5" />
+            </div>
+            <h3 className="font-extrabold text-white text-base">Women Safety Cell (ICC)</h3>
+            <p className="text-xs text-white/70 leading-relaxed">
+              Internal Complaints Committee ensuring equitable, secure, and respectful working and
+              learning campus spaces.
+            </p>
+            <span className="text-[11px] text-purple-300 font-bold block">
+              Helpline: +91-7204081185
+            </span>
+          </div>
+
+          <div className="p-6 rounded-2xl bg-[#121412] border border-white/[0.08] space-y-3">
+            <div className="w-10 h-10 rounded-xl bg-amber-400/10 border border-amber-400/30 flex items-center justify-center text-amber-300">
+              <FileCheck className="w-5 h-5" />
+            </div>
+            <h3 className="font-extrabold text-white text-base">Student Grievance Cell</h3>
+            <p className="text-xs text-white/70 leading-relaxed">
+              Equal Opportunity Cell, SC/ST Development Committee, and online grievance redressal
+              mechanism.
+            </p>
+            <span className="text-[11px] text-amber-300 font-bold block">
+              Desk: +91-9902310181
+            </span>
+          </div>
+        </div>
+      </section>
+
+      {/* =========================================================================
+          8. CAMPUS MODULES QUICK ACCESS
           ========================================================================= */}
       <section
         id="modules"
-        className="relative z-20 max-w-7xl mx-auto px-4 sm:px-8 py-20 space-y-12 border-t border-ring/40"
+        className="relative z-20 max-w-7xl mx-auto px-4 sm:px-8 py-20 space-y-12 border-t border-white/[0.08]"
       >
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-72 bg-[radial-gradient(ellipse_at_top,rgba(131,243,77,0.06),transparent_70%)] pointer-events-none" />
-
         <div className="text-center space-y-3 max-w-2xl mx-auto">
-          <Badge variant="lime" className="mx-auto">
-            SJBIT Campus Tools
+          <Badge variant="lime" className="mx-auto uppercase tracking-wider text-[11px]">
+            Campus Modules
           </Badge>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+          <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
             Built for Students, Faculty &amp; Staff
           </h2>
           <p className="text-sm text-white/60">
-            Campus fests, clubs, branch details, and maintenance fixes unified in one
-            platform.
+            Campus fests, clubs, branch details, and maintenance fixes unified in one platform.
           </p>
         </div>
 
@@ -950,140 +388,27 @@ export const LandingPage: React.FC = () => {
           <Link to="/maintenance" className="md:col-span-2 lg:col-span-1">
             <PillCard
               icon={<Wrench className="w-5 h-5 text-lime" />}
-              title="Campus Repairs"
-              subtitle="Report broken lights, AC issues, or hardware problems for quick fixing."
+              title="Maintenance Ticketing"
+              subtitle="Report campus facility issues with photo attachments and track resolution SLA."
             />
           </Link>
         </div>
       </section>
 
       {/* =========================================================================
-          STUDENT SUPPORT & GOVERNANCE CELLS (From https://www.sjbit.edu.in/)
+          9. CINEMATIC FINAL CTA SECTION
           ========================================================================= */}
-      <section className="relative z-20 max-w-7xl mx-auto px-4 sm:px-8 py-16 space-y-10 border-t border-ring/40">
-        <div className="text-center space-y-3 max-w-2xl mx-auto">
-          <Badge variant="lime" className="mx-auto uppercase tracking-wider text-[11px]">
-            Institutional Welfare
-          </Badge>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
-            Student Support &amp; Statutory Governance
-          </h2>
-          <p className="text-sm text-white/60">
-            Dedicated statutory committees upholding safety, ethics, mental well-being, and equal
-            opportunities across the campus.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div className="p-5 rounded-2xl bg-[#141519] border border-white/10 space-y-2.5">
-            <div className="w-9 h-9 rounded-xl bg-lime/10 border border-lime/30 flex items-center justify-center text-lime font-bold">
-              <Users className="w-4 h-4" />
-            </div>
-            <h3 className="font-extrabold text-white text-sm">Proctor System (1:20)</h3>
-            <p className="text-xs text-white/60 leading-relaxed">
-              Every student is assigned a dedicated faculty proctor for academic mentoring and
-              personal counsel throughout their degree.
-            </p>
-          </div>
-
-          <div className="p-5 rounded-2xl bg-[#141519] border border-white/10 space-y-2.5">
-            <div className="w-9 h-9 rounded-xl bg-rose-500/10 border border-rose-500/30 flex items-center justify-center text-rose-400 font-bold">
-              <ShieldCheck className="w-4 h-4" />
-            </div>
-            <h3 className="font-extrabold text-white text-sm">Anti-Ragging Cell</h3>
-            <p className="text-xs text-white/60 leading-relaxed">
-              Zero tolerance policy with 24/7 CCTV vigilance and national helpline: 1800-180-5522.
-              Fully compliant with UGC regulations.
-            </p>
-          </div>
-
-          <div className="p-5 rounded-2xl bg-[#141519] border border-white/10 space-y-2.5">
-            <div className="w-9 h-9 rounded-xl bg-amber-400/10 border border-amber-400/30 flex items-center justify-center text-amber-400 font-bold">
-              <HeartHandshake className="w-4 h-4" />
-            </div>
-            <h3 className="font-extrabold text-white text-sm">Women Safety &amp; ICC</h3>
-            <p className="text-xs text-white/60 leading-relaxed">
-              Internal Complaints Committee and Women Task Force ensuring a secure, supportive
-              learning environment: +91-7204081185.
-            </p>
-          </div>
-
-          <div className="p-5 rounded-2xl bg-[#141519] border border-white/10 space-y-2.5">
-            <div className="w-9 h-9 rounded-xl bg-sky-400/10 border border-sky-400/30 flex items-center justify-center text-sky-400 font-bold">
-              <FileCheck className="w-4 h-4" />
-            </div>
-            <h3 className="font-extrabold text-white text-sm">Grievance &amp; Equal Opportunity</h3>
-            <p className="text-xs text-white/60 leading-relaxed">
-              Online grievance submission and SC/ST developmental cell monitoring inclusive academic
-              and scholarship progression.
-            </p>
-          </div>
-        </div>
-      </section>
+      <FinalCTA />
 
       {/* =========================================================================
-          6. FINAL CTA BANNER
+          BRANCH DETAILS MODAL (Interactive Inspector)
           ========================================================================= */}
-      <section className="max-w-5xl mx-auto px-4 sm:px-6 py-20">
-        <div className="relative rounded-pill border border-lime/30 bg-card/60 backdrop-blur-xl p-8 sm:p-14 text-center overflow-hidden shadow-[0_0_50px_rgba(131,243,77,0.12)]">
-          <div className="absolute -top-24 -left-24 w-72 h-72 bg-lime/10 rounded-full blur-3xl pointer-events-none" />
-          <div className="absolute -bottom-24 -right-24 w-72 h-72 bg-lime/10 rounded-full blur-3xl pointer-events-none" />
-
-          <div className="relative z-10 max-w-2xl mx-auto space-y-6">
-            <div className="flex items-center justify-center gap-2">
-              <img
-                src="/sjbit-emblem.png"
-                alt="SJBIT Emblem"
-                className="w-12 h-12 rounded-full object-cover bg-white p-0.5 border border-amber-400/50 shadow-lg"
-              />
-            </div>
-            <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight leading-tight">
-              Ready to access <br />
-              <span className="text-lime">SJBIT CampusOS?</span>
-            </h2>
-            <p className="text-sm sm:text-base text-white/70">
-              Sign in to your student or faculty portal, or access the campus-wide administrator
-              control board.
-            </p>
-            <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
-              <Link to="/login">
-                <Button
-                  variant="lime"
-                  size="lg"
-                  className="shadow-[0_0_24px_rgba(131,243,77,0.4)] min-h-[48px] font-bold"
-                >
-                  Sign In to Portal <ArrowRight className="w-4 h-4 ml-1.5" />
-                </Button>
-              </Link>
-              <Link to="/login?role=admin">
-                <Button
-                  variant="white"
-                  size="lg"
-                  className="min-h-[48px] font-bold bg-card/80 border border-ring hover:border-lime/40"
-                >
-                  <ShieldCheck className="w-4 h-4 mr-1.5 text-lime" />
-                  Administrator Section
-                </Button>
-              </Link>
-              <Link to="/register">
-                <Button
-                  variant="outline"
-                  size="lg"
-                  className="min-h-[48px] border-white/20 hover:border-white/40"
-                >
-                  Student Registration
-                </Button>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Interactive Branch Details Modal */}
-      <BranchDetailsModal
-        branch={selectedBranch}
-        onClose={() => setSelectedBranch(null)}
-      />
+      {selectedBranch && (
+        <BranchDetailsModal
+          branch={selectedBranch}
+          onClose={() => setSelectedBranch(null)}
+        />
+      )}
     </div>
   );
 };
