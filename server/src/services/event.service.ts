@@ -104,12 +104,22 @@ export class EventService {
       }
     }
 
-    const isCapacityFull = event.registeredCount >= event.capacity;
     const ticketCode = `TKT-${event.title.substring(0, 3).toUpperCase()}-${crypto.randomBytes(4).toString('hex').toUpperCase()}`;
 
     let registration: IEventRegistration;
 
-    if (!isCapacityFull) {
+    // Atomically reserve a spot if registeredCount < capacity
+    const updatedEvent = await Event.findOneAndUpdate(
+      {
+        _id: eventId,
+        status: 'published',
+        $expr: { $lt: ['$registeredCount', '$capacity'] },
+      },
+      { $inc: { registeredCount: 1 } },
+      { new: true }
+    );
+
+    if (updatedEvent) {
       // Direct registration
       if (existing) {
         existing.status = 'registered';
@@ -126,9 +136,6 @@ export class EventService {
         });
       }
 
-      event.registeredCount += 1;
-      await event.save();
-
       // Create notification
       await Notification.create({
         user: userId,
@@ -140,8 +147,13 @@ export class EventService {
 
       return { registration, isWaitlisted: false };
     } else {
-      // Add to waitlist
-      const waitlistPos = event.waitlistCount + 1;
+      // Add to waitlist atomically
+      const waitlistEvent = await Event.findByIdAndUpdate(
+        eventId,
+        { $inc: { waitlistCount: 1 } },
+        { new: true }
+      );
+      const waitlistPos = waitlistEvent?.waitlistCount || 1;
 
       if (existing) {
         existing.status = 'waitlisted';
@@ -158,9 +170,6 @@ export class EventService {
           waitlistPosition: waitlistPos,
         });
       }
-
-      event.waitlistCount += 1;
-      await event.save();
 
       await Notification.create({
         user: userId,

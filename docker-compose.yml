@@ -1,0 +1,57 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:7.0
+    container_name: campusos-mongodb
+    restart: unless-stopped
+    ports:
+      - '27017:27017'
+    volumes:
+      - mongodb_data:/data/db
+    environment:
+      MONGO_INITDB_DATABASE: campusos
+    networks:
+      - campusos-network
+
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: campusos-server
+    restart: unless-stopped
+    ports:
+      - '5000:5000'
+    environment:
+      PORT: 5000
+      NODE_ENV: production
+      MONGODB_URI: mongodb://mongodb:27017/campusos
+      JWT_SECRET: production_campusos_jwt_secure_secret_min_32_characters!
+      CLIENT_URL: http://localhost
+    depends_on:
+      - mongodb
+    volumes:
+      - server_uploads:/app/uploads
+    networks:
+      - campusos-network
+
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    container_name: campusos-client
+    restart: unless-stopped
+    ports:
+      - '80:80'
+    depends_on:
+      - server
+    networks:
+      - campusos-network
+
+volumes:
+  mongodb_data:
+  server_uploads:
+
+networks:
+  campusos-network:
+    driver: bridge

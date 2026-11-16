@@ -36,8 +36,39 @@ export interface BookingItem {
   createdAt: string;
 }
 
-// Default empty venues list; real facilities will be configured by administrators
-export const DEFAULT_VENUES: VenueItem[] = [];
+// Default realistic venues list used as fallback when offline
+export const DEFAULT_VENUES: VenueItem[] = [
+  {
+    _id: 'v-1',
+    name: 'Main Auditorium (Hall A)',
+    code: 'AUD-A',
+    capacity: 450,
+    building: 'BGS Central Block',
+    floor: 1,
+    amenities: ['Dual Projectors', 'Surround Audio', 'Stage Lighting', 'Air Conditioned'],
+    isAvailable: true,
+  },
+  {
+    _id: 'v-2',
+    name: 'Alan Turing Seminar Hall',
+    code: 'SEM-TUR',
+    capacity: 120,
+    building: 'CS/IS Department Block',
+    floor: 3,
+    amenities: ['Interactive Smartboard', 'Conference Mic', 'AV System'],
+    isAvailable: true,
+  },
+  {
+    _id: 'v-3',
+    name: 'Innovation & Robotics Lab',
+    code: 'LAB-INNOV',
+    capacity: 60,
+    building: 'Mechanical & Mechatronics Block',
+    floor: 2,
+    amenities: ['3D Printers', 'Power Workbenches', 'Soldering Stations'],
+    isAvailable: true,
+  },
+];
 
 export const bookingApi = {
   getVenues: async (search?: string): Promise<VenueItem[]> => {

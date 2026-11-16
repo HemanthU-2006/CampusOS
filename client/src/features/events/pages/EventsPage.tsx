@@ -19,7 +19,7 @@ import { Textarea } from '@/components/ui/Textarea';
 import { Badge } from '@/components/ui/Badge';
 import { Modal } from '@/components/ui/Modal';
 import { toast } from 'sonner';
-import { DEFAULT_EVENTS, EventItem, RegistrationItem } from '../api';
+import { DEFAULT_EVENTS, EventItem, RegistrationItem, eventApi } from '../api';
 
 export const EventsPage: React.FC = () => {
   const { user } = useAuth();
@@ -32,6 +32,26 @@ export const EventsPage: React.FC = () => {
 
   // User's tickets (starts empty; real passes appear upon registration)
   const [userTickets, setUserTickets] = useState<RegistrationItem[]>([]);
+
+  // Fetch real events and tickets from backend on mount
+  React.useEffect(() => {
+    let isMounted = true;
+    eventApi.getEvents().then((data) => {
+      if (isMounted && data && data.length > 0) {
+        setEvents(data);
+      }
+    }).catch(() => {});
+
+    eventApi.getMyRegistrations().then((tickets) => {
+      if (isMounted && tickets && tickets.length > 0) {
+        setUserTickets(tickets);
+      }
+    }).catch(() => {});
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   // Modals
   const [ticketModalOpen, setTicketModalOpen] = useState(false);

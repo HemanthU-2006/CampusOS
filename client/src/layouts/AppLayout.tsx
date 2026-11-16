@@ -23,6 +23,7 @@ import {
 import { Badge } from '@/components/ui/Badge';
 import { useAuth } from '@/features/auth/AuthContext';
 import { cn } from '@/lib/utils';
+import { CampusAIAssistant } from '@/components/CampusAIAssistant';
 
 interface NavItem {
   label: string;
@@ -39,8 +40,10 @@ interface RoleNavConfig {
 const allNavDefinitions: Record<string, NavItem> = {
   adminBoard: { label: 'Admin Board', href: '/admin', icon: ShieldCheck },
   home: { label: 'Home', href: '/dashboard', icon: LayoutDashboard },
+  venues: { label: 'Venues', href: '/venues', icon: Building2 },
   events: { label: 'Events', href: '/events', icon: CalendarDays },
   clubs: { label: 'Clubs', href: '/clubs', icon: Users },
+  resources: { label: 'Hardware', href: '/resources', icon: Package },
   lostfound: { label: 'Lost & Found', href: '/lost-found', icon: Search },
   attendance: { label: 'Attendance', href: '/attendance', icon: UserCheck },
   maintenance: { label: 'Repairs', href: '/maintenance', icon: Wrench },
@@ -56,7 +59,7 @@ const roleNavMap: Record<string, RoleNavConfig> = {
       allNavDefinitions.attendance,
       allNavDefinitions.lostfound,
     ],
-    more: [allNavDefinitions.maintenance],
+    more: [allNavDefinitions.venues, allNavDefinitions.resources, allNavDefinitions.maintenance],
   },
   faculty: {
     primary: [
@@ -66,7 +69,7 @@ const roleNavMap: Record<string, RoleNavConfig> = {
       allNavDefinitions.analytics,
       allNavDefinitions.maintenance,
     ],
-    more: [allNavDefinitions.clubs],
+    more: [allNavDefinitions.venues, allNavDefinitions.resources, allNavDefinitions.clubs],
   },
   club_head: {
     primary: [
@@ -511,6 +514,9 @@ export const AppLayout: React.FC = () => {
         <main className="flex-1 p-4 sm:p-8 max-w-7xl mx-auto w-full">
           <Outlet />
         </main>
+
+        {/* Floating Campus AI Assistant */}
+        <CampusAIAssistant />
       </div>
     </div>
   );

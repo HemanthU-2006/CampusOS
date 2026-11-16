@@ -10,9 +10,17 @@
     "build:server": "npm run build --prefix server",
     "build:client": "npm run build --prefix client",
     "build": "npm run build:server && npm run build:client",
+    "start": "node server/dist/index.js",
+    "seed": "npm run seed --prefix server",
+    "test:server": "npm test --prefix server",
+    "test:client": "npm test --prefix client",
+    "test": "npm run test:server && npm run test:client",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "install:all": "npm install && npm install --prefix server && npm install --prefix client"
   },
   "devDependencies": {
-    "concurrently": "^9.1.2"
+    "concurrently": "^9.1.2",
+    "prettier": "^3.10.1"
   }
 }

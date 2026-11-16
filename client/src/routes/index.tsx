@@ -101,10 +101,10 @@ export const router = createBrowserRouter([
     children: [
       { path: 'dashboard', element: <DashboardPage /> },
       { path: 'admin', element: <AdminBoardPage /> },
-      { path: 'venues', element: <Navigate to="/dashboard" replace /> },
+      { path: 'venues', element: <VenuesPage /> },
       { path: 'events', element: <EventsPage /> },
       { path: 'clubs', element: <ClubsPage /> },
-      { path: 'resources', element: <Navigate to="/dashboard" replace /> },
+      { path: 'resources', element: <ResourcesPage /> },
       { path: 'lost-found', element: <LostFoundPage /> },
       { path: 'attendance', element: <AttendancePage /> },
       { path: 'maintenance', element: <MaintenancePage /> },

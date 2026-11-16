@@ -24,14 +24,14 @@ import { Textarea } from '@/components/ui/Textarea';
 import { Badge } from '@/components/ui/Badge';
 import { Modal } from '@/components/ui/Modal';
 import { toast } from 'sonner';
-import { DEFAULT_VENUES, VenueItem, BookingItem } from '../api';
+import { DEFAULT_VENUES, VenueItem, BookingItem, bookingApi } from '../api';
 import { bookingFormSchema, BookingFormData } from '../schemas';
 
 export const VenuesPage: React.FC = () => {
   const { user } = useAuth();
   const isFacultyOrAdmin = user?.role === 'faculty' || user?.role === 'admin';
 
-  const [venues] = useState<VenueItem[]>(DEFAULT_VENUES);
+  const [venues, setVenues] = useState<VenueItem[]>(DEFAULT_VENUES);
   const [activeTab, setActiveTab] = useState<'browse' | 'my_bookings' | 'approvals'>('browse');
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -51,6 +51,26 @@ export const VenuesPage: React.FC = () => {
   const [reviewBookingTarget, setReviewBookingTarget] = useState<BookingItem | null>(null);
   const [reviewAction, setReviewAction] = useState<'approved' | 'rejected'>('approved');
   const [reviewComment, setReviewComment] = useState('');
+
+  // Fetch real venues and bookings from API on mount
+  React.useEffect(() => {
+    let isMounted = true;
+    bookingApi.getVenues().then((res) => {
+      if (isMounted && res && res.length > 0) {
+        setVenues(res);
+      }
+    }).catch(() => {});
+
+    bookingApi.getBookings().then((res) => {
+      if (isMounted && res && res.length > 0) {
+        setBookings(res);
+      }
+    }).catch(() => {});
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   // Campus bookings state
   const [bookings, setBookings] = useState<BookingItem[]>([

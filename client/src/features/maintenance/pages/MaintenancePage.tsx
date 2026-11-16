@@ -12,6 +12,7 @@ import {
   Check,
   Search,
   Camera,
+  Sparkles,
 } from 'lucide-react';
 import { useAuth } from '@/features/auth/AuthContext';
 import { Button } from '@/components/ui/Button';
@@ -20,7 +21,8 @@ import { Textarea } from '@/components/ui/Textarea';
 import { Badge } from '@/components/ui/Badge';
 import { Modal } from '@/components/ui/Modal';
 import { toast } from 'sonner';
-import { DEFAULT_TICKETS, MaintenanceTicketItem } from '../api';
+import { DEFAULT_TICKETS, MaintenanceTicketItem, maintenanceApi } from '../api';
+import { aiApi } from '@/features/ai/api';
 
 export const MaintenancePage: React.FC = () => {
   const { user } = useAuth();
@@ -30,11 +32,51 @@ export const MaintenancePage: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'all' | 'my_tasks' | 'done'>('all');
   const [searchTerm, setSearchTerm] = useState('');
 
+  // Fetch real tickets from backend on mount
+  React.useEffect(() => {
+    let isMounted = true;
+    maintenanceApi.getTickets().then((data) => {
+      if (isMounted && data && data.length > 0) {
+        setTickets(data);
+      }
+    }).catch(() => {});
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
   // 3-field form state
   const [createModalOpen, setCreateModalOpen] = useState(false);
   const [whatIsWrong, setWhatIsWrong] = useState('');
   const [whereIsIt, setWhereIsIt] = useState('');
   const [photoName, setPhotoName] = useState<string | null>(null);
+  const [aiTriageResult, setAiTriageResult] = useState<{
+    category: MaintenanceTicketItem['category'];
+    priority: MaintenanceTicketItem['priority'];
+    summary: string;
+    suggestedAction: string;
+    safetyCaution?: string;
+    estimatedHours: number;
+  } | null>(null);
+  const [isTriaging, setIsTriaging] = useState(false);
+
+  const handleAutoTriage = async () => {
+    if (!whatIsWrong.trim()) {
+      toast.info('Please enter what is wrong first so AI can analyze it');
+      return;
+    }
+    setIsTriaging(true);
+    try {
+      const res = await aiApi.triage(whatIsWrong, whatIsWrong, whereIsIt || 'SJBIT Campus');
+      setAiTriageResult(res);
+      toast.success(`AI Classified: ${res.category.toUpperCase()} (${res.priority.toUpperCase()} Priority)`);
+    } catch {
+      toast.error('AI triage unavailable right now');
+    } finally {
+      setIsTriaging(false);
+    }
+  };
 
   // Detail Modal State with 4-step timeline
   const [selectedTicketForDetail, setSelectedTicketForDetail] = useState<MaintenanceTicketItem | null>(null);
@@ -57,8 +99,8 @@ export const MaintenancePage: React.FC = () => {
       _id: `tick-${Date.now()}`,
       title: whatIsWrong,
       description: whatIsWrong,
-      category: 'other',
-      priority: 'medium', // Default to Normal
+      category: aiTriageResult?.category || 'other',
+      priority: aiTriageResult?.priority || 'medium',
       status: 'open',
       location: whereIsIt,
       reportedBy: {
@@ -76,12 +118,28 @@ export const MaintenancePage: React.FC = () => {
     setWhatIsWrong('');
     setWhereIsIt('');
     setPhotoName(null);
+    setAiTriageResult(null);
     toast.success('Problem reported!', {
       description: 'Campus maintenance team has been notified.',
     });
+
+    maintenanceApi.createTicket({
+      title: whatIsWrong,
+      description: whatIsWrong,
+      location: whereIsIt,
+      category: aiTriageResult?.category || 'other',
+      priority: aiTriageResult?.priority || 'medium',
+    }).then((created) => {
+      if (created?._id) {
+        setTickets((prev) => [created, ...prev.filter(t => t._id !== newTicket._id)]);
+      }
+    }).catch(() => {});
   };
 
   const advanceTicketStep = (ticketId: string, nextStatus: MaintenanceTicketItem['status']) => {
+    if (!ticketId.startsWith('tick-')) {
+      maintenanceApi.updateStatus(ticketId, nextStatus).catch(() => {});
+    }
     setTickets((prev) =>
       prev.map((t) => {
         if (t._id === ticketId) {
@@ -368,12 +426,50 @@ export const MaintenancePage: React.FC = () => {
         size="md"
       >
         <form onSubmit={handleCreateSubmit} className="space-y-4">
-          <Input
-            label="1. What is wrong?"
-            placeholder="e.g. AC leaking water, projector not turning on, door latch broken"
-            value={whatIsWrong}
-            onChange={(e) => setWhatIsWrong(e.target.value)}
-          />
+          <div>
+            <Input
+              label="1. What is wrong?"
+              placeholder="e.g. AC leaking water, projector not turning on, door latch broken"
+              value={whatIsWrong}
+              onChange={(e) => setWhatIsWrong(e.target.value)}
+            />
+            <div className="flex items-center justify-between mt-1.5 px-0.5">
+              <span className="text-[11px] text-white/50">Need automatic priority assessment?</span>
+              <button
+                type="button"
+                onClick={handleAutoTriage}
+                disabled={isTriaging || !whatIsWrong.trim()}
+                className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-lime/10 border border-lime/30 text-lime text-[11px] font-medium hover:bg-lime/20 cursor-pointer disabled:opacity-40 transition-all"
+              >
+                <Sparkles className="w-3 h-3" />
+                <span>{isTriaging ? 'Analyzing...' : 'AI Auto-Triage'}</span>
+              </button>
+            </div>
+
+            {aiTriageResult && (
+              <div className="mt-2.5 p-3 rounded-xl bg-lime/5 border border-lime/25 text-xs space-y-1.5 animate-in fade-in duration-200">
+                <div className="flex items-center gap-2 flex-wrap">
+                  <Badge variant="lime" className="text-[10px] uppercase font-bold tracking-wider">
+                    {aiTriageResult.category}
+                  </Badge>
+                  <span className="text-white/70">
+                    Priority: <strong className="text-white capitalize">{aiTriageResult.priority}</strong>
+                  </span>
+                  <span className="text-white/40">· Est. {aiTriageResult.estimatedHours}h</span>
+                </div>
+                {aiTriageResult.safetyCaution && (
+                  <p className="text-amber-400 font-semibold text-[11px]">
+                    ⚠️ {aiTriageResult.safetyCaution}
+                  </p>
+                )}
+                {aiTriageResult.suggestedAction && (
+                  <p className="text-white/60 text-[11px]">
+                    Action: {aiTriageResult.suggestedAction}
+                  </p>
+                )}
+              </div>
+            )}
+          </div>
 
           <Input
             label="2. Where is it?"

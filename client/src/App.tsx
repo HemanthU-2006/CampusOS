@@ -5,15 +5,18 @@ import { queryClient } from '@/lib/queryClient';
 import { AuthProvider } from '@/features/auth/AuthContext';
 import { router } from '@/routes';
 import { Toast } from '@/components/ui/Toast';
+import { ErrorBoundary } from '@/components/ErrorBoundary';
 
 export const App: React.FC = () => {
   return (
-    <QueryClientProvider client={queryClient}>
-      <AuthProvider>
-        <RouterProvider router={router} />
-        <Toast />
-      </AuthProvider>
-    </QueryClientProvider>
+    <ErrorBoundary>
+      <QueryClientProvider client={queryClient}>
+        <AuthProvider>
+          <RouterProvider router={router} />
+          <Toast />
+        </AuthProvider>
+      </QueryClientProvider>
+    </ErrorBoundary>
   );
 };
 
