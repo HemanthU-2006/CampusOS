@@ -17,6 +17,7 @@ import { AnalyticsPage } from '@/features/analytics/pages/AnalyticsPage';
 import { AdminBoardPage } from '@/features/admin/pages/AdminBoardPage';
 import { ContactPage } from '@/features/contact/pages/ContactPage';
 import { LandingPage } from '@/features/landing/pages/LandingPage';
+import { DepartmentFacultyPage } from '@/features/departments/pages/DepartmentFacultyPage';
 import { ISEFacultyPage } from '@/features/departments/pages/ISEFacultyPage';
 import { Button } from '@/components/ui/Button';
 import { PillCard } from '@/components/ui/PillCard';
@@ -90,7 +91,9 @@ export const router = createBrowserRouter([
     children: [
       { index: true, element: <LandingPage /> },
       { path: 'contact', element: <ContactPage /> },
-      { path: 'faculty/ise', element: <ISEFacultyPage /> },
+      { path: 'faculty', element: <DepartmentFacultyPage /> },
+      { path: 'faculty/:deptCode', element: <DepartmentFacultyPage /> },
+      { path: 'faculty/ise', element: <DepartmentFacultyPage defaultDept="ISE" /> },
     ],
   },
   // Dedicated Auth Pages

@@ -21,6 +21,7 @@ import {
 import { CampusAIAssistant } from '@/components/CampusAIAssistant';
 import { SmoothScroll, ScrollProgress, FilmGrain } from '@/components/cinematic';
 import '../cinematic.css';
+import '../leadership.css';
 
 export const PublicLayout: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -220,61 +221,77 @@ export const PublicLayout: React.FC = () => {
                     Autonomous Engineering &amp; Management Branches
                   </div>
                   <div className="grid grid-cols-2 gap-1 text-[13px]">
-                    <a
-                      href="/#branches"
-                      className="px-2.5 py-1.5 rounded-[8px] hover:bg-white/[0.06] text-gray-300 hover:text-white transition-colors"
+                    <Link
+                      to="/faculty/cse"
+                      className="px-2.5 py-1.5 rounded-[8px] hover:bg-white/[0.06] text-gray-300 hover:text-white transition-colors flex items-center justify-between"
                     >
-                      <span className="font-medium text-white">CSE</span> · Computer Science
-                    </a>
+                      <span className="font-medium text-white">CSE</span>
+                      <span className="text-[11px] text-gray-400">38</span>
+                    </Link>
                     <Link
                       to="/faculty/ise"
                       className="px-2.5 py-1.5 rounded-[8px] hover:bg-white/[0.06] text-gray-300 hover:text-white transition-colors flex items-center justify-between"
                     >
-                      <span className="font-medium text-white">ISE Faculty</span>
+                      <span className="font-medium text-white">ISE</span>
                       <span className="text-[11px] text-lime font-semibold">41</span>
                     </Link>
-                    <a
-                      href="/#branches"
-                      className="px-2.5 py-1.5 rounded-[8px] hover:bg-white/[0.06] text-gray-300 hover:text-white transition-colors"
+                    <Link
+                      to="/faculty/aiml"
+                      className="px-2.5 py-1.5 rounded-[8px] hover:bg-white/[0.06] text-gray-300 hover:text-white transition-colors flex items-center justify-between"
                     >
-                      <span className="font-medium text-white">AI&amp;ML</span> · Artificial Intel
-                    </a>
-                    <a
-                      href="/#branches"
-                      className="px-2.5 py-1.5 rounded-[8px] hover:bg-white/[0.06] text-gray-300 hover:text-white transition-colors"
+                      <span className="font-medium text-white">AI&amp;ML</span>
+                      <span className="text-[11px] text-gray-400">18</span>
+                    </Link>
+                    <Link
+                      to="/faculty/cs-ds"
+                      className="px-2.5 py-1.5 rounded-[8px] hover:bg-white/[0.06] text-gray-300 hover:text-white transition-colors flex items-center justify-between"
                     >
-                      <span className="font-medium text-white">CS-DS</span> · Data Science
-                    </a>
-                    <a
-                      href="/#branches"
-                      className="px-2.5 py-1.5 rounded-[8px] hover:bg-white/[0.06] text-gray-300 hover:text-white transition-colors"
+                      <span className="font-medium text-white">CS-DS</span>
+                      <span className="text-[11px] text-gray-400">14</span>
+                    </Link>
+                    <Link
+                      to="/faculty/ece"
+                      className="px-2.5 py-1.5 rounded-[8px] hover:bg-white/[0.06] text-gray-300 hover:text-white transition-colors flex items-center justify-between"
                     >
-                      <span className="font-medium text-white">ECE</span> · Electronics &amp; Comm
-                    </a>
-                    <a
-                      href="/#branches"
-                      className="px-2.5 py-1.5 rounded-[8px] hover:bg-white/[0.06] text-gray-300 hover:text-white transition-colors"
+                      <span className="font-medium text-white">ECE</span>
+                      <span className="text-[11px] text-gray-400">34</span>
+                    </Link>
+                    <Link
+                      to="/faculty/eee"
+                      className="px-2.5 py-1.5 rounded-[8px] hover:bg-white/[0.06] text-gray-300 hover:text-white transition-colors flex items-center justify-between"
                     >
-                      <span className="font-medium text-white">EEE</span> · Electrical &amp; Elec
-                    </a>
-                    <a
-                      href="/#branches"
-                      className="px-2.5 py-1.5 rounded-[8px] hover:bg-white/[0.06] text-gray-300 hover:text-white transition-colors"
+                      <span className="font-medium text-white">EEE</span>
+                      <span className="text-[11px] text-gray-400">16</span>
+                    </Link>
+                    <Link
+                      to="/faculty/mech"
+                      className="px-2.5 py-1.5 rounded-[8px] hover:bg-white/[0.06] text-gray-300 hover:text-white transition-colors flex items-center justify-between"
                     >
-                      <span className="font-medium text-white">MECH</span> · Mechanical
-                    </a>
-                    <a
-                      href="/#branches"
-                      className="px-2.5 py-1.5 rounded-[8px] hover:bg-white/[0.06] text-gray-300 hover:text-white transition-colors"
+                      <span className="font-medium text-white">MECH</span>
+                      <span className="text-[11px] text-gray-400">18</span>
+                    </Link>
+                    <Link
+                      to="/faculty/civil"
+                      className="px-2.5 py-1.5 rounded-[8px] hover:bg-white/[0.06] text-gray-300 hover:text-white transition-colors flex items-center justify-between"
                     >
-                      <span className="font-medium text-white">CIVIL</span> · Civil Engineering
-                    </a>
-                    <a
-                      href="/#branches"
-                      className="col-span-2 px-2.5 py-1.5 rounded-[8px] hover:bg-white/[0.06] text-gray-300 hover:text-white transition-colors"
+                      <span className="font-medium text-white">CIVIL</span>
+                      <span className="text-[11px] text-gray-400">16</span>
+                    </Link>
+                    <Link
+                      to="/faculty/mba"
+                      className="col-span-2 px-2.5 py-1.5 rounded-[8px] hover:bg-white/[0.06] text-gray-300 hover:text-white transition-colors flex items-center justify-between"
                     >
-                      <span className="font-medium text-white">MBA</span> · Department of Management Studies
-                    </a>
+                      <span className="font-medium text-white">MBA · Management Studies</span>
+                      <span className="text-[11px] text-gray-400">14</span>
+                    </Link>
+                  </div>
+                  <div className="pt-2 mt-2 border-t border-white/10 text-center">
+                    <Link
+                      to="/faculty"
+                      className="block text-xs font-bold text-lime hover:underline py-1"
+                    >
+                      View All Department Faculty Directory →
+                    </Link>
                   </div>
                 </div>
               )}

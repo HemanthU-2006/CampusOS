@@ -5,6 +5,11 @@ declare module '@/components/Hero' {
   export default Hero;
 }
 
+declare module '@/components/LeadershipCinematic' {
+  const LeadershipCinematic: any;
+  export default LeadershipCinematic;
+}
+
 declare module '@/components/Sections' {
   export const Leadership: any;
   export const Departments: any;

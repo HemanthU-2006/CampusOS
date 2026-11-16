@@ -44,6 +44,8 @@ export const SJBIT_BRANCHES: DepartmentBranch[] = [
       'Computer Vision & Pattern Recognition',
     ],
     facultyCount: 38,
+    hasFacultyPage: true,
+    facultyRoute: '/faculty/cse',
     accreditation: 'NBA Accredited · NAAC A+',
   },
   {
@@ -101,6 +103,8 @@ export const SJBIT_BRANCHES: DepartmentBranch[] = [
       'Reinforcement Learning & Robotics',
     ],
     facultyCount: 18,
+    hasFacultyPage: true,
+    facultyRoute: '/faculty/aiml',
     accreditation: 'VTU Autonomous · NAAC A+',
   },
   {
@@ -128,6 +132,8 @@ export const SJBIT_BRANCHES: DepartmentBranch[] = [
       'Data Mining & Warehousing',
     ],
     facultyCount: 14,
+    hasFacultyPage: true,
+    facultyRoute: '/faculty/cs-ds',
     accreditation: 'VTU Autonomous · NAAC A+',
   },
   {
@@ -156,6 +162,8 @@ export const SJBIT_BRANCHES: DepartmentBranch[] = [
       'IoT & Industrial Cyber-Physical Systems',
     ],
     facultyCount: 34,
+    hasFacultyPage: true,
+    facultyRoute: '/faculty/ece',
     accreditation: 'NBA Accredited · NAAC A+',
   },
   {
@@ -183,6 +191,8 @@ export const SJBIT_BRANCHES: DepartmentBranch[] = [
       'Power System Protection & High Voltage',
     ],
     facultyCount: 16,
+    hasFacultyPage: true,
+    facultyRoute: '/faculty/eee',
     accreditation: 'NBA Accredited · NAAC A+',
   },
   {
@@ -210,6 +220,8 @@ export const SJBIT_BRANCHES: DepartmentBranch[] = [
       'Computer-Aided Design & Engineering (CAD/CAE)',
     ],
     facultyCount: 18,
+    hasFacultyPage: true,
+    facultyRoute: '/faculty/mech',
     accreditation: 'NBA Accredited · NAAC A+',
   },
   {
@@ -237,6 +249,8 @@ export const SJBIT_BRANCHES: DepartmentBranch[] = [
       'GIS, Remote Sensing & Digital Cartography',
     ],
     facultyCount: 16,
+    hasFacultyPage: true,
+    facultyRoute: '/faculty/civil',
     accreditation: 'NBA Accredited · NAAC A+',
   },
   {
@@ -263,6 +277,8 @@ export const SJBIT_BRANCHES: DepartmentBranch[] = [
       'Business Analytics & Data-Driven Management',
     ],
     facultyCount: 14,
+    hasFacultyPage: true,
+    facultyRoute: '/faculty/mba',
     accreditation: 'VTU Autonomous · NAAC A+',
   },
 ];

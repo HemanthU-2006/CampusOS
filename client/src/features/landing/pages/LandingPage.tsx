@@ -21,7 +21,8 @@ import { Button } from '@/components/ui/Button';
 import { SJBIT_BRANCHES, DepartmentBranch } from '@/features/departments/data/branchesData';
 import { BranchDetailsModal } from '@/features/departments/components/BranchDetailsModal';
 import Hero from '@/components/Hero';
-import { Leadership, Departments, Infrastructure, FinalCTA } from '@/components/Sections';
+import LeadershipCinematic from '@/components/LeadershipCinematic';
+import { Departments, Infrastructure, FinalCTA } from '@/components/Sections';
 
 export const LandingPage: React.FC = () => {
   const [selectedBranch, setSelectedBranch] = useState<DepartmentBranch | null>(null);
@@ -64,9 +65,9 @@ export const LandingPage: React.FC = () => {
       />
 
       {/* =========================================================================
-          2. EXCEPTIONAL LEADERSHIP & VISION (Cinematic Spotlight Cards)
+          2. EXCEPTIONAL LEADERSHIP & VISION (Cinematic Accordion Panels)
           ========================================================================= */}
-      <Leadership />
+      <LeadershipCinematic />
 
       {/* =========================================================================
           3. ALL 9 SJBIT DEPARTMENTS (Cinematic Grid with Interactive Details Modal)
