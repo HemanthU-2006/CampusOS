@@ -24,6 +24,9 @@ import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
 import { PillCard } from '@/components/ui/PillCard';
 import { toast } from 'sonner';
+import { SJBIT_BRANCHES, DepartmentBranch } from '@/features/departments/data/branchesData';
+import { BranchDetailsModal } from '@/features/departments/components/BranchDetailsModal';
+import { DepartmentAuditModal } from '@/features/departments/components/DepartmentAuditModal';
 
 interface DepartmentDetail {
   code: string;
@@ -162,6 +165,8 @@ const SJBIT_DEPARTMENTS: DepartmentDetail[] = [
 export const AdminBoardPage: React.FC = () => {
   const navigate = useNavigate();
   const [selectedBranch, setSelectedBranch] = useState<string>('ALL');
+  const [activeBranchModal, setActiveBranchModal] = useState<DepartmentBranch | null>(null);
+  const [activeAuditModal, setActiveAuditModal] = useState<DepartmentBranch | null>(null);
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [broadcastModalOpen, setBroadcastModalOpen] = useState(false);
   const [broadcastTitle, setBroadcastTitle] = useState('');
@@ -497,21 +502,23 @@ export const AdminBoardPage: React.FC = () => {
                 <Button
                   variant="outline"
                   size="sm"
-                  onClick={() => navigate('/attendance')}
+                  onClick={() => {
+                    const b = SJBIT_BRANCHES.find((item) => item.code === dept.code) || null;
+                    setActiveBranchModal(b);
+                  }}
                   className="w-full text-xs border-ring/80 hover:border-lime/40 text-white"
                 >
-                  <BookOpen className="w-3.5 h-3.5 mr-1 text-lime" />
-                  View Attendance
+                  <Building2 className="w-3.5 h-3.5 mr-1 text-lime" />
+                  Branch Details
                 </Button>
                 <Button
                   variant="ghost"
                   size="sm"
                   onClick={() => {
-                    toast.success(`${dept.code} Status Normal`, {
-                      description: `${dept.name} is compliant with VTU guidelines.`,
-                    });
+                    const b = SJBIT_BRANCHES.find((item) => item.code === dept.code) || null;
+                    setActiveAuditModal(b);
                   }}
-                  className="text-xs text-white/60 hover:text-white hover:bg-row"
+                  className="text-xs text-amber-400 hover:text-white hover:bg-amber-400/10 font-semibold"
                 >
                   Audit
                 </Button>
@@ -600,6 +607,16 @@ export const AdminBoardPage: React.FC = () => {
           </div>
         </div>
       )}
+
+      {/* Branch Details & Audit Modals */}
+      <BranchDetailsModal
+        branch={activeBranchModal}
+        onClose={() => setActiveBranchModal(null)}
+      />
+      <DepartmentAuditModal
+        branch={activeAuditModal}
+        onClose={() => setActiveAuditModal(null)}
+      />
     </div>
   );
 };

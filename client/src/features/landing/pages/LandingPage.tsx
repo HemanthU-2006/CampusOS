@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   Sparkles,
@@ -21,12 +21,20 @@ import {
   Briefcase,
   Library,
   Flame,
+  FileCheck,
+  Activity,
+  HeartHandshake,
+  Clock,
+  ChevronRight,
 } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { PillCard } from '@/components/ui/PillCard';
 import { Badge } from '@/components/ui/Badge';
+import { SJBIT_BRANCHES, DepartmentBranch } from '@/features/departments/data/branchesData';
+import { BranchDetailsModal } from '@/features/departments/components/BranchDetailsModal';
 
 export const LandingPage: React.FC = () => {
+  const [selectedBranch, setSelectedBranch] = useState<DepartmentBranch | null>(null);
   return (
     <div className="text-white selection:bg-lime selection:text-lime-ink">
       {/* =========================================================================
@@ -86,7 +94,7 @@ export const LandingPage: React.FC = () => {
 
           {/* Subtitle */}
           <p className="text-base sm:text-xl text-white/85 max-w-2xl mx-auto leading-relaxed drop-shadow-md">
-            Campus tech fests, student clubs, VTU attendance tracking, and fast repair resolution
+            Campus tech fests, student clubs, branch academic tracking, and fast repair resolution
             across all 9 SJBIT engineering &amp; management branches.
           </p>
 
@@ -595,20 +603,119 @@ export const LandingPage: React.FC = () => {
                 <p className="text-[11px] text-white/50">{b.block}</p>
               </div>
 
-              <div className="pt-3 border-t border-white/10 flex items-center justify-between">
+              <div className="pt-3 border-t border-white/10 flex items-center justify-between gap-2">
+                <button
+                  type="button"
+                  onClick={() => {
+                    const full = SJBIT_BRANCHES.find((item) => item.code === b.code) || null;
+                    setSelectedBranch(full);
+                  }}
+                  className="inline-flex items-center gap-1 text-xs text-lime hover:text-white font-semibold cursor-pointer group/btn transition-colors"
+                >
+                  Branch Details <ArrowRight className="w-3.5 h-3.5 group-hover/btn:translate-x-1 transition-transform" />
+                </button>
+
                 {b.code === 'ISE' ? (
                   <Link
                     to="/faculty/ise"
                     className="inline-flex items-center gap-1 text-xs text-amber-400 hover:text-amber-300 font-bold group/btn transition-colors"
                   >
-                    View Faculty (41) <ArrowRight className="w-3.5 h-3.5 group-hover/btn:translate-x-1 transition-transform" />
+                    View Faculty (41) →
                   </Link>
                 ) : (
-                  <span className="text-[11px] text-white/50 font-medium">SJBIT Autonomous</span>
+                  <span className="text-[10px] text-white/40 uppercase tracking-wider font-mono">
+                    VTU Autonomous
+                  </span>
                 )}
-                <span className="text-[10px] text-white/40 uppercase tracking-wider font-mono">
-                  {b.code === 'ISE' ? 'Information Science' : 'VTU Accredited'}
-                </span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* =========================================================================
+          NEWS & LIVE ACADEMIC HIGHLIGHTS (Scraped from https://www.sjbit.edu.in/)
+          ========================================================================= */}
+      <section className="relative z-20 max-w-7xl mx-auto px-4 sm:px-8 py-16 space-y-10 border-t border-ring/40">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+          <div className="space-y-2">
+            <Badge variant="lime" className="uppercase tracking-wider text-[11px]">
+              What's Happening in SJBIT
+            </Badge>
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+              Campus News &amp; Academic Milestones
+            </h2>
+            <p className="text-xs sm:text-sm text-white/60 max-w-2xl">
+              Certified Excellence. Major project exhibitions, international fests, industry MoUs,
+              and faculty development across our 50-acre Kengeri campus.
+            </p>
+          </div>
+
+          <a
+            href="https://www.sjbit.edu.in/news-and-events.php"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-xs font-semibold text-lime hover:underline flex items-center gap-1 shrink-0"
+          >
+            All Campus News &amp; Events <ExternalLink className="w-3 h-3" />
+          </a>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {[
+            {
+              title: 'Major Project Exhibition 2026',
+              category: 'Academic Innovation',
+              date: 'Graduating Batches',
+              desc: 'Annual intra-department capstone project showcase featuring prototype models validated by VTU & IIC.',
+              badgeColor: 'border-amber-400/30 text-amber-300 bg-amber-400/10',
+            },
+            {
+              title: 'VARCHASVA & ARNAAV 2026',
+              category: 'Techno-Cultural Fest',
+              date: 'Flagship Event',
+              desc: 'Inter-collegiate technical and cultural extravaganza drawing 5,000+ engineering delegates across Karnataka.',
+              badgeColor: 'border-lime/30 text-lime bg-lime/10',
+            },
+            {
+              title: 'Agentic AI & MCP Servers FDP',
+              category: 'Faculty Development',
+              date: 'CSE & ISE Departments',
+              desc: '6-day faculty immersion workshop on Large Language Models, Multi-Agent Swarms, and Model Context Protocol.',
+              badgeColor: 'border-sky-400/30 text-sky-300 bg-sky-400/10',
+            },
+            {
+              title: 'Industry MoU with PRDC Pvt Ltd',
+              category: 'Industry Partnership',
+              date: 'Smart Grid Research',
+              desc: 'Strategic collaboration between SJBIT EEE and Power Research & Development Consultants for EV simulation.',
+              badgeColor: 'border-rose-400/30 text-rose-300 bg-rose-400/10',
+            },
+          ].map((news, idx) => (
+            <div
+              key={idx}
+              className="p-5 rounded-2xl bg-[#141519] border border-white/10 hover:border-lime/30 transition-all duration-300 flex flex-col justify-between space-y-3 group hover:-translate-y-1 shadow-sm"
+            >
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <span
+                    className={`text-[9px] font-bold px-2 py-0.5 rounded uppercase font-mono border ${news.badgeColor}`}
+                  >
+                    {news.category}
+                  </span>
+                  <span className="text-[10px] text-white/40 flex items-center gap-1">
+                    <Clock className="w-3 h-3" /> {news.date}
+                  </span>
+                </div>
+                <h3 className="font-extrabold text-sm text-white group-hover:text-lime transition-colors leading-snug">
+                  {news.title}
+                </h3>
+                <p className="text-xs text-white/60 leading-relaxed">{news.desc}</p>
+              </div>
+
+              <div className="pt-2 border-t border-white/5 flex items-center justify-between text-[11px] text-white/40">
+                <span>SJB Institute of Technology</span>
+                <span className="text-lime group-hover:translate-x-1 transition-transform">→</span>
               </div>
             </div>
           ))}
@@ -806,7 +913,7 @@ export const LandingPage: React.FC = () => {
             Built for Students, Faculty &amp; Staff
           </h2>
           <p className="text-sm text-white/60">
-            Campus fests, clubs, attendance registers, and maintenance fixes unified in one
+            Campus fests, clubs, branch details, and maintenance fixes unified in one
             platform.
           </p>
         </div>
@@ -836,8 +943,8 @@ export const LandingPage: React.FC = () => {
           <Link to="/attendance">
             <PillCard
               icon={<UserCheck className="w-5 h-5 text-lime" />}
-              title="Attendance"
-              subtitle="Check course percentages across all 9 branches and stay safe above 75%."
+              title="Academic &amp; Attendance Records"
+              subtitle="Check course percentage details across all 9 branches and maintain VTU 75% compliance."
             />
           </Link>
           <Link to="/maintenance" className="md:col-span-2 lg:col-span-1">
@@ -847,6 +954,70 @@ export const LandingPage: React.FC = () => {
               subtitle="Report broken lights, AC issues, or hardware problems for quick fixing."
             />
           </Link>
+        </div>
+      </section>
+
+      {/* =========================================================================
+          STUDENT SUPPORT & GOVERNANCE CELLS (From https://www.sjbit.edu.in/)
+          ========================================================================= */}
+      <section className="relative z-20 max-w-7xl mx-auto px-4 sm:px-8 py-16 space-y-10 border-t border-ring/40">
+        <div className="text-center space-y-3 max-w-2xl mx-auto">
+          <Badge variant="lime" className="mx-auto uppercase tracking-wider text-[11px]">
+            Institutional Welfare
+          </Badge>
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+            Student Support &amp; Statutory Governance
+          </h2>
+          <p className="text-sm text-white/60">
+            Dedicated statutory committees upholding safety, ethics, mental well-being, and equal
+            opportunities across the campus.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="p-5 rounded-2xl bg-[#141519] border border-white/10 space-y-2.5">
+            <div className="w-9 h-9 rounded-xl bg-lime/10 border border-lime/30 flex items-center justify-center text-lime font-bold">
+              <Users className="w-4 h-4" />
+            </div>
+            <h3 className="font-extrabold text-white text-sm">Proctor System (1:20)</h3>
+            <p className="text-xs text-white/60 leading-relaxed">
+              Every student is assigned a dedicated faculty proctor for academic mentoring and
+              personal counsel throughout their degree.
+            </p>
+          </div>
+
+          <div className="p-5 rounded-2xl bg-[#141519] border border-white/10 space-y-2.5">
+            <div className="w-9 h-9 rounded-xl bg-rose-500/10 border border-rose-500/30 flex items-center justify-center text-rose-400 font-bold">
+              <ShieldCheck className="w-4 h-4" />
+            </div>
+            <h3 className="font-extrabold text-white text-sm">Anti-Ragging Cell</h3>
+            <p className="text-xs text-white/60 leading-relaxed">
+              Zero tolerance policy with 24/7 CCTV vigilance and national helpline: 1800-180-5522.
+              Fully compliant with UGC regulations.
+            </p>
+          </div>
+
+          <div className="p-5 rounded-2xl bg-[#141519] border border-white/10 space-y-2.5">
+            <div className="w-9 h-9 rounded-xl bg-amber-400/10 border border-amber-400/30 flex items-center justify-center text-amber-400 font-bold">
+              <HeartHandshake className="w-4 h-4" />
+            </div>
+            <h3 className="font-extrabold text-white text-sm">Women Safety &amp; ICC</h3>
+            <p className="text-xs text-white/60 leading-relaxed">
+              Internal Complaints Committee and Women Task Force ensuring a secure, supportive
+              learning environment: +91-7204081185.
+            </p>
+          </div>
+
+          <div className="p-5 rounded-2xl bg-[#141519] border border-white/10 space-y-2.5">
+            <div className="w-9 h-9 rounded-xl bg-sky-400/10 border border-sky-400/30 flex items-center justify-center text-sky-400 font-bold">
+              <FileCheck className="w-4 h-4" />
+            </div>
+            <h3 className="font-extrabold text-white text-sm">Grievance &amp; Equal Opportunity</h3>
+            <p className="text-xs text-white/60 leading-relaxed">
+              Online grievance submission and SC/ST developmental cell monitoring inclusive academic
+              and scholarship progression.
+            </p>
+          </div>
         </div>
       </section>
 
@@ -907,6 +1078,12 @@ export const LandingPage: React.FC = () => {
           </div>
         </div>
       </section>
+
+      {/* Interactive Branch Details Modal */}
+      <BranchDetailsModal
+        branch={selectedBranch}
+        onClose={() => setSelectedBranch(null)}
+      />
     </div>
   );
 };

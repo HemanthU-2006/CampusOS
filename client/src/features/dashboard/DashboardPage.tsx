@@ -441,11 +441,11 @@ export const DashboardPage: React.FC = () => {
                   <Badge variant="lime">92.1% Compliant</Badge>
                 </div>
                 <p className="text-xs text-white/60">
-                  Attendance registers across 9 departments checked. Minimum 75% attendance
-                  threshold maintained.
+                  Branch compliance and academic registers across all 9 departments checked.
+                  Minimum 75% attendance threshold maintained.
                 </p>
                 <p className="text-xs text-lime font-medium">
-                  Next step: Inspect consolidated attendance report and branch rosters
+                  Next step: Inspect consolidated branch details and academic audit rosters
                 </p>
               </div>
               <Button
