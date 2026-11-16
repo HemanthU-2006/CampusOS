@@ -23,12 +23,11 @@ export class AnalyticsService {
       Event.find({ $or: [{ title: regex }, { description: regex }, { tags: regex }] })
         .populate('venue', 'name code')
         .limit(6),
-      Venue.find({ $or: [{ name: regex }, { code: regex }, { building: regex }] })
-        .limit(6),
-      Club.find({ $or: [{ name: regex }, { code: regex }, { category: regex }] })
-        .limit(6),
-      LostFoundItem.find({ $or: [{ title: regex }, { description: regex }, { location: regex }] })
-        .limit(6),
+      Venue.find({ $or: [{ name: regex }, { code: regex }, { building: regex }] }).limit(6),
+      Club.find({ $or: [{ name: regex }, { code: regex }, { category: regex }] }).limit(6),
+      LostFoundItem.find({
+        $or: [{ title: regex }, { description: regex }, { location: regex }],
+      }).limit(6),
     ]);
 
     return {

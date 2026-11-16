@@ -125,7 +125,9 @@ export const ResourcesPage: React.FC = () => {
   const [reqDays, setReqDays] = useState('3');
 
   // Detail Modal State with Timeline
-  const [selectedRequestForDetail, setSelectedRequestForDetail] = useState<RequestItem | null>(null);
+  const [selectedRequestForDetail, setSelectedRequestForDetail] = useState<RequestItem | null>(
+    null
+  );
 
   const openCheckoutFor = (resId: string) => {
     setSelectedResId(resId);
@@ -169,10 +171,7 @@ export const ResourcesPage: React.FC = () => {
     setActiveTab('my_requests');
   };
 
-  const handleStatusTransition = (
-    reqId: string,
-    newStatus: 'approved' | 'issued' | 'returned'
-  ) => {
+  const handleStatusTransition = (reqId: string, newStatus: 'approved' | 'issued' | 'returned') => {
     const target = requests.find((r) => r.id === reqId);
     if (!target) return;
 
@@ -188,15 +187,16 @@ export const ResourcesPage: React.FC = () => {
       setResources((prev) =>
         prev.map((r) =>
           r.id === target.resourceId
-            ? { ...r, availableQuantity: Math.min(r.totalQuantity, r.availableQuantity + target.quantity) }
+            ? {
+                ...r,
+                availableQuantity: Math.min(r.totalQuantity, r.availableQuantity + target.quantity),
+              }
             : r
         )
       );
     }
 
-    setRequests((prev) =>
-      prev.map((r) => (r.id === reqId ? { ...r, status: newStatus } : r))
-    );
+    setRequests((prev) => prev.map((r) => (r.id === reqId ? { ...r, status: newStatus } : r)));
 
     toast.success(`Request marked as ${newStatus}!`);
   };
@@ -301,7 +301,9 @@ export const ResourcesPage: React.FC = () => {
                     {res.category}
                   </span>
                   <Badge variant={res.availableQuantity > 0 ? 'approved' : 'overdue'}>
-                    {res.availableQuantity > 0 ? `${res.availableQuantity} available` : 'All issued'}
+                    {res.availableQuantity > 0
+                      ? `${res.availableQuantity} available`
+                      : 'All issued'}
                   </Badge>
                 </div>
 
@@ -312,7 +314,9 @@ export const ResourcesPage: React.FC = () => {
 
                 <div className="text-xs text-white/60 flex justify-between pt-1">
                   <span>Total lab stock:</span>
-                  <span className="font-mono text-white font-semibold">{res.totalQuantity} units</span>
+                  <span className="font-mono text-white font-semibold">
+                    {res.totalQuantity} units
+                  </span>
                 </div>
               </div>
 
@@ -361,35 +365,33 @@ export const ResourcesPage: React.FC = () => {
                         req.status === 'issued'
                           ? 'lime'
                           : req.status === 'approved'
-                          ? 'info'
-                          : req.status === 'returned'
-                          ? 'approved'
-                          : 'pending'
+                            ? 'info'
+                            : req.status === 'returned'
+                              ? 'approved'
+                              : 'pending'
                       }
                     >
                       {req.status === 'requested'
                         ? 'Waiting'
                         : req.status === 'approved'
-                        ? 'Approved'
-                        : req.status === 'issued'
-                        ? 'In use'
-                        : 'Returned'}
+                          ? 'Approved'
+                          : req.status === 'issued'
+                            ? 'In use'
+                            : 'Returned'}
                     </Badge>
                   </div>
                   <p className="text-xs text-white/70">
                     Requested for {req.applicantName} · Quantity: x{req.quantity}
                   </p>
-                  <p className="text-xs text-white/50">
-                    Return by: {req.endDate}
-                  </p>
+                  <p className="text-xs text-white/50">Return by: {req.endDate}</p>
                   <p className="text-xs text-lime font-medium pt-0.5">
                     {req.status === 'requested'
                       ? 'Next step: Waiting for lab in-charge approval'
                       : req.status === 'approved'
-                      ? 'Next step: Collect physical gear from lab'
-                      : req.status === 'issued'
-                      ? 'Next step: Return equipment before deadline'
-                      : 'Completed: Equipment returned & inspected'}
+                        ? 'Next step: Collect physical gear from lab'
+                        : req.status === 'issued'
+                          ? 'Next step: Return equipment before deadline'
+                          : 'Completed: Equipment returned & inspected'}
                   </p>
                 </div>
 
@@ -622,11 +624,7 @@ export const ResourcesPage: React.FC = () => {
             </div>
 
             <div className="flex justify-end pt-2 border-t border-ring/60">
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => setSelectedRequestForDetail(null)}
-              >
+              <Button variant="outline" size="sm" onClick={() => setSelectedRequestForDetail(null)}>
                 Close details
               </Button>
             </div>

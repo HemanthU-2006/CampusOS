@@ -172,7 +172,9 @@ export const ClubsPage: React.FC = () => {
             <div className="p-8 rounded-2xl bg-card border border-ring/60 text-center space-y-2">
               <MessageSquare className="w-6 h-6 text-white/30 mx-auto" />
               <p className="text-xs font-semibold text-white">No announcements posted yet</p>
-              <p className="text-[11px] text-white/50">Club updates and broadcasts will appear here.</p>
+              <p className="text-[11px] text-white/50">
+                Club updates and broadcasts will appear here.
+              </p>
             </div>
           ) : (
             posts.map((post) => (
@@ -186,9 +188,7 @@ export const ClubsPage: React.FC = () => {
                 </div>
                 <h3 className="text-sm font-bold text-white">{post.title}</h3>
                 <p className="text-xs text-white/70 leading-relaxed">{post.content}</p>
-                <p className="text-[11px] text-white/40 pt-1">
-                  Posted by {post.authorName}
-                </p>
+                <p className="text-[11px] text-white/40 pt-1">Posted by {post.authorName}</p>
               </div>
             ))
           )}

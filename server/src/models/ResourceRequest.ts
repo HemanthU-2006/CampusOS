@@ -1,12 +1,7 @@
 import mongoose, { Document, Schema, Model } from 'mongoose';
 
 export type ResourceRequestStatus =
-  | 'requested'
-  | 'approved'
-  | 'issued'
-  | 'returned'
-  | 'overdue'
-  | 'rejected';
+  'requested' | 'approved' | 'issued' | 'returned' | 'overdue' | 'rejected';
 
 export interface IResourceRequest extends Document {
   resource: mongoose.Types.ObjectId;

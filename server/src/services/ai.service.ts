@@ -57,13 +57,13 @@ export class AIService {
 
     if (!client) {
       return (
-        "🤖 **CampusOS Sage (Local Mode)**:\n\n" +
+        '🤖 **CampusOS Sage (Local Mode)**:\n\n' +
         "I'm ready to assist you with SJBIT campus services! To unlock live real-time Gemini AI reasoning, simply add your free Gemini API key to `server/.env` as `GEMINI_API_KEY=AIzaSy...`.\n\n" +
         `Regarding your question *"${prompt}"*:\n` +
-        "• **Venues & Bookings**: You can check live availability or reserve BGS Auditorium and Alan Turing Hall under the **Venues** tab.\n" +
-        "• **Campus Events**: View upcoming fests and technical seminars under **Events**.\n" +
-        "• **Hardware Checkout**: Check out sensors, Raspberry Pi, and lab equipment under **Resources**.\n" +
-        "• **Maintenance**: Report any classroom or lab issues under **Maintenance**."
+        '• **Venues & Bookings**: You can check live availability or reserve BGS Auditorium and Alan Turing Hall under the **Venues** tab.\n' +
+        '• **Campus Events**: View upcoming fests and technical seminars under **Events**.\n' +
+        '• **Hardware Checkout**: Check out sensors, Raspberry Pi, and lab equipment under **Resources**.\n' +
+        '• **Maintenance**: Report any classroom or lab issues under **Maintenance**.'
       );
     }
 
@@ -74,11 +74,19 @@ export class AIService {
       // Add system prompt context
       contents.push({
         role: 'user',
-        parts: [{ text: `${SJBIT_SYSTEM_PROMPT}\n\nPlease keep the context above in mind for all responses.` }],
+        parts: [
+          {
+            text: `${SJBIT_SYSTEM_PROMPT}\n\nPlease keep the context above in mind for all responses.`,
+          },
+        ],
       });
       contents.push({
         role: 'model',
-        parts: [{ text: "Understood! I am Sage, the SJBIT CampusOS virtual assistant. How can I assist today?" }],
+        parts: [
+          {
+            text: 'Understood! I am Sage, the SJBIT CampusOS virtual assistant. How can I assist today?',
+          },
+        ],
       });
 
       // Add past turns
@@ -100,13 +108,16 @@ export class AIService {
         contents,
       });
 
-      return response.text || 'I received your query, but could not generate a response. Please try again.';
+      return (
+        response.text ||
+        'I received your query, but could not generate a response. Please try again.'
+      );
     } catch (error: any) {
       console.error('Gemini API Error:', error?.message || error);
       return (
-        "⚠️ **AI Service Notice**: Unable to contact the Gemini AI model at this moment (" +
+        '⚠️ **AI Service Notice**: Unable to contact the Gemini AI model at this moment (' +
         (error?.message || 'Check API key or network') +
-        "). You can still browse and use all CampusOS features normally."
+        '). You can still browse and use all CampusOS features normally.'
       );
     }
   }
@@ -121,19 +132,72 @@ export class AIService {
     // Deterministic fallback if API key is not configured yet
     const fallbackCategory = ((): MaintenanceTriageResult['category'] => {
       const lower = `${title} ${description}`.toLowerCase();
-      if (lower.includes('light') || lower.includes('wire') || lower.includes('power') || lower.includes('spark') || lower.includes('switch')) return 'electrical';
-      if (lower.includes('water') || lower.includes('pipe') || lower.includes('tap') || lower.includes('leak') || lower.includes('drain')) return 'plumbing';
-      if (lower.includes('ac') || lower.includes('cooling') || lower.includes('heat') || lower.includes('hvac')) return 'hvac';
-      if (lower.includes('projector') || lower.includes('screen') || lower.includes('pc') || lower.includes('wifi') || lower.includes('mouse')) return 'it_hardware';
-      if (lower.includes('desk') || lower.includes('chair') || lower.includes('bench') || lower.includes('door') || lower.includes('window')) return 'furniture';
-      if (lower.includes('clean') || lower.includes('garbage') || lower.includes('trash') || lower.includes('floor')) return 'cleaning';
+      if (
+        lower.includes('light') ||
+        lower.includes('wire') ||
+        lower.includes('power') ||
+        lower.includes('spark') ||
+        lower.includes('switch')
+      )
+        return 'electrical';
+      if (
+        lower.includes('water') ||
+        lower.includes('pipe') ||
+        lower.includes('tap') ||
+        lower.includes('leak') ||
+        lower.includes('drain')
+      )
+        return 'plumbing';
+      if (
+        lower.includes('ac') ||
+        lower.includes('cooling') ||
+        lower.includes('heat') ||
+        lower.includes('hvac')
+      )
+        return 'hvac';
+      if (
+        lower.includes('projector') ||
+        lower.includes('screen') ||
+        lower.includes('pc') ||
+        lower.includes('wifi') ||
+        lower.includes('mouse')
+      )
+        return 'it_hardware';
+      if (
+        lower.includes('desk') ||
+        lower.includes('chair') ||
+        lower.includes('bench') ||
+        lower.includes('door') ||
+        lower.includes('window')
+      )
+        return 'furniture';
+      if (
+        lower.includes('clean') ||
+        lower.includes('garbage') ||
+        lower.includes('trash') ||
+        lower.includes('floor')
+      )
+        return 'cleaning';
       return 'other';
     })();
 
     const fallbackPriority = ((): MaintenanceTriageResult['priority'] => {
       const lower = `${title} ${description}`.toLowerCase();
-      if (lower.includes('fire') || lower.includes('spark') || lower.includes('flood') || lower.includes('urgent') || lower.includes('danger')) return 'critical';
-      if (lower.includes('leak') || lower.includes('broken') || lower.includes('not working') || lower.includes('exam')) return 'high';
+      if (
+        lower.includes('fire') ||
+        lower.includes('spark') ||
+        lower.includes('flood') ||
+        lower.includes('urgent') ||
+        lower.includes('danger')
+      )
+        return 'critical';
+      if (
+        lower.includes('leak') ||
+        lower.includes('broken') ||
+        lower.includes('not working') ||
+        lower.includes('exam')
+      )
+        return 'high';
       return 'medium';
     })();
 
@@ -170,7 +234,10 @@ Return ONLY valid JSON with keys: category, priority, summary, suggestedAction, 
 
       const text = response.text || '{}';
       // Clean up markdown code block if present
-      const cleanJson = text.replace(/```json/g, '').replace(/```/g, '').trim();
+      const cleanJson = text
+        .replace(/```json/g, '')
+        .replace(/```/g, '')
+        .trim();
       const parsed = JSON.parse(cleanJson);
 
       return {

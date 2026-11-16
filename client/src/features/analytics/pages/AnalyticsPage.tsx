@@ -134,7 +134,8 @@ export const AnalyticsPage: React.FC = () => {
 
           {/* Plain 1-Line Takeaway */}
           <p className="text-xs text-lime font-medium pt-1">
-            Takeaway: Student participation has grown 36% this semester across tech fests and workshops.
+            Takeaway: Student participation has grown 36% this semester across tech fests and
+            workshops.
           </p>
         </div>
 
@@ -166,7 +167,8 @@ export const AnalyticsPage: React.FC = () => {
 
           {/* Plain 1-Line Takeaway */}
           <p className="text-xs text-lime font-medium pt-1">
-            Takeaway: BGS Auditorium, CSE Hall, and AI Lab are at peak occupancy across campus events.
+            Takeaway: BGS Auditorium, CSE Hall, and AI Lab are at peak occupancy across campus
+            events.
           </p>
         </div>
 
@@ -207,7 +209,8 @@ export const AnalyticsPage: React.FC = () => {
 
           {/* Plain 1-Line Takeaway */}
           <p className="text-xs text-lime font-medium pt-1">
-            Takeaway: Electrical and AC issues make up 64% of reports, with 88% resolved within 4 hours.
+            Takeaway: Electrical and AC issues make up 64% of reports, with 88% resolved within 4
+            hours.
           </p>
         </div>
 
@@ -239,7 +242,8 @@ export const AnalyticsPage: React.FC = () => {
 
           {/* Plain 1-Line Takeaway */}
           <p className="text-xs text-lime font-medium pt-1">
-            Takeaway: Over 91% of students maintain safe attendance across all 9 academic branches at SJBIT.
+            Takeaway: Over 91% of students maintain safe attendance across all 9 academic branches
+            at SJBIT.
           </p>
         </div>
       </div>

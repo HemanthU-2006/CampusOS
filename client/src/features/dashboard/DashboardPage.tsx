@@ -98,9 +98,7 @@ export const DashboardPage: React.FC = () => {
 
       {/* 2. 3 to 4 Big PillCard Shortcuts Per Role */}
       <section className="space-y-3">
-        <h2 className="text-base font-bold text-white tracking-tight">
-          Quick Actions
-        </h2>
+        <h2 className="text-base font-bold text-white tracking-tight">Quick Actions</h2>
 
         {/* Student Shortcuts */}
         {role === 'student' && (
@@ -243,9 +241,7 @@ export const DashboardPage: React.FC = () => {
             <h2 className="text-base font-bold text-white tracking-tight">
               What needs your attention
             </h2>
-            <p className="text-xs text-white/50">
-              Items requiring action or upcoming reminders
-            </p>
+            <p className="text-xs text-white/50">Items requiring action or upcoming reminders</p>
           </div>
         </div>
 
@@ -319,9 +315,7 @@ export const DashboardPage: React.FC = () => {
                   </h3>
                   <Badge variant="info">Today</Badge>
                 </div>
-                <p className="text-xs text-white/60">
-                  Scheduled lecture completed at 11:30 AM
-                </p>
+                <p className="text-xs text-white/60">Scheduled lecture completed at 11:30 AM</p>
                 <p className="text-xs text-lime font-medium">
                   Next step: Mark attendance for 42 students
                 </p>
@@ -344,9 +338,7 @@ export const DashboardPage: React.FC = () => {
             <div className="p-4 rounded-2xl bg-card border border-ring/80 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <div className="space-y-1">
                 <div className="flex items-center gap-2">
-                  <h3 className="text-sm font-semibold text-white">
-                    Robotics Build Sprint 2026
-                  </h3>
+                  <h3 className="text-sm font-semibold text-white">Robotics Build Sprint 2026</h3>
                   <Badge variant="lime">184 / 250 Registered</Badge>
                 </div>
                 <p className="text-xs text-white/60">
@@ -449,7 +441,8 @@ export const DashboardPage: React.FC = () => {
                   <Badge variant="lime">92.1% Compliant</Badge>
                 </div>
                 <p className="text-xs text-white/60">
-                  Attendance registers across 9 departments checked. Minimum 75% attendance threshold maintained.
+                  Attendance registers across 9 departments checked. Minimum 75% attendance
+                  threshold maintained.
                 </p>
                 <p className="text-xs text-lime font-medium">
                   Next step: Inspect consolidated attendance report and branch rosters

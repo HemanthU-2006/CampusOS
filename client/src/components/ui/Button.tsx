@@ -9,7 +9,10 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
 }
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant = 'lime', size = 'md', isLoading = false, children, disabled, ...props }, ref) => {
+  (
+    { className, variant = 'lime', size = 'md', isLoading = false, children, disabled, ...props },
+    ref
+  ) => {
     const baseStyles =
       'inline-flex items-center justify-center font-medium transition-all duration-200 active:translate-y-0 cursor-pointer disabled:opacity-50 disabled:pointer-events-none select-none';
 
@@ -17,8 +20,10 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       lime: 'bg-lime text-lime-ink hover:-translate-y-[1px] hover:shadow-[0_0_20px_rgba(131,243,77,0.45)] font-semibold border border-transparent',
       outline:
         'border border-lime/60 text-lime bg-transparent hover:bg-lime/10 hover:border-lime hover:-translate-y-[1px]',
-      white: 'bg-white text-page hover:bg-white/90 hover:-translate-y-[1px] font-medium border border-transparent',
-      ghost: 'bg-transparent text-white/80 hover:text-white hover:bg-white/5 border border-transparent',
+      white:
+        'bg-white text-page hover:bg-white/90 hover:-translate-y-[1px] font-medium border border-transparent',
+      ghost:
+        'bg-transparent text-white/80 hover:text-white hover:bg-white/5 border border-transparent',
       danger:
         'bg-red-500/10 text-red-400 border border-red-500/30 hover:bg-red-500/20 hover:border-red-500/50 hover:-translate-y-[1px]',
     };

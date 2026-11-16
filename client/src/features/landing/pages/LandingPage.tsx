@@ -25,7 +25,6 @@ import {
 import { Button } from '@/components/ui/Button';
 import { PillCard } from '@/components/ui/PillCard';
 import { Badge } from '@/components/ui/Badge';
-import { ISEFacultySection } from '@/features/departments/components/ISEFacultySection';
 
 export const LandingPage: React.FC = () => {
   return (
@@ -87,7 +86,8 @@ export const LandingPage: React.FC = () => {
 
           {/* Subtitle */}
           <p className="text-base sm:text-xl text-white/85 max-w-2xl mx-auto leading-relaxed drop-shadow-md">
-            Campus tech fests, student clubs, VTU attendance tracking, and fast repair resolution across all 9 SJBIT engineering &amp; management branches.
+            Campus tech fests, student clubs, VTU attendance tracking, and fast repair resolution
+            across all 9 SJBIT engineering &amp; management branches.
           </p>
 
           {/* Action CTAs */}
@@ -140,7 +140,9 @@ export const LandingPage: React.FC = () => {
                 />
                 <div className="h-8 sm:h-9 px-2 rounded bg-white/95 flex flex-col justify-center items-center shadow-sm">
                   <span className="font-extrabold text-blue-900 text-[11px] leading-none">ISO</span>
-                  <span className="text-[8px] text-slate-700 font-bold leading-none mt-0.5">9001:2015</span>
+                  <span className="text-[8px] text-slate-700 font-bold leading-none mt-0.5">
+                    9001:2015
+                  </span>
                 </div>
                 <img
                   src="/recognitions/vtu.png"
@@ -170,15 +172,25 @@ export const LandingPage: React.FC = () => {
 
               {/* Official Admission Counseling Codes */}
               <div className="pt-2.5 border-t border-white/10 flex flex-wrap items-center justify-center gap-x-5 gap-y-1.5 text-[11px] sm:text-xs text-white/80 font-semibold">
-                <span>CET: <strong className="text-lime">E115</strong></span>
+                <span>
+                  CET: <strong className="text-lime">E115</strong>
+                </span>
                 <span className="text-white/30 hidden sm:inline">|</span>
-                <span>COMED-K: <strong className="text-lime">E107</strong></span>
+                <span>
+                  COMED-K: <strong className="text-lime">E107</strong>
+                </span>
                 <span className="text-white/30 hidden sm:inline">|</span>
-                <span>MBA: <strong className="text-lime">B288</strong></span>
+                <span>
+                  MBA: <strong className="text-lime">B288</strong>
+                </span>
                 <span className="text-white/30 hidden sm:inline">|</span>
-                <span>M.Tech: <strong className="text-lime">T871</strong></span>
+                <span>
+                  M.Tech: <strong className="text-lime">T871</strong>
+                </span>
                 <span className="text-white/30 hidden sm:inline">|</span>
-                <span>MCA: <strong className="text-lime">C547MC</strong></span>
+                <span>
+                  MCA: <strong className="text-lime">C547MC</strong>
+                </span>
               </div>
             </div>
           </div>
@@ -190,7 +202,9 @@ export const LandingPage: React.FC = () => {
             href="#overview"
             className="group flex flex-col items-center gap-2 hover:text-lime transition-colors"
           >
-            <span className="group-hover:tracking-widest transition-all">EXPLORE SJBIT OVERVIEW</span>
+            <span className="group-hover:tracking-widest transition-all">
+              EXPLORE SJBIT OVERVIEW
+            </span>
             <div className="w-6 h-10 rounded-full border border-white/20 flex items-start justify-center p-1.5 group-hover:border-lime transition-colors">
               <div className="w-1.5 h-2.5 rounded-full bg-lime animate-bounce" />
             </div>
@@ -205,55 +219,83 @@ export const LandingPage: React.FC = () => {
         <div className="rounded-2xl bg-[#131418] p-5 sm:p-6 shadow-xl border border-white/10 backdrop-blur-xl">
           {/* Recognition Logos Row */}
           <div className="flex flex-wrap items-center justify-around sm:justify-between gap-4 sm:gap-6 px-2 sm:px-4">
-            <div className="flex items-center justify-center p-2 rounded-xl bg-white/95 shadow-sm hover:scale-105 transition-transform" title="NAAC 'A+' Grade Accredited">
+            <div
+              className="flex items-center justify-center p-2 rounded-xl bg-white/95 shadow-sm hover:scale-105 transition-transform"
+              title="NAAC 'A+' Grade Accredited"
+            >
               <img
                 src="/recognitions/naac.png"
                 alt="NAAC A+ Accredited"
                 className="h-9 sm:h-11 w-auto object-contain"
               />
             </div>
-            <div className="flex items-center justify-center p-2 rounded-xl bg-white/95 shadow-sm hover:scale-105 transition-transform" title="NBA Accredited Programmes">
+            <div
+              className="flex items-center justify-center p-2 rounded-xl bg-white/95 shadow-sm hover:scale-105 transition-transform"
+              title="NBA Accredited Programmes"
+            >
               <img
                 src="/recognitions/nba.png"
                 alt="NBA Accredited"
                 className="h-9 sm:h-11 w-auto object-contain"
               />
             </div>
-            <div className="flex items-center justify-center p-2 rounded-xl bg-white/95 shadow-sm hover:scale-105 transition-transform" title="ISO 9001:2015 Certified">
+            <div
+              className="flex items-center justify-center p-2 rounded-xl bg-white/95 shadow-sm hover:scale-105 transition-transform"
+              title="ISO 9001:2015 Certified"
+            >
               <div className="h-9 sm:h-11 px-3 rounded-lg border-2 border-blue-900/30 flex flex-col justify-center items-center text-center bg-blue-50/50">
-                <span className="font-extrabold text-blue-900 text-xs sm:text-sm tracking-tight leading-none">ISO</span>
-                <span className="text-[9px] text-slate-700 font-bold leading-none mt-0.5">9001:2015</span>
+                <span className="font-extrabold text-blue-900 text-xs sm:text-sm tracking-tight leading-none">
+                  ISO
+                </span>
+                <span className="text-[9px] text-slate-700 font-bold leading-none mt-0.5">
+                  9001:2015
+                </span>
               </div>
             </div>
-            <div className="flex items-center justify-center p-2 rounded-xl bg-white/95 shadow-sm hover:scale-105 transition-transform" title="Affiliated to Visvesvaraya Technological University">
+            <div
+              className="flex items-center justify-center p-2 rounded-xl bg-white/95 shadow-sm hover:scale-105 transition-transform"
+              title="Affiliated to Visvesvaraya Technological University"
+            >
               <img
                 src="/recognitions/vtu.png"
                 alt="VTU Autonomous"
                 className="h-9 sm:h-11 w-auto object-contain"
               />
             </div>
-            <div className="flex items-center justify-center p-2 rounded-xl bg-white/95 shadow-sm hover:scale-105 transition-transform" title="Approved by AICTE New Delhi">
+            <div
+              className="flex items-center justify-center p-2 rounded-xl bg-white/95 shadow-sm hover:scale-105 transition-transform"
+              title="Approved by AICTE New Delhi"
+            >
               <img
                 src="/recognitions/aicte.png"
                 alt="AICTE Approved"
                 className="h-9 sm:h-11 w-auto object-contain"
               />
             </div>
-            <div className="flex items-center justify-center p-2 rounded-xl bg-white/95 shadow-sm hover:scale-105 transition-transform" title="NIRF Ranked Institution">
+            <div
+              className="flex items-center justify-center p-2 rounded-xl bg-white/95 shadow-sm hover:scale-105 transition-transform"
+              title="NIRF Ranked Institution"
+            >
               <img
                 src="/recognitions/nirf.png"
                 alt="NIRF Ranked"
                 className="h-9 sm:h-11 w-auto object-contain"
               />
             </div>
-            <div className="flex items-center justify-center p-2 rounded-xl bg-white/95 shadow-sm hover:scale-105 transition-transform" title="Institution's Innovation Council - MoE">
+            <div
+              className="flex items-center justify-center p-2 rounded-xl bg-white/95 shadow-sm hover:scale-105 transition-transform"
+              title="Institution's Innovation Council - MoE"
+            >
               <img
                 src="/recognitions/iic.png"
                 alt="Institution's Innovation Council"
                 className="h-9 sm:h-11 w-auto object-contain"
               />
             </div>
-            <div className="flex items-center justify-center p-2 rounded-xl bg-white/95 shadow-sm hover:scale-105 transition-transform" title="QS I-GAUGE Gold Rated">
+            <div
+              className="flex items-center justify-center p-2 rounded-xl bg-white/95 shadow-sm hover:scale-105 transition-transform"
+              title="QS I-GAUGE Gold Rated"
+            >
               <img
                 src="/recognitions/qs-iguage.png"
                 alt="QS I-GAUGE Gold"
@@ -264,15 +306,25 @@ export const LandingPage: React.FC = () => {
 
           {/* Official Counseling Codes Row (From Official Banner) */}
           <div className="mt-4 pt-3.5 border-t border-white/10 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs sm:text-sm font-bold text-white/80 tracking-wide text-center">
-            <span>CET Code: <strong className="text-lime">E115</strong></span>
+            <span>
+              CET Code: <strong className="text-lime">E115</strong>
+            </span>
             <span className="text-white/20 hidden sm:inline">|</span>
-            <span>COMED-K: <strong className="text-lime">E107</strong></span>
+            <span>
+              COMED-K: <strong className="text-lime">E107</strong>
+            </span>
             <span className="text-white/20 hidden sm:inline">|</span>
-            <span>MBA: <strong className="text-lime">B288</strong></span>
+            <span>
+              MBA: <strong className="text-lime">B288</strong>
+            </span>
             <span className="text-white/20 hidden sm:inline">|</span>
-            <span>M.Tech: <strong className="text-lime">T871</strong></span>
+            <span>
+              M.Tech: <strong className="text-lime">T871</strong>
+            </span>
             <span className="text-white/20 hidden sm:inline">|</span>
-            <span>MCA: <strong className="text-lime">C547MC</strong></span>
+            <span>
+              MCA: <strong className="text-lime">C547MC</strong>
+            </span>
           </div>
         </div>
       </section>
@@ -292,8 +344,10 @@ export const LandingPage: React.FC = () => {
             Exceptional Leadership &amp; Vision
           </h2>
           <p className="text-sm text-white/70 leading-relaxed">
-            Established under the divine aegis of <strong className="text-white">Sri Adichunchanagiri Shikshana Trust ®</strong>, 
-            SJBIT has evolved into one of Karnataka's premier autonomous institutions, combining academic rigor, holistic human values, and world-class infrastructure.
+            Established under the divine aegis of{' '}
+            <strong className="text-white">Sri Adichunchanagiri Shikshana Trust ®</strong>, SJBIT
+            has evolved into one of Karnataka's premier autonomous institutions, combining academic
+            rigor, holistic human values, and world-class infrastructure.
           </p>
         </div>
 
@@ -302,9 +356,9 @@ export const LandingPage: React.FC = () => {
           {/* Card 1: Founder President */}
           <div className="p-5 rounded-2xl bg-[#141519] border border-white/10 hover:border-amber-400/50 transition-all duration-300 space-y-4 shadow-md hover:-translate-y-1 flex flex-col justify-between group">
             <div className="space-y-3.5">
-              <div className="relative overflow-hidden rounded-xl border-2 border-amber-400/50 shadow-md aspect-square bg-[#0c0d10] flex items-center justify-center">
+              <div className="relative overflow-hidden rounded-xl border-2 border-amber-400/50 shadow-md aspect-[4/5] bg-[#0c0d10] flex items-center justify-center">
                 <img
-                  src="/leadership/balagangadharanatha-swamiji.jpg"
+                  src="/leadership/balagangadharanatha-swamiji.png"
                   alt="Jagadguru Sri Sri Sri Dr. Balagangadharanatha Maha Swamiji"
                   className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300"
                 />
@@ -317,7 +371,8 @@ export const LandingPage: React.FC = () => {
                   Jagadguru Sri Sri Sri Dr. Balagangadharanatha Maha Swamiji
                 </h3>
                 <p className="text-xs text-white/60 mt-1 leading-relaxed">
-                  Padma Bhushan Awardee &amp; Visionary Founder, Sri Adichunchanagiri Shikshana Trust®
+                  Padma Bhushan Awardee &amp; Visionary Founder, Sri Adichunchanagiri Shikshana
+                  Trust®
                 </p>
               </div>
             </div>
@@ -329,9 +384,9 @@ export const LandingPage: React.FC = () => {
           {/* Card 2: President */}
           <div className="p-5 rounded-2xl bg-[#141519] border border-white/10 hover:border-lime/50 transition-all duration-300 space-y-4 shadow-md hover:-translate-y-1 flex flex-col justify-between group">
             <div className="space-y-3.5">
-              <div className="relative overflow-hidden rounded-xl border-2 border-lime/50 shadow-md aspect-square bg-[#0c0d10] flex items-center justify-center">
+              <div className="relative overflow-hidden rounded-xl border-2 border-lime/50 shadow-md aspect-[4/5] bg-[#0c0d10] flex items-center justify-center">
                 <img
-                  src="/leadership/nirmalanandanatha-swamiji.jpg"
+                  src="/leadership/nirmalanandanatha-swamiji.png"
                   alt="Sri Sri Sri Dr. Nirmalanandanatha Maha Swamiji"
                   className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300"
                 />
@@ -344,7 +399,8 @@ export const LandingPage: React.FC = () => {
                   Sri Sri Sri Dr. Nirmalanandanatha Maha Swamiji
                 </h3>
                 <p className="text-xs text-white/60 mt-1 leading-relaxed">
-                  Pontiff &amp; President, Sri Adichunchanagiri Mahasamsthana Math &amp; Shikshana Trust®
+                  Pontiff &amp; President, Sri Adichunchanagiri Mahasamsthana Math &amp; Shikshana
+                  Trust®
                 </p>
               </div>
             </div>
@@ -356,9 +412,9 @@ export const LandingPage: React.FC = () => {
           {/* Card 3: Managing Director */}
           <div className="p-5 rounded-2xl bg-[#141519] border border-white/10 hover:border-blue-400/50 transition-all duration-300 space-y-4 shadow-md hover:-translate-y-1 flex flex-col justify-between group">
             <div className="space-y-3.5">
-              <div className="relative overflow-hidden rounded-xl border-2 border-blue-400/50 shadow-md aspect-square bg-[#0c0d10] flex items-center justify-center">
+              <div className="relative overflow-hidden rounded-xl border-2 border-blue-400/50 shadow-md aspect-[4/5] bg-[#0c0d10] flex items-center justify-center">
                 <img
-                  src="/leadership/prakashanatha-swamiji.jpg"
+                  src="/leadership/prakashanatha-swamiji.png"
                   alt="Sri Sri Dr. Prakashanatha Swamiji"
                   className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300"
                 />
@@ -383,14 +439,14 @@ export const LandingPage: React.FC = () => {
           {/* Card 4: Principal & Chief Administrator */}
           <div className="p-5 rounded-2xl bg-[#141519] border border-white/10 hover:border-rose-400/50 transition-all duration-300 space-y-4 shadow-md hover:-translate-y-1 flex flex-col justify-between group">
             <div className="space-y-3.5">
-              <div className="relative overflow-hidden rounded-xl border-2 border-rose-400/50 shadow-md aspect-square bg-[#0c0d10] flex items-center justify-center p-4">
+              <div className="relative overflow-hidden rounded-xl border-2 border-rose-400/50 shadow-md aspect-[4/5] bg-[#0c0d10] flex items-center justify-center">
                 <img
-                  src="/sjbit-emblem.png"
-                  alt="Principal Office - SJBIT"
-                  className="w-24 h-24 rounded-full object-cover bg-white p-1 border-2 border-rose-400/70 shadow-lg group-hover:scale-105 transition-transform duration-300"
+                  src="/leadership/mahendra-prashanth.png"
+                  alt="Dr. K. V. Mahendra Prashanth - Principal"
+                  className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300"
                 />
                 <span className="absolute bottom-2 left-2 bg-black/80 backdrop-blur-md px-2 py-0.5 rounded text-[9px] font-bold text-rose-400 uppercase tracking-wider border border-rose-400/30">
-                  Principal Office
+                  Principal
                 </span>
               </div>
               <div>
@@ -402,9 +458,13 @@ export const LandingPage: React.FC = () => {
                 </p>
               </div>
             </div>
-            <div className="pt-3 border-t border-white/10">
-              <Link to="/login?role=admin" className="text-xs font-semibold text-rose-400 hover:text-white flex items-center gap-1">
-                Admin Office Portal →
+            <div className="pt-3 border-t border-white/10 flex items-center justify-between">
+              <span className="text-[11px] text-rose-300/80 font-medium">Principal Office</span>
+              <Link
+                to="/login?role=admin"
+                className="text-xs font-semibold text-rose-400 hover:text-white flex items-center gap-1 transition-colors"
+              >
+                Admin Portal →
               </Link>
             </div>
           </div>
@@ -446,21 +506,76 @@ export const LandingPage: React.FC = () => {
             All 9 SJBIT Departments
           </h2>
           <p className="text-sm text-white/60">
-            VTU Autonomous engineering &amp; management branches with specialized labs and dedicated faculty leadership.
+            VTU Autonomous engineering &amp; management branches with specialized labs and dedicated
+            faculty leadership.
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
           {[
-            { code: 'CSE', name: 'Computer Science & Engineering', hod: 'Dr. Krishna A N', block: 'Aryabhata Block, 2nd & 3rd Floors', scheme: '2022 Scheme (VTU)' },
-            { code: 'ISE', name: 'Information Science & Engineering', hod: 'Dr. Gopalakrishna M T', block: 'Aryabhata Block, 1st Floor', scheme: '2022 Scheme (VTU)' },
-            { code: 'AI&ML', name: 'Artificial Intelligence & Machine Learning', hod: 'Dr. Abhilash C N', block: 'Sir M.V. Block, 3rd Floor', scheme: '2022 Scheme (VTU)' },
-            { code: 'CS-DS', name: 'CSE (Data Science)', hod: 'Dr. Chandrashekar D K (I/C)', block: 'Sir M.V. Block, 2nd Floor', scheme: '2022 Scheme (VTU)' },
-            { code: 'ECE', name: 'Electronics & Communication Engineering', hod: 'Dr. Chandrappa D N', block: 'C.V. Raman Block, 2nd & 3rd Floors', scheme: '2022 Scheme (VTU)' },
-            { code: 'EEE', name: 'Electrical & Electronics Engineering', hod: 'Dr. Chandrashekar M J', block: 'C.V. Raman Block, 1st Floor', scheme: '2022 Scheme (VTU)' },
-            { code: 'MECH', name: 'Mechanical Engineering', hod: 'Dr. Vitala H.R', block: 'Mechanical Block & Central Workshops', scheme: '2022 Scheme (VTU)' },
-            { code: 'CIVIL', name: 'Civil Engineering', hod: 'Dr. Prasad C S M V', block: 'Civil Engineering Block & CAD Labs', scheme: '2022 Scheme (VTU)' },
-            { code: 'MBA', name: 'Department of Management Studies', hod: 'Dr. Mamatha J', block: 'MBA & PG Studies Block, 4th Floor', scheme: 'Autonomous PG Scheme' },
+            {
+              code: 'CSE',
+              name: 'Computer Science & Engineering',
+              hod: 'Dr. Krishna A N',
+              block: 'Aryabhata Block, 2nd & 3rd Floors',
+              scheme: '2022 Scheme (VTU)',
+            },
+            {
+              code: 'ISE',
+              name: 'Information Science & Engineering',
+              hod: 'Dr. Gopalakrishna M T',
+              block: 'Aryabhata Block, 1st Floor',
+              scheme: '2022 Scheme (VTU)',
+            },
+            {
+              code: 'AI&ML',
+              name: 'Artificial Intelligence & Machine Learning',
+              hod: 'Dr. Abhilash C N',
+              block: 'Sir M.V. Block, 3rd Floor',
+              scheme: '2022 Scheme (VTU)',
+            },
+            {
+              code: 'CS-DS',
+              name: 'CSE (Data Science)',
+              hod: 'Dr. Chandrashekar D K (I/C)',
+              block: 'Sir M.V. Block, 2nd Floor',
+              scheme: '2022 Scheme (VTU)',
+            },
+            {
+              code: 'ECE',
+              name: 'Electronics & Communication Engineering',
+              hod: 'Dr. Chandrappa D N',
+              block: 'C.V. Raman Block, 2nd & 3rd Floors',
+              scheme: '2022 Scheme (VTU)',
+            },
+            {
+              code: 'EEE',
+              name: 'Electrical & Electronics Engineering',
+              hod: 'Dr. Chandrashekar M J',
+              block: 'C.V. Raman Block, 1st Floor',
+              scheme: '2022 Scheme (VTU)',
+            },
+            {
+              code: 'MECH',
+              name: 'Mechanical Engineering',
+              hod: 'Dr. Vitala H.R',
+              block: 'Mechanical Block & Central Workshops',
+              scheme: '2022 Scheme (VTU)',
+            },
+            {
+              code: 'CIVIL',
+              name: 'Civil Engineering',
+              hod: 'Dr. Prasad C S M V',
+              block: 'Civil Engineering Block & CAD Labs',
+              scheme: '2022 Scheme (VTU)',
+            },
+            {
+              code: 'MBA',
+              name: 'Department of Management Studies',
+              hod: 'Dr. Mamatha J',
+              block: 'MBA & PG Studies Block, 4th Floor',
+              scheme: 'Autonomous PG Scheme',
+            },
           ].map((b) => (
             <div
               key={b.code}
@@ -474,35 +589,31 @@ export const LandingPage: React.FC = () => {
                   <span className="text-[10px] text-white/50">{b.scheme}</span>
                 </div>
                 <h3 className="font-extrabold text-base text-white tracking-tight">{b.name}</h3>
-                <p className="text-xs text-white/60">HOD: <strong className="text-white">{b.hod}</strong></p>
+                <p className="text-xs text-white/60">
+                  HOD: <strong className="text-white">{b.hod}</strong>
+                </p>
                 <p className="text-[11px] text-white/50">{b.block}</p>
               </div>
 
               <div className="pt-3 border-t border-white/10 flex items-center justify-between">
-                <Link
-                  to="/attendance"
-                  className="text-xs text-lime font-semibold hover:underline flex items-center gap-1"
-                >
-                  View Attendance Registers →
-                </Link>
-                {b.code === 'ISE' && (
-                  <a
-                    href="#ise-faculty"
-                    className="text-[11px] text-amber-400 font-bold hover:underline"
+                {b.code === 'ISE' ? (
+                  <Link
+                    to="/faculty/ise"
+                    className="inline-flex items-center gap-1 text-xs text-amber-400 hover:text-amber-300 font-bold group/btn transition-colors"
                   >
-                    View Faculty (41) ↓
-                  </a>
+                    View Faculty (41) <ArrowRight className="w-3.5 h-3.5 group-hover/btn:translate-x-1 transition-transform" />
+                  </Link>
+                ) : (
+                  <span className="text-[11px] text-white/50 font-medium">SJBIT Autonomous</span>
                 )}
+                <span className="text-[10px] text-white/40 uppercase tracking-wider font-mono">
+                  {b.code === 'ISE' ? 'Information Science' : 'VTU Accredited'}
+                </span>
               </div>
             </div>
           ))}
         </div>
       </section>
-
-      {/* =========================================================================
-          FEATURED ISE FACULTY SPOTLIGHT (Authentic Faculty Roster & Photos)
-          ========================================================================= */}
-      <ISEFacultySection />
 
       {/* =========================================================================
           4. LIFE @ SJBIT & CAMPUS INFRASTRUCTURE (From Main Website Dropdown)
@@ -519,7 +630,8 @@ export const LandingPage: React.FC = () => {
             World-Class Campus Infrastructure
           </h2>
           <p className="text-sm text-white/60">
-            High-tech centers of excellence, expansive library resources, modern hostels, and industry collaborations.
+            High-tech centers of excellence, expansive library resources, modern hostels, and
+            industry collaborations.
           </p>
         </div>
 
@@ -530,7 +642,8 @@ export const LandingPage: React.FC = () => {
             </div>
             <h3 className="font-bold text-white text-base">Central Library &amp; Info Centre</h3>
             <p className="text-xs text-white/70 leading-relaxed">
-              45,000+ volumes, IEEE Xplore, ScienceDirect digital journals, automated barcode book checkout, and NDLI club facilities.
+              45,000+ volumes, IEEE Xplore, ScienceDirect digital journals, automated barcode book
+              checkout, and NDLI club facilities.
             </p>
           </div>
 
@@ -540,7 +653,8 @@ export const LandingPage: React.FC = () => {
             </div>
             <h3 className="font-bold text-white text-base">Industry Collaboration CoEs</h3>
             <p className="text-xs text-white/70 leading-relaxed">
-              Active technology labs co-sponsored by IBM, Cisco Networking Academy, Texas Instruments, Bentley Systems, Ethnotech, and Google Cloud.
+              Active technology labs co-sponsored by IBM, Cisco Networking Academy, Texas
+              Instruments, Bentley Systems, Ethnotech, and Google Cloud.
             </p>
           </div>
 
@@ -550,7 +664,8 @@ export const LandingPage: React.FC = () => {
             </div>
             <h3 className="font-bold text-white text-base">BGS Cultural Auditorium</h3>
             <p className="text-xs text-white/70 leading-relaxed">
-              2,500-seat acoustic auditorium hosting flagship tech symposiums, HackSJBIT, annual fests, and international conferences.
+              2,500-seat acoustic auditorium hosting flagship tech symposiums, HackSJBIT, annual
+              fests, and international conferences.
             </p>
           </div>
 
@@ -560,7 +675,8 @@ export const LandingPage: React.FC = () => {
             </div>
             <h3 className="font-bold text-white text-base">Sports Arena &amp; Gymnasiums</h3>
             <p className="text-xs text-white/70 leading-relaxed">
-              Cricket pavilion, football grounds, indoor badminton complex, basketball courts, and regular VTU inter-collegiate tournaments.
+              Cricket pavilion, football grounds, indoor badminton complex, basketball courts, and
+              regular VTU inter-collegiate tournaments.
             </p>
           </div>
 
@@ -570,7 +686,8 @@ export const LandingPage: React.FC = () => {
             </div>
             <h3 className="font-bold text-white text-base">Hostels &amp; Green Campus</h3>
             <p className="text-xs text-white/70 leading-relaxed">
-              Safe on-campus residential hostels for 1,200+ students, 100% solar lighting, sewage treatment plants, and rainwater harvesting.
+              Safe on-campus residential hostels for 1,200+ students, 100% solar lighting, sewage
+              treatment plants, and rainwater harvesting.
             </p>
           </div>
 
@@ -580,7 +697,8 @@ export const LandingPage: React.FC = () => {
             </div>
             <h3 className="font-bold text-white text-base">Student Guilds &amp; NSS</h3>
             <p className="text-xs text-white/70 leading-relaxed">
-              Coding guilds, robotics clubs, Indian Concrete Institute chapters, Red Cross units, and community extension programs.
+              Coding guilds, robotics clubs, Indian Concrete Institute chapters, Red Cross units,
+              and community extension programs.
             </p>
           </div>
         </div>
@@ -601,7 +719,9 @@ export const LandingPage: React.FC = () => {
             Bridging Academia &amp; Industry Excellence
           </h2>
           <p className="text-sm text-white/70 leading-relaxed">
-            Leading multinational technology corporations and global research institutions partnering with SJBIT for campus recruitments, student internships, and state-of-the-art Centers of Excellence.
+            Leading multinational technology corporations and global research institutions
+            partnering with SJBIT for campus recruitments, student internships, and state-of-the-art
+            Centers of Excellence.
           </p>
         </div>
 
@@ -619,7 +739,10 @@ export const LandingPage: React.FC = () => {
             { name: 'Oracle', file: 'oracle.jpg' },
             { name: 'Rexroth (A Bosch Company)', file: 'rexroth.jpg' },
             { name: 'Texas Instruments', file: 'texas-instruments.jpg' },
-            { name: 'University of Agricultural Sciences', file: 'university-agricultural-sciences.jpg' },
+            {
+              name: 'University of Agricultural Sciences',
+              file: 'university-agricultural-sciences.jpg',
+            },
           ].map((c) => (
             <div
               key={c.name}
@@ -638,9 +761,12 @@ export const LandingPage: React.FC = () => {
         {/* Placement Key Highlights */}
         <div className="p-6 rounded-2xl bg-card border border-ring/80 flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="space-y-1 text-center md:text-left">
-            <h4 className="text-lg font-extrabold text-white">Department Placement Drives &amp; Internships</h4>
+            <h4 className="text-lg font-extrabold text-white">
+              Department Placement Drives &amp; Internships
+            </h4>
             <p className="text-xs text-white/60">
-              Active recruitment across all 9 departments: CSE, ISE, AI&amp;ML, CS-DS, ECE, EEE, Mechanical, Civil, and MBA.
+              Active recruitment across all 9 departments: CSE, ISE, AI&amp;ML, CS-DS, ECE, EEE,
+              Mechanical, Civil, and MBA.
             </p>
           </div>
           <div className="flex flex-wrap items-center justify-center gap-2">
@@ -680,7 +806,8 @@ export const LandingPage: React.FC = () => {
             Built for Students, Faculty &amp; Staff
           </h2>
           <p className="text-sm text-white/60">
-            Campus fests, clubs, attendance registers, and maintenance fixes unified in one platform.
+            Campus fests, clubs, attendance registers, and maintenance fixes unified in one
+            platform.
           </p>
         </div>
 
@@ -744,22 +871,35 @@ export const LandingPage: React.FC = () => {
               <span className="text-lime">SJBIT CampusOS?</span>
             </h2>
             <p className="text-sm sm:text-base text-white/70">
-              Sign in to your student or faculty portal, or access the campus-wide administrator control board.
+              Sign in to your student or faculty portal, or access the campus-wide administrator
+              control board.
             </p>
             <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
               <Link to="/login">
-                <Button variant="lime" size="lg" className="shadow-[0_0_24px_rgba(131,243,77,0.4)] min-h-[48px] font-bold">
+                <Button
+                  variant="lime"
+                  size="lg"
+                  className="shadow-[0_0_24px_rgba(131,243,77,0.4)] min-h-[48px] font-bold"
+                >
                   Sign In to Portal <ArrowRight className="w-4 h-4 ml-1.5" />
                 </Button>
               </Link>
               <Link to="/login?role=admin">
-                <Button variant="white" size="lg" className="min-h-[48px] font-bold bg-card/80 border border-ring hover:border-lime/40">
+                <Button
+                  variant="white"
+                  size="lg"
+                  className="min-h-[48px] font-bold bg-card/80 border border-ring hover:border-lime/40"
+                >
                   <ShieldCheck className="w-4 h-4 mr-1.5 text-lime" />
                   Administrator Section
                 </Button>
               </Link>
               <Link to="/register">
-                <Button variant="outline" size="lg" className="min-h-[48px] border-white/20 hover:border-white/40">
+                <Button
+                  variant="outline"
+                  size="lg"
+                  className="min-h-[48px] border-white/20 hover:border-white/40"
+                >
                   Student Registration
                 </Button>
               </Link>

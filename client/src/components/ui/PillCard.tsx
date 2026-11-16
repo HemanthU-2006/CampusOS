@@ -12,7 +12,10 @@ export interface PillCardProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 export const PillCard = React.forwardRef<HTMLDivElement, PillCardProps>(
-  ({ className, icon, title, subtitle, badge, showArrow = true, active = false, ...props }, ref) => {
+  (
+    { className, icon, title, subtitle, badge, showArrow = true, active = false, ...props },
+    ref
+  ) => {
     return (
       <div
         ref={ref}
@@ -37,9 +40,7 @@ export const PillCard = React.forwardRef<HTMLDivElement, PillCardProps>(
               {badge}
             </div>
             {subtitle && (
-              <p className="text-xs text-white/60 truncate font-normal tracking-wide">
-                {subtitle}
-              </p>
+              <p className="text-xs text-white/60 truncate font-normal tracking-wide">{subtitle}</p>
             )}
           </div>
         </div>

@@ -30,7 +30,12 @@ export const createLostFound = asyncHandler(async (req: AuthRequest, res: Respon
 export const submitClaim = asyncHandler(async (req: AuthRequest, res: Response) => {
   const claimantId = req.user!._id.toString();
   const { proofDetails, proofImage } = req.body;
-  const claim = await CommunityService.submitClaim(req.params.id, claimantId, proofDetails, proofImage);
+  const claim = await CommunityService.submitClaim(
+    req.params.id,
+    claimantId,
+    proofDetails,
+    proofImage
+  );
   ApiResponse.success(res, { claim }, 'Claim submitted for verification', 201);
 });
 
@@ -92,7 +97,12 @@ export const createResourceRequest = asyncHandler(async (req: AuthRequest, res: 
 export const updateResourceStatus = asyncHandler(async (req: AuthRequest, res: Response) => {
   const reviewerId = req.user!._id.toString();
   const { status, comment } = req.body;
-  const request = await CommunityService.updateRequestStatus(req.params.id, reviewerId, status, comment);
+  const request = await CommunityService.updateRequestStatus(
+    req.params.id,
+    reviewerId,
+    status,
+    comment
+  );
   ApiResponse.success(res, { request }, `Resource request marked as ${status}`);
 });
 
@@ -123,6 +133,9 @@ export const getStudentAttendance = asyncHandler(async (req: AuthRequest, res: R
 export const exportAttendanceCSV = asyncHandler(async (req: Request, res: Response) => {
   const csv = await CommunityService.exportAttendanceCSV(req.params.courseId);
   res.setHeader('Content-Type', 'text/csv');
-  res.setHeader('Content-Disposition', `attachment; filename=attendance-${req.params.courseId}.csv`);
+  res.setHeader(
+    'Content-Disposition',
+    `attachment; filename=attendance-${req.params.courseId}.csv`
+  );
   res.status(200).send(csv);
 });

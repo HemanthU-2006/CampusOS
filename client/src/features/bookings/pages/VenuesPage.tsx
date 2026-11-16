@@ -45,7 +45,9 @@ export const VenuesPage: React.FC = () => {
   const [selectedVenue, setSelectedVenue] = useState<VenueItem | null>(null);
 
   // Detail Drawer / Modal for "Details on demand"
-  const [selectedBookingForDetail, setSelectedBookingForDetail] = useState<BookingItem | null>(null);
+  const [selectedBookingForDetail, setSelectedBookingForDetail] = useState<BookingItem | null>(
+    null
+  );
 
   // Review modal state for Faculty/Admin
   const [reviewBookingTarget, setReviewBookingTarget] = useState<BookingItem | null>(null);
@@ -55,17 +57,23 @@ export const VenuesPage: React.FC = () => {
   // Fetch real venues and bookings from API on mount
   React.useEffect(() => {
     let isMounted = true;
-    bookingApi.getVenues().then((res) => {
-      if (isMounted && res && res.length > 0) {
-        setVenues(res);
-      }
-    }).catch(() => {});
+    bookingApi
+      .getVenues()
+      .then((res) => {
+        if (isMounted && res && res.length > 0) {
+          setVenues(res);
+        }
+      })
+      .catch(() => {});
 
-    bookingApi.getBookings().then((res) => {
-      if (isMounted && res && res.length > 0) {
-        setBookings(res);
-      }
-    }).catch(() => {});
+    bookingApi
+      .getBookings()
+      .then((res) => {
+        if (isMounted && res && res.length > 0) {
+          setBookings(res);
+        }
+      })
+      .catch(() => {});
 
     return () => {
       isMounted = false;
@@ -85,7 +93,8 @@ export const VenuesPage: React.FC = () => {
         department: 'Information Technology',
       },
       title: 'HackSJBIT Audio & Stage Setup',
-      description: 'Audio routing and lighting preset setup for hackathon opening in BGS Auditorium.',
+      description:
+        'Audio routing and lighting preset setup for hackathon opening in BGS Auditorium.',
       startTime: `${new Date().toISOString().split('T')[0]}T14:00:00.000Z`,
       endTime: `${new Date().toISOString().split('T')[0]}T18:00:00.000Z`,
       status: 'approved',
@@ -484,15 +493,15 @@ export const VenuesPage: React.FC = () => {
                         booking.status === 'approved'
                           ? 'approved'
                           : booking.status === 'rejected'
-                          ? 'overdue'
-                          : 'pending'
+                            ? 'overdue'
+                            : 'pending'
                       }
                     >
                       {booking.status === 'approved'
                         ? 'Approved'
                         : booking.status === 'rejected'
-                        ? 'Declined'
-                        : 'Waiting'}
+                          ? 'Declined'
+                          : 'Waiting'}
                     </Badge>
                   </div>
                   <p className="text-xs text-white/70 font-medium">{booking.title}</p>
@@ -516,8 +525,8 @@ export const VenuesPage: React.FC = () => {
                     {booking.status === 'approved'
                       ? 'Room confirmed on campus calendar'
                       : booking.status === 'rejected'
-                      ? 'Request declined by faculty'
-                      : 'Next step: Waiting for faculty approval'}
+                        ? 'Request declined by faculty'
+                        : 'Next step: Waiting for faculty approval'}
                   </p>
                 </div>
 
@@ -701,8 +710,8 @@ export const VenuesPage: React.FC = () => {
                       selectedBookingForDetail.status === 'approved'
                         ? 'bg-lime text-lime-ink'
                         : selectedBookingForDetail.status === 'rejected'
-                        ? 'bg-red-500 text-white'
-                        : 'bg-card border border-ring text-white/40'
+                          ? 'bg-red-500 text-white'
+                          : 'bg-card border border-ring text-white/40'
                     }`}
                   >
                     3
@@ -711,8 +720,8 @@ export const VenuesPage: React.FC = () => {
                     {selectedBookingForDetail.status === 'approved'
                       ? 'Confirmed'
                       : selectedBookingForDetail.status === 'rejected'
-                      ? 'Declined'
-                      : 'Decision'}
+                        ? 'Declined'
+                        : 'Decision'}
                   </span>
                 </div>
               </div>
@@ -753,11 +762,7 @@ export const VenuesPage: React.FC = () => {
             </div>
 
             <div className="flex justify-end pt-2">
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => setSelectedBookingForDetail(null)}
-              >
+              <Button variant="outline" size="sm" onClick={() => setSelectedBookingForDetail(null)}>
                 Close details
               </Button>
             </div>

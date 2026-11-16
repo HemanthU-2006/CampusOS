@@ -1,6 +1,6 @@
-@import "tailwindcss";
-@import "./tokens.css";
-@import "./glass.css";
+@import 'tailwindcss';
+@import './tokens.css';
+@import './glass.css';
 
 /* Base Resets & Global Styles */
 * {
@@ -11,9 +11,10 @@ html {
   scroll-behavior: smooth;
 }
 
-html, body {
+html,
+body {
   background-color: var(--color-page);
-  color: #FFFFFF;
+  color: #ffffff;
   font-family: var(--font-sans);
   overflow-x: hidden;
   text-rendering: optimizeLegibility;
@@ -41,7 +42,9 @@ html, body {
 
 /* Respect prefers-reduced-motion */
 @media (prefers-reduced-motion: reduce) {
-  *, ::before, ::after {
+  *,
+  ::before,
+  ::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;

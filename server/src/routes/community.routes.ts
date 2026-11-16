@@ -76,6 +76,11 @@ router.post(
   bulkMarkAttendance
 );
 router.get('/attendance/my-records', authenticate, getStudentAttendance);
-router.get('/attendance/export/:courseId', authenticate, roleGuard('faculty', 'admin'), exportAttendanceCSV);
+router.get(
+  '/attendance/export/:courseId',
+  authenticate,
+  roleGuard('faculty', 'admin'),
+  exportAttendanceCSV
+);
 
 export default router;

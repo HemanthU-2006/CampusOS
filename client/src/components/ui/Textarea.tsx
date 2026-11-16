@@ -11,9 +11,7 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
     return (
       <div className="w-full space-y-1.5">
         {label && (
-          <label className="block text-xs font-medium text-white/80 select-none">
-            {label}
-          </label>
+          <label className="block text-xs font-medium text-white/80 select-none">{label}</label>
         )}
         <textarea
           ref={ref}

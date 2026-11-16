@@ -30,7 +30,7 @@ export const CampusAIAssistant: React.FC = () => {
     {
       role: 'model',
       content:
-        "Hello! I am **Sage**, your SJBIT CampusOS Assistant. How can I assist you with venues, fests, faculty, or lab hardware today?",
+        'Hello! I am **Sage**, your SJBIT CampusOS Assistant. How can I assist you with venues, fests, faculty, or lab hardware today?',
     },
   ]);
 
@@ -116,7 +116,9 @@ export const CampusAIAssistant: React.FC = () => {
               </div>
               <div>
                 <div className="flex items-center gap-1.5">
-                  <span className="text-sm font-bold text-white tracking-tight">Sage Assistant</span>
+                  <span className="text-sm font-bold text-white tracking-tight">
+                    Sage Assistant
+                  </span>
                   <span className="w-1.5 h-1.5 rounded-full bg-lime" />
                 </div>
                 <p className="text-[10px] text-white/50">SJBIT Campus AI · Powered by Gemini</p>
@@ -203,7 +205,9 @@ export const CampusAIAssistant: React.FC = () => {
           {/* Quick Suggestions Chips (only if 2 or fewer messages) */}
           {messages.length <= 2 && !isLoading && (
             <div className="px-3 pb-2 pt-1 border-t border-ring/30 bg-[#121212]">
-              <p className="text-[10px] text-white/40 mb-1.5 font-medium px-1">Suggested inquiries:</p>
+              <p className="text-[10px] text-white/40 mb-1.5 font-medium px-1">
+                Suggested inquiries:
+              </p>
               <div className="flex flex-wrap gap-1.5">
                 {QUICK_SUGGESTIONS.map((sug, sIdx) => (
                   <button

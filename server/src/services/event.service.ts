@@ -237,10 +237,7 @@ export class EventService {
     return { message: 'Registration cancelled', promotedUserId };
   }
 
-  static async checkInAttendee(
-    eventId: string,
-    ticketCode: string
-  ): Promise<IEventRegistration> {
+  static async checkInAttendee(eventId: string, ticketCode: string): Promise<IEventRegistration> {
     const reg = await EventRegistration.findOne({
       event: eventId,
       ticketCode: ticketCode.trim(),

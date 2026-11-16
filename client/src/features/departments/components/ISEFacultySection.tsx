@@ -1,6 +1,17 @@
 import React, { useState } from 'react';
 import { ISE_FACULTY, FacultyMember } from '../data/iseFaculty';
-import { Search, Users, GraduationCap, X, Mail, MapPin, Building2, CheckCircle2, Award, BookOpen } from 'lucide-react';
+import {
+  Search,
+  Users,
+  GraduationCap,
+  X,
+  Mail,
+  MapPin,
+  Building2,
+  CheckCircle2,
+  Award,
+  BookOpen,
+} from 'lucide-react';
 import { Badge } from '@/components/ui/Badge';
 
 export const ISEFacultySection: React.FC = () => {
@@ -20,7 +31,10 @@ export const ISEFacultySection: React.FC = () => {
   const staffCount = ISE_FACULTY.filter((m) => m.category === 'non-teaching').length;
 
   return (
-    <section id="ise-faculty" className="relative z-20 max-w-7xl mx-auto px-4 sm:px-8 py-20 space-y-10 border-t border-ring/40">
+    <section
+      id="ise-faculty"
+      className="relative z-20 max-w-7xl mx-auto px-4 sm:px-8 py-20 space-y-10 border-t border-ring/40"
+    >
       {/* 1. Header with Official College Typography */}
       <div className="text-center space-y-3 max-w-3xl mx-auto">
         <Badge variant="lime" className="mx-auto uppercase tracking-wider text-[11px]">
@@ -30,7 +44,8 @@ export const ISEFacultySection: React.FC = () => {
           Department of Information Science &amp; Engineering
         </h2>
         <p className="text-xs sm:text-sm text-white/70 leading-relaxed">
-          Autonomous VTU curriculum, state-of-the-art computational labs, and dedicated professors and staff at Aryabhata Block.
+          Autonomous VTU curriculum, state-of-the-art computational labs, and dedicated professors
+          and staff at Aryabhata Block.
         </p>
       </div>
 
@@ -48,7 +63,9 @@ export const ISEFacultySection: React.FC = () => {
           >
             <GraduationCap className="w-4 h-4" />
             <span>Teaching Faculty</span>
-            <span className={`text-[10px] px-1.5 py-0.5 rounded-full ${activeTab === 'teaching' ? 'bg-black/15 text-black font-extrabold' : 'bg-white/10 text-white/70'}`}>
+            <span
+              className={`text-[10px] px-1.5 py-0.5 rounded-full ${activeTab === 'teaching' ? 'bg-black/15 text-black font-extrabold' : 'bg-white/10 text-white/70'}`}
+            >
               {teachingCount}
             </span>
           </button>
@@ -63,7 +80,9 @@ export const ISEFacultySection: React.FC = () => {
           >
             <Users className="w-4 h-4" />
             <span>Technical &amp; Support Staff</span>
-            <span className={`text-[10px] px-1.5 py-0.5 rounded-full ${activeTab === 'non-teaching' ? 'bg-black/15 text-black font-extrabold' : 'bg-white/10 text-white/70'}`}>
+            <span
+              className={`text-[10px] px-1.5 py-0.5 rounded-full ${activeTab === 'non-teaching' ? 'bg-black/15 text-black font-extrabold' : 'bg-white/10 text-white/70'}`}
+            >
               {staffCount}
             </span>
           </button>
@@ -131,7 +150,9 @@ export const ISEFacultySection: React.FC = () => {
                   </span>
 
                   <span className="text-[11px] text-white/50 block mt-0.5 truncate">
-                    {member.category === 'teaching' ? 'Dept of Information Science' : 'Technical Staff · ISE Labs'}
+                    {member.category === 'teaching'
+                      ? 'Dept of Information Science'
+                      : 'Technical Staff · ISE Labs'}
                   </span>
                 </div>
 
@@ -153,7 +174,9 @@ export const ISEFacultySection: React.FC = () => {
 
       {filteredMembers.length === 0 && (
         <div className="p-12 text-center rounded-2xl bg-[#141519] border border-white/10 space-y-3">
-          <p className="text-sm text-white/60">No members found matching "{searchQuery}" in this category.</p>
+          <p className="text-sm text-white/60">
+            No members found matching "{searchQuery}" in this category.
+          </p>
           <button
             onClick={() => setSearchQuery('')}
             className="text-xs text-amber-400 font-semibold underline hover:text-white"
@@ -211,20 +234,26 @@ export const ISEFacultySection: React.FC = () => {
             <div className="p-4 rounded-xl bg-[#121316] border border-white/10 space-y-2.5 text-xs">
               <div className="flex items-center gap-2 text-white/80">
                 <Building2 className="w-4 h-4 text-amber-400 shrink-0" />
-                <span><strong>Location:</strong> Aryabhata Block, 1st Floor, SJBIT Campus</span>
+                <span>
+                  <strong>Location:</strong> Aryabhata Block, 1st Floor, SJBIT Campus
+                </span>
               </div>
               <div className="flex items-center gap-2 text-white/80">
                 <Mail className="w-4 h-4 text-amber-400 shrink-0" />
                 <span>
                   <strong>Official Contact:</strong>{' '}
                   <span className="text-amber-300 font-mono">
-                    {selectedFaculty.tier === 'hod' ? 'isehod@sjbit.edu.in' : 'faculty.ise@sjbit.edu.in'}
+                    {selectedFaculty.tier === 'hod'
+                      ? 'isehod@sjbit.edu.in'
+                      : 'faculty.ise@sjbit.edu.in'}
                   </span>
                 </span>
               </div>
               <div className="flex items-center gap-2 text-white/80">
                 <Award className="w-4 h-4 text-amber-400 shrink-0" />
-                <span><strong>Curriculum:</strong> 2022 Scheme (VTU Autonomous Framework)</span>
+                <span>
+                  <strong>Curriculum:</strong> 2022 Scheme (VTU Autonomous Framework)
+                </span>
               </div>
             </div>
 

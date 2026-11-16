@@ -51,12 +51,7 @@ export const reviewBooking = asyncHandler(async (req: AuthRequest, res: Response
   const bookingId = req.params.id;
   const { status, reviewComment } = req.body;
 
-  const booking = await BookingService.reviewBooking(
-    bookingId,
-    reviewerId,
-    status,
-    reviewComment
-  );
+  const booking = await BookingService.reviewBooking(bookingId, reviewerId, status, reviewComment);
 
   ApiResponse.success(res, { booking }, `Booking successfully ${status}`);
 });

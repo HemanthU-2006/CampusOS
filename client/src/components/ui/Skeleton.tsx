@@ -6,10 +6,7 @@ export interface SkeletonProps extends React.HTMLAttributes<HTMLDivElement> {}
 export const Skeleton: React.FC<SkeletonProps> = ({ className, ...props }) => {
   return (
     <div
-      className={cn(
-        'animate-pulse rounded-md bg-row/80 border border-ring/50',
-        className
-      )}
+      className={cn('animate-pulse rounded-md bg-row/80 border border-ring/50', className)}
       {...props}
     />
   );

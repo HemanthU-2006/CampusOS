@@ -54,9 +54,10 @@ export const StyleguidePage: React.FC = () => {
       badge: 'Core Logic',
       content: (
         <p>
-          Every reservation checks existing approved bookings against the requested start and end timestamps.
-          If an overlap exists on the requested venue, the API immediately throws a <code>409 Conflict</code> error.
-          Pending requests are held in escrow until a faculty member or administrator approves with a review comment.
+          Every reservation checks existing approved bookings against the requested start and end
+          timestamps. If an overlap exists on the requested venue, the API immediately throws a{' '}
+          <code>409 Conflict</code> error. Pending requests are held in escrow until a faculty
+          member or administrator approves with a review comment.
         </p>
       ),
     },
@@ -66,9 +67,10 @@ export const StyleguidePage: React.FC = () => {
       badge: 'Automation',
       content: (
         <p>
-          When a registered attendee cancels their registration, a transaction query fetches the earliest waitlisted
-          applicant and automatically promotes their status to <code>registered</code>, generating a personalized QR ticket and
-          dispatching an instant notification.
+          When a registered attendee cancels their registration, a transaction query fetches the
+          earliest waitlisted applicant and automatically promotes their status to{' '}
+          <code>registered</code>, generating a personalized QR ticket and dispatching an instant
+          notification.
         </p>
       ),
     },
@@ -78,8 +80,9 @@ export const StyleguidePage: React.FC = () => {
       badge: 'Dark Glassy',
       content: (
         <p>
-          Inspired by high-performance trading platforms: deep obsidian surface (<code>#090909</code>), frosted glass layers,
-          high-contrast electric lime accents (<code>#83F34D</code>), and buttery smooth 320ms grid accordion physics.
+          Inspired by high-performance trading platforms: deep obsidian surface (
+          <code>#090909</code>), frosted glass layers, high-contrast electric lime accents (
+          <code>#83F34D</code>), and buttery smooth 320ms grid accordion physics.
         </p>
       ),
     },
@@ -97,7 +100,8 @@ export const StyleguidePage: React.FC = () => {
           Component Kit & Design Tokens
         </h1>
         <p className="text-white/60 text-sm sm:text-base max-w-2xl leading-relaxed">
-          Near-black obsidian base, frosted glass containers, electric lime accent, and tactile micro-interactions.
+          Near-black obsidian base, frosted glass containers, electric lime accent, and tactile
+          micro-interactions.
         </p>
       </div>
 
@@ -180,7 +184,9 @@ export const StyleguidePage: React.FC = () => {
       {/* 2. Buttons */}
       <section className="space-y-6">
         <div className="border-b border-ring/80 pb-3">
-          <h2 className="text-lg font-bold text-white tracking-tight">2. Button Variants & States</h2>
+          <h2 className="text-lg font-bold text-white tracking-tight">
+            2. Button Variants & States
+          </h2>
         </div>
 
         <div className="space-y-4">
@@ -206,9 +212,15 @@ export const StyleguidePage: React.FC = () => {
           </div>
 
           <div className="flex flex-wrap items-center gap-3 pt-2">
-            <Button variant="lime" size="sm">Small</Button>
-            <Button variant="lime" size="md">Medium</Button>
-            <Button variant="lime" size="lg">Large Hero</Button>
+            <Button variant="lime" size="sm">
+              Small
+            </Button>
+            <Button variant="lime" size="md">
+              Medium
+            </Button>
+            <Button variant="lime" size="lg">
+              Large Hero
+            </Button>
           </div>
         </div>
       </section>
@@ -216,12 +228,16 @@ export const StyleguidePage: React.FC = () => {
       {/* 3. Form Controls & SearchBar */}
       <section className="space-y-6">
         <div className="border-b border-ring/80 pb-3">
-          <h2 className="text-lg font-bold text-white tracking-tight">3. Form Controls & SearchBar</h2>
+          <h2 className="text-lg font-bold text-white tracking-tight">
+            3. Form Controls & SearchBar
+          </h2>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-4 p-5 rounded-2xl bg-card border border-ring/80">
-            <h3 className="text-xs font-bold uppercase tracking-wider text-white/50">Inputs & Search</h3>
+            <h3 className="text-xs font-bold uppercase tracking-wider text-white/50">
+              Inputs & Search
+            </h3>
             <SearchBar
               value={searchValue}
               onChange={(e) => setSearchValue(e.target.value)}
@@ -243,7 +259,9 @@ export const StyleguidePage: React.FC = () => {
           </div>
 
           <div className="space-y-4 p-5 rounded-2xl bg-card border border-ring/80">
-            <h3 className="text-xs font-bold uppercase tracking-wider text-white/50">Selects & Textarea</h3>
+            <h3 className="text-xs font-bold uppercase tracking-wider text-white/50">
+              Selects & Textarea
+            </h3>
             <Select
               label="Campus Role"
               options={[
@@ -325,13 +343,27 @@ export const StyleguidePage: React.FC = () => {
         </div>
 
         <div className="flex flex-wrap items-center gap-3 p-4 rounded-xl bg-card border border-ring/80">
-          <Badge variant="pending" dot>Pending Approval</Badge>
-          <Badge variant="approved" dot>Approved</Badge>
-          <Badge variant="resolved" dot>Resolved</Badge>
-          <Badge variant="rejected" dot>Rejected</Badge>
-          <Badge variant="overdue" dot>Overdue (Alert)</Badge>
-          <Badge variant="lime" dot>Live System</Badge>
-          <Badge variant="info" dot>Under Review</Badge>
+          <Badge variant="pending" dot>
+            Pending Approval
+          </Badge>
+          <Badge variant="approved" dot>
+            Approved
+          </Badge>
+          <Badge variant="resolved" dot>
+            Resolved
+          </Badge>
+          <Badge variant="rejected" dot>
+            Rejected
+          </Badge>
+          <Badge variant="overdue" dot>
+            Overdue (Alert)
+          </Badge>
+          <Badge variant="lime" dot>
+            Live System
+          </Badge>
+          <Badge variant="info" dot>
+            Under Review
+          </Badge>
           <Badge variant="neutral">Archived</Badge>
         </div>
       </section>
@@ -365,29 +397,33 @@ export const StyleguidePage: React.FC = () => {
           </TableHeader>
           <TableBody>
             <TableRow>
-              <TableCell className="font-semibold text-white">
-                Main Seminar Hall A
-              </TableCell>
+              <TableCell className="font-semibold text-white">Main Seminar Hall A</TableCell>
               <TableCell>Robotics Club (Dr. Mehta)</TableCell>
               <TableCell className="text-white/70">Nov 18, 2:00 PM - 5:00 PM</TableCell>
               <TableCell>
-                <Badge variant="approved" dot>Approved</Badge>
+                <Badge variant="approved" dot>
+                  Approved
+                </Badge>
               </TableCell>
               <TableCell className="text-right">
-                <Button variant="ghost" size="sm">Manage</Button>
+                <Button variant="ghost" size="sm">
+                  Manage
+                </Button>
               </TableCell>
             </TableRow>
             <TableRow>
-              <TableCell className="font-semibold text-white">
-                Innovation Lab 3
-              </TableCell>
+              <TableCell className="font-semibold text-white">Innovation Lab 3</TableCell>
               <TableCell>Priya Sharma (Student)</TableCell>
               <TableCell className="text-white/70">Nov 19, 10:00 AM - 1:00 PM</TableCell>
               <TableCell>
-                <Badge variant="pending" dot>Pending</Badge>
+                <Badge variant="pending" dot>
+                  Pending
+                </Badge>
               </TableCell>
               <TableCell className="text-right">
-                <Button variant="lime" size="sm">Review</Button>
+                <Button variant="lime" size="sm">
+                  Review
+                </Button>
               </TableCell>
             </TableRow>
             <TableRow>
@@ -397,10 +433,14 @@ export const StyleguidePage: React.FC = () => {
               <TableCell>Sports Council</TableCell>
               <TableCell className="text-white/70">Nov 15, 6:00 PM - 9:00 PM</TableCell>
               <TableCell>
-                <Badge variant="overdue" dot>Overdue Return</Badge>
+                <Badge variant="overdue" dot>
+                  Overdue Return
+                </Badge>
               </TableCell>
               <TableCell className="text-right">
-                <Button variant="danger" size="sm">Flag</Button>
+                <Button variant="danger" size="sm">
+                  Flag
+                </Button>
               </TableCell>
             </TableRow>
           </TableBody>
@@ -410,7 +450,9 @@ export const StyleguidePage: React.FC = () => {
       {/* 8. Modal & Toast Triggers */}
       <section className="space-y-6">
         <div className="border-b border-ring/80 pb-3">
-          <h2 className="text-lg font-bold text-white tracking-tight">8. Modal & Toast Interactivity</h2>
+          <h2 className="text-lg font-bold text-white tracking-tight">
+            8. Modal & Toast Interactivity
+          </h2>
         </div>
 
         <div className="flex flex-wrap items-center gap-4">
@@ -499,7 +541,9 @@ export const StyleguidePage: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Skeleton Loaders */}
           <div className="p-6 rounded-2xl bg-card border border-ring/80 space-y-4">
-            <h3 className="text-xs font-bold uppercase tracking-wider text-white/50">Skeleton State</h3>
+            <h3 className="text-xs font-bold uppercase tracking-wider text-white/50">
+              Skeleton State
+            </h3>
             <div className="space-y-3">
               <Skeleton className="h-6 w-3/4 rounded-md" />
               <Skeleton className="h-4 w-full rounded-md" />

@@ -35,11 +35,14 @@ export const MaintenancePage: React.FC = () => {
   // Fetch real tickets from backend on mount
   React.useEffect(() => {
     let isMounted = true;
-    maintenanceApi.getTickets().then((data) => {
-      if (isMounted && data && data.length > 0) {
-        setTickets(data);
-      }
-    }).catch(() => {});
+    maintenanceApi
+      .getTickets()
+      .then((data) => {
+        if (isMounted && data && data.length > 0) {
+          setTickets(data);
+        }
+      })
+      .catch(() => {});
 
     return () => {
       isMounted = false;
@@ -70,7 +73,9 @@ export const MaintenancePage: React.FC = () => {
     try {
       const res = await aiApi.triage(whatIsWrong, whatIsWrong, whereIsIt || 'SJBIT Campus');
       setAiTriageResult(res);
-      toast.success(`AI Classified: ${res.category.toUpperCase()} (${res.priority.toUpperCase()} Priority)`);
+      toast.success(
+        `AI Classified: ${res.category.toUpperCase()} (${res.priority.toUpperCase()} Priority)`
+      );
     } catch {
       toast.error('AI triage unavailable right now');
     } finally {
@@ -79,7 +84,8 @@ export const MaintenancePage: React.FC = () => {
   };
 
   // Detail Modal State with 4-step timeline
-  const [selectedTicketForDetail, setSelectedTicketForDetail] = useState<MaintenanceTicketItem | null>(null);
+  const [selectedTicketForDetail, setSelectedTicketForDetail] =
+    useState<MaintenanceTicketItem | null>(null);
 
   // Quick staff resolution modal
   const [resolveNote, setResolveNote] = useState('');
@@ -123,17 +129,20 @@ export const MaintenancePage: React.FC = () => {
       description: 'Campus maintenance team has been notified.',
     });
 
-    maintenanceApi.createTicket({
-      title: whatIsWrong,
-      description: whatIsWrong,
-      location: whereIsIt,
-      category: aiTriageResult?.category || 'other',
-      priority: aiTriageResult?.priority || 'medium',
-    }).then((created) => {
-      if (created?._id) {
-        setTickets((prev) => [created, ...prev.filter(t => t._id !== newTicket._id)]);
-      }
-    }).catch(() => {});
+    maintenanceApi
+      .createTicket({
+        title: whatIsWrong,
+        description: whatIsWrong,
+        location: whereIsIt,
+        category: aiTriageResult?.category || 'other',
+        priority: aiTriageResult?.priority || 'medium',
+      })
+      .then((created) => {
+        if (created?._id) {
+          setTickets((prev) => [created, ...prev.filter((t) => t._id !== newTicket._id)]);
+        }
+      })
+      .catch(() => {});
   };
 
   const advanceTicketStep = (ticketId: string, nextStatus: MaintenanceTicketItem['status']) => {
@@ -158,7 +167,11 @@ export const MaintenancePage: React.FC = () => {
     );
 
     const label =
-      nextStatus === 'in_progress' ? 'marked In progress' : nextStatus === 'resolved' ? 'marked Done' : 'updated';
+      nextStatus === 'in_progress'
+        ? 'marked In progress'
+        : nextStatus === 'resolved'
+          ? 'marked Done'
+          : 'updated';
     toast.success(`Task ${label}!`);
   };
 
@@ -294,7 +307,8 @@ export const MaintenancePage: React.FC = () => {
             <CheckCircle2 className="w-8 h-8 text-lime mx-auto" />
             <p className="text-sm font-semibold text-white">No reports found</p>
             <p className="text-xs text-white/50 max-w-sm mx-auto">
-              Everything in this section is running smoothly. Click below if you need to report an issue.
+              Everything in this section is running smoothly. Click below if you need to report an
+              issue.
             </p>
             <Button variant="lime" size="sm" onClick={() => setCreateModalOpen(true)}>
               Report a problem
@@ -319,19 +333,19 @@ export const MaintenancePage: React.FC = () => {
                         isDone
                           ? 'approved'
                           : ticket.status === 'in_progress'
-                          ? 'lime'
-                          : ticket.status === 'assigned'
-                          ? 'info'
-                          : 'pending'
+                            ? 'lime'
+                            : ticket.status === 'assigned'
+                              ? 'info'
+                              : 'pending'
                       }
                     >
                       {ticket.status === 'open'
                         ? 'Reported'
                         : ticket.status === 'assigned'
-                        ? 'Assigned'
-                        : ticket.status === 'in_progress'
-                        ? 'In progress'
-                        : 'Done'}
+                          ? 'Assigned'
+                          : ticket.status === 'in_progress'
+                            ? 'In progress'
+                            : 'Done'}
                     </Badge>
                   </div>
 
@@ -346,12 +360,12 @@ export const MaintenancePage: React.FC = () => {
                     {ticket.status === 'open'
                       ? 'Next step: Waiting for staff assignment'
                       : ticket.status === 'assigned'
-                      ? `Next step: Assigned to ${ticket.assignedTo?.name || 'facilities staff'}`
-                      : ticket.status === 'in_progress'
-                      ? 'Next step: Repair underway'
-                      : ticket.rating
-                      ? `Rated: ${'★'.repeat(ticket.rating)}`
-                      : 'Next step: Ready for your rating'}
+                        ? `Next step: Assigned to ${ticket.assignedTo?.name || 'facilities staff'}`
+                        : ticket.status === 'in_progress'
+                          ? 'Next step: Repair underway'
+                          : ticket.rating
+                            ? `Rated: ${'★'.repeat(ticket.rating)}`
+                            : 'Next step: Ready for your rating'}
                   </p>
                 </div>
 
@@ -453,7 +467,8 @@ export const MaintenancePage: React.FC = () => {
                     {aiTriageResult.category}
                   </Badge>
                   <span className="text-white/70">
-                    Priority: <strong className="text-white capitalize">{aiTriageResult.priority}</strong>
+                    Priority:{' '}
+                    <strong className="text-white capitalize">{aiTriageResult.priority}</strong>
                   </span>
                   <span className="text-white/40">· Est. {aiTriageResult.estimatedHours}h</span>
                 </div>
@@ -542,7 +557,9 @@ export const MaintenancePage: React.FC = () => {
 
                 <div
                   className={`h-0.5 flex-1 mx-1.5 ${
-                    getTimelineStepIndex(selectedTicketForDetail.status) >= 2 ? 'bg-lime' : 'bg-ring'
+                    getTimelineStepIndex(selectedTicketForDetail.status) >= 2
+                      ? 'bg-lime'
+                      : 'bg-ring'
                   }`}
                 />
 
@@ -562,7 +579,9 @@ export const MaintenancePage: React.FC = () => {
 
                 <div
                   className={`h-0.5 flex-1 mx-1.5 ${
-                    getTimelineStepIndex(selectedTicketForDetail.status) >= 3 ? 'bg-lime' : 'bg-ring'
+                    getTimelineStepIndex(selectedTicketForDetail.status) >= 3
+                      ? 'bg-lime'
+                      : 'bg-ring'
                   }`}
                 />
 
@@ -582,7 +601,9 @@ export const MaintenancePage: React.FC = () => {
 
                 <div
                   className={`h-0.5 flex-1 mx-1.5 ${
-                    getTimelineStepIndex(selectedTicketForDetail.status) >= 4 ? 'bg-lime' : 'bg-ring'
+                    getTimelineStepIndex(selectedTicketForDetail.status) >= 4
+                      ? 'bg-lime'
+                      : 'bg-ring'
                   }`}
                 />
 
@@ -650,11 +671,7 @@ export const MaintenancePage: React.FC = () => {
             )}
 
             <div className="flex justify-end pt-2 border-t border-ring/60">
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => setSelectedTicketForDetail(null)}
-              >
+              <Button variant="outline" size="sm" onClick={() => setSelectedTicketForDetail(null)}>
                 Close
               </Button>
             </div>

@@ -196,7 +196,10 @@ export const AdminBoardPage: React.FC = () => {
     const encodedUri = encodeURI(csvContent);
     const link = document.createElement('a');
     link.setAttribute('href', encodedUri);
-    link.setAttribute('download', `SJBIT_CampusWide_Admin_Audit_${new Date().toISOString().slice(0, 10)}.csv`);
+    link.setAttribute(
+      'download',
+      `SJBIT_CampusWide_Admin_Audit_${new Date().toISOString().slice(0, 10)}.csv`
+    );
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -245,8 +248,9 @@ export const AdminBoardPage: React.FC = () => {
 
             <p className="text-sm text-white/70 max-w-3xl leading-relaxed">
               Centralized governance across all 9 engineering and management departments at{' '}
-              <strong className="text-white">SJB Institute of Technology, Bengaluru</strong>. 
-              Monitor academic attendance compliance under VTU regulations, campus repair SLAs, and institutional operations.
+              <strong className="text-white">SJB Institute of Technology, Bengaluru</strong>.
+              Monitor academic attendance compliance under VTU regulations, campus repair SLAs, and
+              institutional operations.
             </p>
 
             <div className="flex flex-wrap items-center gap-3 text-xs text-white/60 pt-1">
@@ -315,7 +319,9 @@ export const AdminBoardPage: React.FC = () => {
           </p>
           <div className="flex items-baseline justify-between">
             <h3 className="text-3xl font-extrabold text-white">9</h3>
-            <Badge variant="lime" className="text-[10px]">All Active</Badge>
+            <Badge variant="lime" className="text-[10px]">
+              All Active
+            </Badge>
           </div>
           <p className="text-[11px] text-white/60">8 B.E. Programs + MBA</p>
         </div>
@@ -326,7 +332,9 @@ export const AdminBoardPage: React.FC = () => {
           </p>
           <div className="flex items-baseline justify-between">
             <h3 className="text-3xl font-extrabold text-white">{totalStudents.toLocaleString()}</h3>
-            <Badge variant="info" className="text-[10px]">VTU Scheme</Badge>
+            <Badge variant="info" className="text-[10px]">
+              VTU Scheme
+            </Badge>
           </div>
           <p className="text-[11px] text-white/60">{totalFaculty} Full-Time Faculty</p>
         </div>
@@ -337,7 +345,9 @@ export const AdminBoardPage: React.FC = () => {
           </p>
           <div className="flex items-baseline justify-between">
             <h3 className="text-3xl font-extrabold text-lime">{overallAttendance}%</h3>
-            <Badge variant="approved" className="text-[10px]">&gt; 75% Compliant</Badge>
+            <Badge variant="approved" className="text-[10px]">
+              &gt; 75% Compliant
+            </Badge>
           </div>
           <p className="text-[11px] text-white/60">VTU Norms Met Institution-wide</p>
         </div>
@@ -348,7 +358,9 @@ export const AdminBoardPage: React.FC = () => {
           </p>
           <div className="flex items-baseline justify-between">
             <h3 className="text-3xl font-extrabold text-white">{totalLabs}</h3>
-            <Badge variant="pending" className="text-[10px]">R&amp;D Equipped</Badge>
+            <Badge variant="pending" className="text-[10px]">
+              R&amp;D Equipped
+            </Badge>
           </div>
           <p className="text-[11px] text-white/60">Across 4 Academic Blocks</p>
         </div>
@@ -356,9 +368,7 @@ export const AdminBoardPage: React.FC = () => {
 
       {/* 3. Quick Administrative Pathways */}
       <section className="space-y-3">
-        <h2 className="text-base font-bold text-white tracking-tight">
-          Administrative Operations
-        </h2>
+        <h2 className="text-base font-bold text-white tracking-tight">Administrative Operations</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <PillCard
             icon={<GraduationCap className="w-5 h-5 text-lime" />}
@@ -413,20 +423,22 @@ export const AdminBoardPage: React.FC = () => {
 
         {/* Branch Filter Pills */}
         <div className="flex flex-wrap items-center gap-1.5 pb-1 overflow-x-auto">
-          {['ALL', 'CSE', 'ISE', 'AI&ML', 'CS-DS', 'ECE', 'EEE', 'MECH', 'CIVIL', 'MBA'].map((code) => (
-            <button
-              key={code}
-              type="button"
-              onClick={() => setSelectedBranch(code)}
-              className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
-                selectedBranch === code
-                  ? 'bg-lime text-lime-ink shadow-[0_0_12px_rgba(131,243,77,0.35)]'
-                  : 'bg-card hover:bg-row text-white/70 hover:text-white border border-ring/60'
-              }`}
-            >
-              {code === 'ALL' ? 'All 9 Branches' : code}
-            </button>
-          ))}
+          {['ALL', 'CSE', 'ISE', 'AI&ML', 'CS-DS', 'ECE', 'EEE', 'MECH', 'CIVIL', 'MBA'].map(
+            (code) => (
+              <button
+                key={code}
+                type="button"
+                onClick={() => setSelectedBranch(code)}
+                className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+                  selectedBranch === code
+                    ? 'bg-lime text-lime-ink shadow-[0_0_12px_rgba(131,243,77,0.35)]'
+                    : 'bg-card hover:bg-row text-white/70 hover:text-white border border-ring/60'
+                }`}
+              >
+                {code === 'ALL' ? 'All 9 Branches' : code}
+              </button>
+            )
+          )}
         </div>
 
         {/* Department Grid */}
@@ -470,7 +482,9 @@ export const AdminBoardPage: React.FC = () => {
                   </div>
                   <div className="flex items-center justify-between">
                     <span className="text-white/50">Faculty &amp; Labs:</span>
-                    <span>{dept.faculty} Faculty · {dept.labs} Labs</span>
+                    <span>
+                      {dept.faculty} Faculty · {dept.labs} Labs
+                    </span>
                   </div>
                   <div className="flex items-center justify-between">
                     <span className="text-white/50">Sections:</span>
@@ -536,7 +550,8 @@ export const AdminBoardPage: React.FC = () => {
             </div>
 
             <p className="text-xs text-white/60">
-              This notice will be published to student and faculty dashboards across all 9 SJBIT branches under the Principal's seal.
+              This notice will be published to student and faculty dashboards across all 9 SJBIT
+              branches under the Principal's seal.
             </p>
 
             <form onSubmit={handleSendBroadcast} className="space-y-4">

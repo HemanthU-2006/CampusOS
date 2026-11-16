@@ -66,10 +66,7 @@ export class MaintenanceService {
     return ticket.populate('reportedBy', 'name email role');
   }
 
-  static async assignStaff(
-    ticketId: string,
-    staffId: string
-  ): Promise<IMaintenanceTicket> {
+  static async assignStaff(ticketId: string, staffId: string): Promise<IMaintenanceTicket> {
     const ticket = await MaintenanceTicket.findById(ticketId);
     if (!ticket) throw new AppError('Ticket not found', 404);
 

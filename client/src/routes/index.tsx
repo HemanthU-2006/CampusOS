@@ -17,6 +17,7 @@ import { AnalyticsPage } from '@/features/analytics/pages/AnalyticsPage';
 import { AdminBoardPage } from '@/features/admin/pages/AdminBoardPage';
 import { ContactPage } from '@/features/contact/pages/ContactPage';
 import { LandingPage } from '@/features/landing/pages/LandingPage';
+import { ISEFacultyPage } from '@/features/departments/pages/ISEFacultyPage';
 import { Button } from '@/components/ui/Button';
 import { PillCard } from '@/components/ui/PillCard';
 import { Sparkles, Compass, ArrowRight } from 'lucide-react';
@@ -36,7 +37,8 @@ const LandingHeroPlaceholder: React.FC = () => {
       </h1>
 
       <p className="text-white/70 text-base sm:text-lg max-w-2xl mx-auto font-normal leading-relaxed">
-        Venues, events, resources, clubs, attendance and maintenance unified in one place. No paperwork, no delays.
+        Venues, events, resources, clubs, attendance and maintenance unified in one place. No
+        paperwork, no delays.
       </p>
 
       <div className="flex flex-wrap items-center justify-center gap-4 pt-4">
@@ -88,6 +90,7 @@ export const router = createBrowserRouter([
     children: [
       { index: true, element: <LandingPage /> },
       { path: 'contact', element: <ContactPage /> },
+      { path: 'faculty/ise', element: <ISEFacultyPage /> },
     ],
   },
   // Dedicated Auth Pages

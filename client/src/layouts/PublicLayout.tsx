@@ -2,12 +2,16 @@ import React from 'react';
 import { Link, Outlet } from 'react-router-dom';
 import { Button } from '@/components/ui/Button';
 import { ShieldCheck, ExternalLink, Award, GraduationCap } from 'lucide-react';
+import { CampusAIAssistant } from '@/components/CampusAIAssistant';
 
 export const PublicLayout: React.FC = () => {
   return (
     <div className="min-h-screen bg-glow-landing relative flex flex-col text-white selection:bg-lime selection:text-lime-ink">
       {/* Subtle top ambient glow */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[600px] bg-[radial-gradient(ellipse_at_top,rgba(131,243,77,0.06),transparent_70%)] pointer-events-none z-0" aria-hidden="true" />
+      <div
+        className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[600px] bg-[radial-gradient(ellipse_at_top,rgba(131,243,77,0.06),transparent_70%)] pointer-events-none z-0"
+        aria-hidden="true"
+      />
 
       {/* Official Top Institutional Bar */}
       <div className="relative z-50 w-full bg-[#080808]/90 border-b border-white/5 py-1.5 px-4 text-[11px] text-white/70 backdrop-blur-md">
@@ -15,9 +19,13 @@ export const PublicLayout: React.FC = () => {
           <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2 text-center sm:text-left">
             <span className="text-amber-400 font-bold tracking-wider">|| JAI SRI GURUDEV ||</span>
             <span className="hidden sm:inline text-white/20">|</span>
-            <span className="font-medium text-white/80">Sri Adichunchanagiri Shikshana Trust ®</span>
+            <span className="font-medium text-white/80">
+              Sri Adichunchanagiri Shikshana Trust ®
+            </span>
             <span className="hidden md:inline text-white/20">|</span>
-            <span className="hidden md:inline text-white/60">Autonomous Institute under VTU, Belagavi</span>
+            <span className="hidden md:inline text-white/60">
+              Autonomous Institute under VTU, Belagavi
+            </span>
           </div>
 
           <div className="flex items-center gap-3 text-[11px] text-white/60">
@@ -72,9 +80,12 @@ export const PublicLayout: React.FC = () => {
             <a href="/#branches" className="hover:text-white transition-colors">
               9 Branches
             </a>
-            <a href="/#ise-faculty" className="hover:text-white text-amber-300 font-semibold transition-colors">
+            <Link
+              to="/faculty/ise"
+              className="hover:text-white text-amber-300 font-semibold transition-colors"
+            >
               ISE Faculty
-            </a>
+            </Link>
             <a href="/#life-at-sjbit" className="hover:text-white transition-colors">
               Life @ SJBIT
             </a>
@@ -84,7 +95,10 @@ export const PublicLayout: React.FC = () => {
             <a href="/#modules" className="hover:text-white transition-colors">
               Campus Modules
             </a>
-            <Link to="/contact" className="hover:text-white text-lime transition-colors font-semibold">
+            <Link
+              to="/contact"
+              className="hover:text-white text-lime transition-colors font-semibold"
+            >
               Contact Us
             </Link>
           </div>
@@ -140,8 +154,9 @@ export const PublicLayout: React.FC = () => {
               </div>
             </div>
             <p className="text-xs text-white/60 max-w-md leading-relaxed">
-              BGS Health &amp; Education City, Dr. Vishnuvardhan Road, Kengeri, Bengaluru – 560060, Karnataka, India. 
-              Autonomous Institution under VTU, Belagavi. Approved by AICTE, New Delhi. Accredited by NAAC with 'A+' Grade.
+              BGS Health &amp; Education City, Dr. Vishnuvardhan Road, Kengeri, Bengaluru – 560060,
+              Karnataka, India. Autonomous Institution under VTU, Belagavi. Approved by AICTE, New
+              Delhi. Accredited by NAAC with 'A+' Grade.
             </p>
           </div>
 
@@ -150,10 +165,31 @@ export const PublicLayout: React.FC = () => {
               Institutional Links
             </h5>
             <ul className="space-y-1.5 text-xs text-white/60">
-              <li><a href="https://www.sjbit.edu.in/" target="_blank" rel="noopener noreferrer" className="hover:text-lime">Official SJBIT Portal</a></li>
-              <li><Link to="/contact" className="hover:text-lime">Campus Directory &amp; HOD Contacts</Link></li>
-              <li><Link to="/login?role=admin" className="hover:text-rose-300">Principal Office &amp; Admin Board</Link></li>
-              <li><Link to="/attendance" className="hover:text-lime">VTU Course Attendance</Link></li>
+              <li>
+                <a
+                  href="https://www.sjbit.edu.in/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-lime"
+                >
+                  Official SJBIT Portal
+                </a>
+              </li>
+              <li>
+                <Link to="/contact" className="hover:text-lime">
+                  Campus Directory &amp; HOD Contacts
+                </Link>
+              </li>
+              <li>
+                <Link to="/login?role=admin" className="hover:text-rose-300">
+                  Principal Office &amp; Admin Board
+                </Link>
+              </li>
+              <li>
+                <Link to="/attendance" className="hover:text-lime">
+                  VTU Course Attendance
+                </Link>
+              </li>
             </ul>
           </div>
 
@@ -172,10 +208,17 @@ export const PublicLayout: React.FC = () => {
         </div>
 
         <div className="max-w-7xl mx-auto pt-6 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
-          <p>© 2026 SJBIT CampusOS · SJB Institute of Technology, Bengaluru. All rights reserved.</p>
-          <p className="text-[11px] text-white/40">Affiliated to VTU · Approved by AICTE · NAAC 'A+' Accredited</p>
+          <p>
+            © 2026 SJBIT CampusOS · SJB Institute of Technology, Bengaluru. All rights reserved.
+          </p>
+          <p className="text-[11px] text-white/40">
+            Affiliated to VTU · Approved by AICTE · NAAC 'A+' Accredited
+          </p>
         </div>
       </footer>
+
+      {/* Floating AI Assistant on Public/Home Pages */}
+      <CampusAIAssistant />
     </div>
   );
 };

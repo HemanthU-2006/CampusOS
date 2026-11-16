@@ -15,11 +15,7 @@ export interface AccordionProps {
   className?: string;
 }
 
-export const Accordion: React.FC<AccordionProps> = ({
-  items,
-  defaultOpenId,
-  className,
-}) => {
+export const Accordion: React.FC<AccordionProps> = ({ items, defaultOpenId, className }) => {
   const [openId, setOpenId] = useState<string | null>(defaultOpenId || null);
 
   const toggle = (id: string) => {
@@ -67,7 +63,9 @@ export const Accordion: React.FC<AccordionProps> = ({
               <div
                 className={cn(
                   'w-8 h-8 rounded-full bg-row flex items-center justify-center shrink-0 border border-ring transition-transform duration-[320ms] ease-[cubic-bezier(0.16,1,0.3,1)]',
-                  isOpen ? 'rotate-180 bg-lime text-lime-ink border-transparent shadow-[0_0_12px_rgba(131,243,77,0.3)]' : 'text-white/50 group-hover:text-white'
+                  isOpen
+                    ? 'rotate-180 bg-lime text-lime-ink border-transparent shadow-[0_0_12px_rgba(131,243,77,0.3)]'
+                    : 'text-white/50 group-hover:text-white'
                 )}
               >
                 <ChevronDown className="w-4 h-4" />

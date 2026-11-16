@@ -55,7 +55,12 @@ export const maintenanceApi = {
     return res.data.data.ticket;
   },
 
-  updateStatus: async (ticketId: string, status: string, comment?: string, resolutionNotes?: string) => {
+  updateStatus: async (
+    ticketId: string,
+    status: string,
+    comment?: string,
+    resolutionNotes?: string
+  ) => {
     const res = await api.patch(`/maintenance/${ticketId}/status`, {
       status,
       comment,

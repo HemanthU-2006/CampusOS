@@ -4,10 +4,16 @@ import { z } from 'zod';
 dotenv.config();
 
 const envSchema = z.object({
-  PORT: z.string().default('5000').transform((val) => parseInt(val, 10)),
+  PORT: z
+    .string()
+    .default('5000')
+    .transform((val) => parseInt(val, 10)),
   NODE_ENV: z.enum(['development', 'production', 'test']).default('development'),
   MONGODB_URI: z.string().default('mongodb://localhost:27017/campusos'),
-  JWT_SECRET: z.string().min(10, 'JWT_SECRET must be at least 10 chars long').default('super_secret_jwt_key_for_campusos_development_min_32_chars!'),
+  JWT_SECRET: z
+    .string()
+    .min(10, 'JWT_SECRET must be at least 10 chars long')
+    .default('super_secret_jwt_key_for_campusos_development_min_32_chars!'),
   CLIENT_URL: z.string().default('http://localhost:5173'),
   GEMINI_API_KEY: z.string().optional().default(''),
 });

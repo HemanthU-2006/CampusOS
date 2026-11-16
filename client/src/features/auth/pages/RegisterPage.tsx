@@ -125,12 +125,30 @@ export const RegisterPage: React.FC = () => {
               options={[
                 { value: 'Civil Engineering', label: 'Civil Engineering (CV)' },
                 { value: 'Mechanical Engineering', label: 'Mechanical Engineering (ME)' },
-                { value: 'Electrical & Electronics Engineering', label: 'Electrical & Electronics (EEE)' },
-                { value: 'Electronics & Communication Engineering', label: 'Electronics & Communication (ECE)' },
-                { value: 'Computer Science & Engineering', label: 'Computer Science & Engineering (CSE)' },
-                { value: 'Information Science & Engineering', label: 'Information Science & Engineering (ISE)' },
-                { value: 'Artificial Intelligence & Machine Learning', label: 'AI & Machine Learning (AI&ML)' },
-                { value: 'Computer Science & Engineering (Data Science)', label: 'CSE - Data Science (CS-DS)' },
+                {
+                  value: 'Electrical & Electronics Engineering',
+                  label: 'Electrical & Electronics (EEE)',
+                },
+                {
+                  value: 'Electronics & Communication Engineering',
+                  label: 'Electronics & Communication (ECE)',
+                },
+                {
+                  value: 'Computer Science & Engineering',
+                  label: 'Computer Science & Engineering (CSE)',
+                },
+                {
+                  value: 'Information Science & Engineering',
+                  label: 'Information Science & Engineering (ISE)',
+                },
+                {
+                  value: 'Artificial Intelligence & Machine Learning',
+                  label: 'AI & Machine Learning (AI&ML)',
+                },
+                {
+                  value: 'Computer Science & Engineering (Data Science)',
+                  label: 'CSE - Data Science (CS-DS)',
+                },
                 { value: 'Master of Business Administration', label: 'MBA (Management Studies)' },
                 { value: 'Master of Computer Applications', label: 'MCA (Computer Applications)' },
                 { value: 'Basic Sciences & Humanities', label: 'Basic Sciences & Humanities' },

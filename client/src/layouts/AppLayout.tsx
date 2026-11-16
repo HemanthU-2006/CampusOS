@@ -81,11 +81,7 @@ const roleNavMap: Record<string, RoleNavConfig> = {
     more: [allNavDefinitions.maintenance],
   },
   maintenance: {
-    primary: [
-      allNavDefinitions.home,
-      allNavDefinitions.maintenance,
-      allNavDefinitions.lostfound,
-    ],
+    primary: [allNavDefinitions.home, allNavDefinitions.maintenance, allNavDefinitions.lostfound],
     more: [],
   },
   admin: {
@@ -97,10 +93,7 @@ const roleNavMap: Record<string, RoleNavConfig> = {
       allNavDefinitions.maintenance,
       allNavDefinitions.analytics,
     ],
-    more: [
-      allNavDefinitions.clubs,
-      allNavDefinitions.lostfound,
-    ],
+    more: [allNavDefinitions.clubs, allNavDefinitions.lostfound],
   },
 };
 
@@ -173,14 +166,44 @@ export const AppLayout: React.FC = () => {
   const searchablePages = useMemo(
     () => [
       ...(userRole === 'admin'
-        ? [{ label: 'Administrator Board', desc: 'Institutional oversight across all 9 departments', href: '/attendance' }]
+        ? [
+            {
+              label: 'Administrator Board',
+              desc: 'Institutional oversight across all 9 departments',
+              href: '/attendance',
+            },
+          ]
         : []),
-      { label: 'Campus Events', desc: 'Browse upcoming workshops, fests, and tickets', href: '/events' },
-      { label: 'Attendance', desc: 'Check course percentages and mark daily sessions', href: '/attendance' },
-      { label: 'Repairs & Maintenance', desc: 'Report campus issues and track fixes', href: '/maintenance' },
-      { label: 'Clubs & Communities', desc: 'Explore student clubs and announcements', href: '/clubs' },
-      { label: 'Lost & Found', desc: 'Report lost items or claim found belongings', href: '/lost-found' },
-      { label: 'Analytics', desc: 'Campus utilization and maintenance statistics', href: '/analytics' },
+      {
+        label: 'Campus Events',
+        desc: 'Browse upcoming workshops, fests, and tickets',
+        href: '/events',
+      },
+      {
+        label: 'Attendance',
+        desc: 'Check course percentages and mark daily sessions',
+        href: '/attendance',
+      },
+      {
+        label: 'Repairs & Maintenance',
+        desc: 'Report campus issues and track fixes',
+        href: '/maintenance',
+      },
+      {
+        label: 'Clubs & Communities',
+        desc: 'Explore student clubs and announcements',
+        href: '/clubs',
+      },
+      {
+        label: 'Lost & Found',
+        desc: 'Report lost items or claim found belongings',
+        href: '/lost-found',
+      },
+      {
+        label: 'Analytics',
+        desc: 'Campus utilization and maintenance statistics',
+        href: '/analytics',
+      },
     ],
     [userRole]
   );
@@ -488,9 +511,7 @@ export const AppLayout: React.FC = () => {
                             <span className="font-semibold text-white">{notif.title}</span>
                             <span className="text-[10px] text-white/40">{notif.time}</span>
                           </div>
-                          <p className="text-white/60 text-[11px] leading-relaxed">
-                            {notif.text}
-                          </p>
+                          <p className="text-white/60 text-[11px] leading-relaxed">{notif.text}</p>
                         </div>
                       ))
                     )}

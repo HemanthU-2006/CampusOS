@@ -23,16 +23,20 @@ const storage = multer.diskStorage({
   },
 });
 
-const fileFilter = (
-  _req: any,
-  file: Express.Multer.File,
-  cb: multer.FileFilterCallback
-) => {
-  const allowedMimeTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/gif', 'application/pdf'];
+const fileFilter = (_req: any, file: Express.Multer.File, cb: multer.FileFilterCallback) => {
+  const allowedMimeTypes = [
+    'image/jpeg',
+    'image/png',
+    'image/webp',
+    'image/gif',
+    'application/pdf',
+  ];
   if (allowedMimeTypes.includes(file.mimetype)) {
     cb(null, true);
   } else {
-    cb(new AppError('Unsupported file type. Only images (JPG, PNG, WEBP) and PDFs are allowed', 400));
+    cb(
+      new AppError('Unsupported file type. Only images (JPG, PNG, WEBP) and PDFs are allowed', 400)
+    );
   }
 };
 

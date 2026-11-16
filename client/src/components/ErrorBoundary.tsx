@@ -40,9 +40,7 @@ export class ErrorBoundary extends Component<Props, State> {
             </div>
 
             <div className="space-y-2">
-              <h2 className="text-xl font-bold tracking-tight text-white">
-                Something went wrong
-              </h2>
+              <h2 className="text-xl font-bold tracking-tight text-white">Something went wrong</h2>
               <p className="text-sm text-white/60">
                 An unexpected error occurred in this view. Your session data is preserved.
               </p>
@@ -63,12 +61,7 @@ export class ErrorBoundary extends Component<Props, State> {
                 <RefreshCw className="w-3.5 h-3.5" />
                 Reload Page
               </Button>
-              <Button
-                variant="lime"
-                size="sm"
-                onClick={this.handleReset}
-                className="gap-1.5"
-              >
+              <Button variant="lime" size="sm" onClick={this.handleReset} className="gap-1.5">
                 <Home className="w-3.5 h-3.5" />
                 Return to Dashboard
               </Button>

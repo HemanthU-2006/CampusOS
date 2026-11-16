@@ -13,9 +13,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
     return (
       <div className="w-full space-y-1.5">
         {label && (
-          <label className="block text-xs font-medium text-white/80 select-none">
-            {label}
-          </label>
+          <label className="block text-xs font-medium text-white/80 select-none">{label}</label>
         )}
         <div className="relative flex items-center">
           {leftIcon && (

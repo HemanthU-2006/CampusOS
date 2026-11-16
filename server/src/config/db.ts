@@ -17,7 +17,11 @@ export const connectDB = async (): Promise<void> => {
     });
     console.log(`✅ MongoDB Connected: ${conn.connection.host}/${conn.connection.name}`);
   } catch (error: any) {
-    console.warn('⚠️  MongoDB Connection Warning: ' + (error?.message || 'Could not connect to MongoDB'));
-    console.warn('👉 If using MongoDB Atlas, make sure 0.0.0.0/0 (Allow Access from Anywhere) is added under Network Access in Atlas.');
+    console.warn(
+      '⚠️  MongoDB Connection Warning: ' + (error?.message || 'Could not connect to MongoDB')
+    );
+    console.warn(
+      '👉 If using MongoDB Atlas, make sure 0.0.0.0/0 (Allow Access from Anywhere) is added under Network Access in Atlas.'
+    );
   }
 };

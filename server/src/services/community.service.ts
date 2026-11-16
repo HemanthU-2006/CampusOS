@@ -15,7 +15,10 @@ export class CommunityService {
   /* ============================================================
      1. LOST & FOUND
      ============================================================ */
-  static async getLostFoundItems(query: { category?: string; type?: string }): Promise<ILostFoundItem[]> {
+  static async getLostFoundItems(query: {
+    category?: string;
+    type?: string;
+  }): Promise<ILostFoundItem[]> {
     const filter: Record<string, unknown> = {};
     if (query.category) filter.category = query.category;
     if (query.type) filter.type = query.type;
@@ -24,7 +27,10 @@ export class CommunityService {
       .sort({ dateReported: -1 });
   }
 
-  static async createLostFoundItem(userId: string, data: any): Promise<{ item: ILostFoundItem; matches: ILostFoundItem[] }> {
+  static async createLostFoundItem(
+    userId: string,
+    data: any
+  ): Promise<{ item: ILostFoundItem; matches: ILostFoundItem[] }> {
     const item = await LostFoundItem.create({
       ...data,
       reportedBy: userId,
@@ -37,16 +43,18 @@ export class CommunityService {
       _id: { $ne: item._id },
       type: oppositeType,
       status: 'open',
-      $or: [
-        { category: item.category },
-        { tags: { $in: item.tags } },
-      ],
+      $or: [{ category: item.category }, { tags: { $in: item.tags } }],
     }).limit(5);
 
     return { item, matches };
   }
 
-  static async submitClaim(itemId: string, claimantId: string, proofDetails: string, proofImage?: string): Promise<IClaimRequest> {
+  static async submitClaim(
+    itemId: string,
+    claimantId: string,
+    proofDetails: string,
+    proofImage?: string
+  ): Promise<IClaimRequest> {
     const item = await LostFoundItem.findById(itemId);
     if (!item) throw new AppError('Item not found', 404);
 
@@ -73,7 +81,11 @@ export class CommunityService {
     return claim.populate('claimant', 'name email role');
   }
 
-  static async approveClaim(claimId: string, reviewerId: string, approved: boolean): Promise<IClaimRequest> {
+  static async approveClaim(
+    claimId: string,
+    reviewerId: string,
+    approved: boolean
+  ): Promise<IClaimRequest> {
     const claim = await ClaimRequest.findById(claimId).populate('item');
     if (!claim) throw new AppError('Claim not found', 404);
 
@@ -201,7 +213,10 @@ export class CommunityService {
     return Resource.find().sort({ name: 1 });
   }
 
-  static async getResourceRequests(query: { status?: string; userId?: string }): Promise<IResourceRequest[]> {
+  static async getResourceRequests(query: {
+    status?: string;
+    userId?: string;
+  }): Promise<IResourceRequest[]> {
     const filter: Record<string, unknown> = {};
     if (query.status) filter.status = query.status;
     if (query.userId) filter.user = query.userId;
@@ -266,8 +281,14 @@ export class CommunityService {
       }
       resource.availableQuantity -= request.quantity;
       request.issuedAt = new Date();
-    } else if (status === 'returned' && (previousStatus === 'issued' || previousStatus === 'overdue')) {
-      resource.availableQuantity = Math.min(resource.totalQuantity, resource.availableQuantity + request.quantity);
+    } else if (
+      status === 'returned' &&
+      (previousStatus === 'issued' || previousStatus === 'overdue')
+    ) {
+      resource.availableQuantity = Math.min(
+        resource.totalQuantity,
+        resource.availableQuantity + request.quantity
+      );
       request.returnedAt = new Date();
     }
 
@@ -300,7 +321,11 @@ export class CommunityService {
     facultyId: string,
     courseId: string,
     dateString: string,
-    records: { studentId: string; status: 'present' | 'absent' | 'late' | 'excused'; remarks?: string }[]
+    records: {
+      studentId: string;
+      status: 'present' | 'absent' | 'late' | 'excused';
+      remarks?: string;
+    }[]
   ): Promise<{ savedCount: number; warningsDispatched: number }> {
     const course = await Course.findById(courseId);
     if (!course) throw new AppError('Course not found', 404);
@@ -329,7 +354,12 @@ export class CommunityService {
 
       // Compute student percentage via aggregation
       const stats = await AttendanceRecord.aggregate([
-        { $match: { course: new mongoose.Types.ObjectId(courseId), student: new mongoose.Types.ObjectId(rec.studentId) } },
+        {
+          $match: {
+            course: new mongoose.Types.ObjectId(courseId),
+            student: new mongoose.Types.ObjectId(rec.studentId),
+          },
+        },
         {
           $group: {
             _id: null,

@@ -32,7 +32,11 @@ export const LoginPage: React.FC = () => {
     setErrorMsg(null);
     try {
       await login(data);
-      if (isAdminParam || data.email.toLowerCase().includes('admin') || data.email.toLowerCase().includes('principal')) {
+      if (
+        isAdminParam ||
+        data.email.toLowerCase().includes('admin') ||
+        data.email.toLowerCase().includes('principal')
+      ) {
         navigate('/admin');
       } else {
         navigate('/dashboard');
@@ -77,7 +81,9 @@ export const LoginPage: React.FC = () => {
             <ShieldCheck className="w-4 h-4 text-rose-400 shrink-0" />
             <div>
               <p className="font-semibold text-white">Administrator Access Mode</p>
-              <p className="text-[11px] text-white/60">Governing all 9 SJBIT engineering &amp; management departments</p>
+              <p className="text-[11px] text-white/60">
+                Governing all 9 SJBIT engineering &amp; management departments
+              </p>
             </div>
           </div>
         )}
@@ -115,7 +121,8 @@ export const LoginPage: React.FC = () => {
             className="w-full mt-2 font-bold shadow-[0_0_24px_rgba(131,243,77,0.35)]"
             isLoading={isSubmitting || isLoading}
           >
-            {isAdminParam ? 'Sign In to Administrator Board' : 'Sign In to CampusOS'} <ArrowRight className="w-4 h-4 ml-1.5" />
+            {isAdminParam ? 'Sign In to Administrator Board' : 'Sign In to CampusOS'}{' '}
+            <ArrowRight className="w-4 h-4 ml-1.5" />
           </Button>
         </form>
 

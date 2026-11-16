@@ -18,12 +18,7 @@ export const register = asyncHandler(async (req: Request, res: Response) => {
 
   res.cookie('token', token, cookieOptions);
 
-  ApiResponse.success(
-    res,
-    { user },
-    'Account registered successfully',
-    201
-  );
+  ApiResponse.success(res, { user }, 'Account registered successfully', 201);
 });
 
 export const login = asyncHandler(async (req: Request, res: Response) => {
@@ -32,21 +27,11 @@ export const login = asyncHandler(async (req: Request, res: Response) => {
 
   res.cookie('token', token, cookieOptions);
 
-  ApiResponse.success(
-    res,
-    { user },
-    'Login successful',
-    200
-  );
+  ApiResponse.success(res, { user }, 'Login successful', 200);
 });
 
 export const getMe = asyncHandler(async (req: AuthRequest, res: Response) => {
-  ApiResponse.success(
-    res,
-    { user: req.user },
-    'Current authenticated user profile',
-    200
-  );
+  ApiResponse.success(res, { user: req.user }, 'Current authenticated user profile', 200);
 });
 
 export const logout = asyncHandler(async (_req: Request, res: Response) => {
@@ -57,10 +42,5 @@ export const logout = asyncHandler(async (_req: Request, res: Response) => {
     path: '/',
   });
 
-  ApiResponse.success(
-    res,
-    null,
-    'Logged out successfully',
-    200
-  );
+  ApiResponse.success(res, null, 'Logged out successfully', 200);
 });

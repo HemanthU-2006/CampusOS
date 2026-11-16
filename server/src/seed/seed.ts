@@ -1,4 +1,8 @@
 import mongoose from 'mongoose';
+import dns from 'dns';
+try {
+  dns.setServers(['8.8.8.8', '8.8.4.4']);
+} catch {}
 import bcrypt from 'bcryptjs';
 import { env } from '../config/env.js';
 import { User } from '../models/User.js';
@@ -108,7 +112,13 @@ const seedDatabase = async () => {
         capacity: 450,
         building: 'Academic Block 1',
         floor: 1,
-        amenities: ['4K Projector', 'Stage Lights', 'Surround Sound', 'Central AC', 'Wireless Mics'],
+        amenities: [
+          '4K Projector',
+          'Stage Lights',
+          'Surround Sound',
+          'Central AC',
+          'Wireless Mics',
+        ],
         isAvailable: true,
       },
       {
@@ -146,7 +156,8 @@ const seedDatabase = async () => {
       {
         name: 'Robotics & AI Guild',
         code: 'ROBO-AI',
-        description: 'Building autonomous rovers, drones, and machine learning models for national hackathons.',
+        description:
+          'Building autonomous rovers, drones, and machine learning models for national hackathons.',
         category: 'Technical',
         lead: clubHeadUser._id,
         members: [clubHeadUser._id, studentUser._id],
@@ -164,7 +175,8 @@ const seedDatabase = async () => {
       {
         name: 'E-Cell Entrepreneurship Hub',
         code: 'ECELL',
-        description: 'Incubating student-led startups with mentorship, pitch workshops, and seed funding.',
+        description:
+          'Incubating student-led startups with mentorship, pitch workshops, and seed funding.',
         category: 'Business',
         lead: clubHeadUser._id,
         members: [studentUser._id, facultyUser._id],
@@ -334,7 +346,8 @@ const seedDatabase = async () => {
       },
       {
         title: 'Casio fx-991EX ClassWiz Calculator',
-        description: 'Misplaced during Engineering Mathematics tutorial. Has a small cat sticker on cover.',
+        description:
+          'Misplaced during Engineering Mathematics tutorial. Has a small cat sticker on cover.',
         category: 'Electronics',
         type: 'lost',
         status: 'open',

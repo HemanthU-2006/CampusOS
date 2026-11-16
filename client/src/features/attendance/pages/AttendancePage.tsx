@@ -49,12 +49,37 @@ const BRANCH_ROSTERS: Record<string, StudentRosterItem[]> = {};
 // Official SJBIT Academic & Management Departments for Administrator Board
 const SJBIT_DEPARTMENTS = [
   { code: 'CV', name: 'Civil Engineering', hod: 'Dr. H. Narendra', block: 'Civil Block' },
-  { code: 'ME', name: 'Mechanical Engineering', hod: 'Dr. T. Madhusudhan', block: 'Mechanical Block' },
+  {
+    code: 'ME',
+    name: 'Mechanical Engineering',
+    hod: 'Dr. T. Madhusudhan',
+    block: 'Mechanical Block',
+  },
   { code: 'EEE', name: 'Electrical & Electronics', hod: 'Dr. Babu N.', block: 'EEE Block' },
-  { code: 'ECE', name: 'Electronics & Communication', hod: 'Dr. Nataraj K. R.', block: 'ECE Block' },
-  { code: 'CSE', name: 'Computer Science & Engineering', hod: 'Dr. A. N. Krishna', block: 'CSE Block' },
-  { code: 'ISE', name: 'Information Science & Engineering', hod: 'Dr. Rekha B.', block: 'ISE Block' },
-  { code: 'AI&ML', name: 'AI & Machine Learning', hod: 'Dr. Gopalakrishna M. T.', block: 'AI & DS Block' },
+  {
+    code: 'ECE',
+    name: 'Electronics & Communication',
+    hod: 'Dr. Nataraj K. R.',
+    block: 'ECE Block',
+  },
+  {
+    code: 'CSE',
+    name: 'Computer Science & Engineering',
+    hod: 'Dr. A. N. Krishna',
+    block: 'CSE Block',
+  },
+  {
+    code: 'ISE',
+    name: 'Information Science & Engineering',
+    hod: 'Dr. Rekha B.',
+    block: 'ISE Block',
+  },
+  {
+    code: 'AI&ML',
+    name: 'AI & Machine Learning',
+    hod: 'Dr. Gopalakrishna M. T.',
+    block: 'AI & DS Block',
+  },
   { code: 'CS-DS', name: 'CSE (Data Science)', hod: 'Dr. Deepa S.', block: 'AI & DS Block' },
   { code: 'MBA', name: 'Management Studies (MBA)', hod: 'Dr. Mamatha J.', block: 'MBA Block' },
 ];
@@ -87,7 +112,12 @@ const getStudentBranch = (deptStr?: string, rollNum?: string) => {
   if (text.includes('COMMUNICATION') || text.includes('ECE') || text.includes('EC')) {
     return { code: 'ECE', name: 'Electronics & Communication Engineering' };
   }
-  if (text.includes('DATA SCIENCE') || text.includes('CS-DS') || text.includes('CSDS') || text.includes('CD')) {
+  if (
+    text.includes('DATA SCIENCE') ||
+    text.includes('CS-DS') ||
+    text.includes('CSDS') ||
+    text.includes('CD')
+  ) {
     return { code: 'CS-DS', name: 'Computer Science & Engineering (Data Science)' };
   }
   if (text.includes('AI') || text.includes('ARTIFICIAL') || text.includes('AIML')) {
@@ -96,7 +126,12 @@ const getStudentBranch = (deptStr?: string, rollNum?: string) => {
   if (text.includes('INFORMATION') || text.includes('ISE') || text.includes('IS')) {
     return { code: 'ISE', name: 'Information Science & Engineering' };
   }
-  if (text.includes('BUSINESS') || text.includes('MBA') || text.includes('MANAGEMENT') || text.includes('BA')) {
+  if (
+    text.includes('BUSINESS') ||
+    text.includes('MBA') ||
+    text.includes('MANAGEMENT') ||
+    text.includes('BA')
+  ) {
     return { code: 'MBA', name: 'Master of Business Administration' };
   }
   return { code: 'CSE', name: 'Computer Science & Engineering' };
@@ -118,7 +153,9 @@ export const AttendancePage: React.FC = () => {
 
   // Faculty / Admin Class State
   const [selectedCourse, setSelectedCourse] = useState('');
-  const [attendanceDate, setAttendanceDate] = useState(() => new Date().toISOString().split('T')[0]);
+  const [attendanceDate, setAttendanceDate] = useState(
+    () => new Date().toISOString().split('T')[0]
+  );
 
   // Determine current active course branch
   const activeCourseObj = useMemo(() => {
@@ -154,7 +191,8 @@ export const AttendancePage: React.FC = () => {
 
   const handleExportCSV = () => {
     if (!activeCourseObj) return;
-    let csv = 'Course,Branch,Date,Roll Number,Student Name,Today Status,Overall Attendance Percentage\n';
+    let csv =
+      'Course,Branch,Date,Roll Number,Student Name,Today Status,Overall Attendance Percentage\n';
     currentRoster.forEach((s) => {
       csv += `"${selectedCourse}","${activeCourseObj.branch}","${attendanceDate}","${s.rollNumber}","${s.name}","${s.status}","${s.overallPercentage}%"\n`;
     });
@@ -163,7 +201,10 @@ export const AttendancePage: React.FC = () => {
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
-    link.setAttribute('download', `Attendance-${selectedCourse}-${activeCourseObj.branchCode}-${attendanceDate}.csv`);
+    link.setAttribute(
+      'download',
+      `Attendance-${selectedCourse}-${activeCourseObj.branchCode}-${attendanceDate}.csv`
+    );
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -212,7 +253,8 @@ export const AttendancePage: React.FC = () => {
                 Campus Academic &amp; Attendance Board
               </h1>
               <p className="text-sm text-white/60 mt-0.5">
-                Unified institutional oversight across all 9 engineering &amp; management branches at SJBIT.
+                Unified institutional oversight across all 9 engineering &amp; management branches
+                at SJBIT.
               </p>
             </div>
 
@@ -286,7 +328,9 @@ export const AttendancePage: React.FC = () => {
           <div className="p-6 rounded-2xl bg-card border border-ring/80 space-y-5">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-ring/60 pb-4">
               <div>
-                <h2 className="text-lg font-bold text-white">Class &amp; Student Attendance Inspector</h2>
+                <h2 className="text-lg font-bold text-white">
+                  Class &amp; Student Attendance Inspector
+                </h2>
                 <p className="text-xs text-white/50 mt-0.5">
                   Select any course to review student attendance rosters or record updates.
                 </p>
@@ -307,7 +351,9 @@ export const AttendancePage: React.FC = () => {
             {ALL_SJBIT_COURSES.length === 0 ? (
               <div className="p-8 text-center space-y-2">
                 <BookOpen className="w-8 h-8 text-white/30 mx-auto" />
-                <p className="text-sm font-semibold text-white">No active course sessions configured</p>
+                <p className="text-sm font-semibold text-white">
+                  No active course sessions configured
+                </p>
                 <p className="text-xs text-white/50">
                   Course registrations and attendance logs will appear here once entered.
                 </p>
@@ -336,7 +382,9 @@ export const AttendancePage: React.FC = () => {
                 {activeCourseObj && (
                   <div className="p-4 rounded-xl bg-row/50 border border-ring/60 flex items-center justify-between text-xs text-white/70">
                     <div>
-                      Inspecting: <strong className="text-white">{activeCourseObj.name}</strong> ({activeCourseObj.code}) · Department: <strong className="text-lime">{activeCourseObj.branch}</strong>
+                      Inspecting: <strong className="text-white">{activeCourseObj.name}</strong> (
+                      {activeCourseObj.code}) · Department:{' '}
+                      <strong className="text-lime">{activeCourseObj.branch}</strong>
                     </div>
                     <span className="text-white/50">Faculty: {activeCourseObj.faculty}</span>
                   </div>
@@ -364,7 +412,8 @@ export const AttendancePage: React.FC = () => {
                 </Badge>
               </div>
               <p className="text-sm text-white/60 mt-1">
-                VTU Scheme semester attendance records for <strong className="text-white">{studentBranch.name}</strong>.
+                VTU Scheme semester attendance records for{' '}
+                <strong className="text-white">{studentBranch.name}</strong>.
               </p>
             </div>
 
@@ -383,7 +432,8 @@ export const AttendancePage: React.FC = () => {
                 No course attendance records for {studentBranch.name}
               </p>
               <p className="text-xs text-white/50 max-w-sm mx-auto">
-                Your enrolled subjects and attendance logs for {studentBranch.name} will appear here once configured by the department.
+                Your enrolled subjects and attendance logs for {studentBranch.name} will appear here
+                once configured by the department.
               </p>
             </div>
           ) : (
@@ -452,7 +502,8 @@ export const AttendancePage: React.FC = () => {
                           <div>
                             <p className="font-semibold text-red-200">Attendance Warning</p>
                             <p className="text-[11px] text-red-300/80 mt-0.5">
-                              Your attendance is below 75%. You need to attend the upcoming sessions to maintain VTU exam clearance.
+                              Your attendance is below 75%. You need to attend the upcoming sessions
+                              to maintain VTU exam clearance.
                             </p>
                           </div>
                         </div>
@@ -483,10 +534,20 @@ export const AttendancePage: React.FC = () => {
 
             {activeCourseObj && (
               <div className="flex items-center gap-2">
-                <Button variant="outline" size="lg" onClick={handleExportCSV} className="shrink-0 min-h-[44px]">
+                <Button
+                  variant="outline"
+                  size="lg"
+                  onClick={handleExportCSV}
+                  className="shrink-0 min-h-[44px]"
+                >
                   <Download className="w-4 h-4 mr-1.5" /> Download CSV
                 </Button>
-                <Button variant="lime" size="lg" onClick={handleSaveAttendance} className="shadow-[0_0_20px_rgba(131,243,77,0.35)] shrink-0 min-h-[44px]">
+                <Button
+                  variant="lime"
+                  size="lg"
+                  onClick={handleSaveAttendance}
+                  className="shadow-[0_0_20px_rgba(131,243,77,0.35)] shrink-0 min-h-[44px]"
+                >
                   <Save className="w-4 h-4 mr-1.5" /> Save attendance
                 </Button>
               </div>
@@ -498,7 +559,8 @@ export const AttendancePage: React.FC = () => {
               <UserCheck className="w-8 h-8 text-white/30 mx-auto" />
               <p className="text-sm font-semibold text-white">No active courses assigned</p>
               <p className="text-xs text-white/50 max-w-sm mx-auto">
-                Course sessions and student rosters will appear here once configured for the semester.
+                Course sessions and student rosters will appear here once configured for the
+                semester.
               </p>
             </div>
           ) : (
@@ -535,7 +597,9 @@ export const AttendancePage: React.FC = () => {
               {activeCourseObj && (
                 <div className="p-4 rounded-xl bg-row/50 border border-ring/60 flex items-center justify-between text-xs text-white/70">
                   <div>
-                    Active Class: <strong className="text-white">{activeCourseObj.name}</strong> ({activeCourseObj.code}) · Department: <strong className="text-lime">{activeCourseObj.branch}</strong>
+                    Active Class: <strong className="text-white">{activeCourseObj.name}</strong> (
+                    {activeCourseObj.code}) · Department:{' '}
+                    <strong className="text-lime">{activeCourseObj.branch}</strong>
                   </div>
                   <span className="text-white/50">Faculty: {activeCourseObj.faculty}</span>
                 </div>

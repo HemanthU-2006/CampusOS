@@ -36,17 +36,23 @@ export const EventsPage: React.FC = () => {
   // Fetch real events and tickets from backend on mount
   React.useEffect(() => {
     let isMounted = true;
-    eventApi.getEvents().then((data) => {
-      if (isMounted && data && data.length > 0) {
-        setEvents(data);
-      }
-    }).catch(() => {});
+    eventApi
+      .getEvents()
+      .then((data) => {
+        if (isMounted && data && data.length > 0) {
+          setEvents(data);
+        }
+      })
+      .catch(() => {});
 
-    eventApi.getMyRegistrations().then((tickets) => {
-      if (isMounted && tickets && tickets.length > 0) {
-        setUserTickets(tickets);
-      }
-    }).catch(() => {});
+    eventApi
+      .getMyRegistrations()
+      .then((tickets) => {
+        if (isMounted && tickets && tickets.length > 0) {
+          setUserTickets(tickets);
+        }
+      })
+      .catch(() => {});
 
     return () => {
       isMounted = false;
@@ -64,7 +70,9 @@ export const EventsPage: React.FC = () => {
   const [newTitle, setNewTitle] = useState('');
   const [newDescription, setNewDescription] = useState('');
   const [newVenue, setNewVenue] = useState('Main Auditorium (Hall A)');
-  const [newDate, setNewDate] = useState(() => new Date(Date.now() + 86400000 * 3).toISOString().split('T')[0]);
+  const [newDate, setNewDate] = useState(
+    () => new Date(Date.now() + 86400000 * 3).toISOString().split('T')[0]
+  );
   const [newCapacity, setNewCapacity] = useState('100');
 
   // Scanner state
@@ -76,9 +84,7 @@ export const EventsPage: React.FC = () => {
   } | null>(null);
 
   const handleRegister = (event: EventItem) => {
-    const existing = userTickets.find(
-      (t) => t.event._id === event._id && t.status !== 'cancelled'
-    );
+    const existing = userTickets.find((t) => t.event._id === event._id && t.status !== 'cancelled');
     if (existing) {
       toast.info(
         `You are already ${existing.status === 'registered' ? 'registered' : 'on the waiting list'}.`
@@ -126,9 +132,7 @@ export const EventsPage: React.FC = () => {
 
       setUserTickets([newReg, ...userTickets]);
       setEvents((prev) =>
-        prev.map((e) =>
-          e._id === event._id ? { ...e, waitlistCount: e.waitlistCount + 1 } : e
-        )
+        prev.map((e) => (e._id === event._id ? { ...e, waitlistCount: e.waitlistCount + 1 } : e))
       );
 
       toast.info('Added to Waiting List', {
@@ -149,7 +153,8 @@ export const EventsPage: React.FC = () => {
         if (e._id === reg.event._id) {
           if (e.waitlistCount > 0) {
             toast.info('Waiting list promoted', {
-              description: 'The first person on the waiting list was automatically granted a ticket.',
+              description:
+                'The first person on the waiting list was automatically granted a ticket.',
             });
             return { ...e, waitlistCount: e.waitlistCount - 1 };
           }
@@ -347,13 +352,14 @@ export const EventsPage: React.FC = () => {
       </div>
 
       {/* 3. Browse Events Grid */}
-      {activeTab === 'browse' && (
-        filteredEvents.length === 0 ? (
+      {activeTab === 'browse' &&
+        (filteredEvents.length === 0 ? (
           <div className="p-12 rounded-2xl bg-card border border-ring/60 text-center space-y-3">
             <Calendar className="w-8 h-8 text-white/30 mx-auto" />
             <p className="text-sm font-semibold text-white">No events scheduled yet</p>
             <p className="text-xs text-white/50 max-w-sm mx-auto">
-              There are no campus events published right now. You can host an event or check back later.
+              There are no campus events published right now. You can host an event or check back
+              later.
             </p>
             {isOrganizer && (
               <Button variant="lime" size="sm" onClick={() => setIsHostModalOpen(true)}>
@@ -382,7 +388,9 @@ export const EventsPage: React.FC = () => {
                         {event.club?.name || 'Campus Wide'}
                       </span>
                       <Badge variant={isFull ? 'pending' : 'approved'}>
-                        {isFull ? `Full (${event.waitlistCount} waiting)` : `${seatsLeft} seats left`}
+                        {isFull
+                          ? `Full (${event.waitlistCount} waiting)`
+                          : `${seatsLeft} seats left`}
                       </Badge>
                     </div>
 
@@ -393,9 +401,7 @@ export const EventsPage: React.FC = () => {
                       >
                         {event.title}
                       </h3>
-                      <p className="text-xs text-white/60 line-clamp-2 mt-1">
-                        {event.description}
-                      </p>
+                      <p className="text-xs text-white/60 line-clamp-2 mt-1">{event.description}</p>
                     </div>
 
                     {/* Date, Time, Venue */}
@@ -472,8 +478,7 @@ export const EventsPage: React.FC = () => {
               );
             })}
           </div>
-        )
-      )}
+        ))}
 
       {/* 4. My Tickets View: Clear, Large QR Pass */}
       {activeTab === 'my_tickets' && (
@@ -483,7 +488,8 @@ export const EventsPage: React.FC = () => {
               <QrCode className="w-8 h-8 text-white/30 mx-auto" />
               <p className="text-sm font-semibold text-white">No tickets yet</p>
               <p className="text-xs text-white/50 max-w-sm mx-auto">
-                You haven't registered for any events yet. Check out upcoming events and grab your pass.
+                You haven't registered for any events yet. Check out upcoming events and grab your
+                pass.
               </p>
               <Button variant="lime" size="sm" onClick={() => setActiveTab('browse')}>
                 Browse events
@@ -501,27 +507,23 @@ export const EventsPage: React.FC = () => {
                       <span className="text-[10px] font-mono uppercase px-2 py-0.5 rounded-full bg-row text-white/70 border border-ring">
                         Pass #{ticket.ticketCode}
                       </span>
-                      <h3 className="text-base font-bold text-white mt-2">
-                        {ticket.event.title}
-                      </h3>
-                      <p className="text-xs text-white/60 mt-0.5">
-                        {ticket.event.venue.name}
-                      </p>
+                      <h3 className="text-base font-bold text-white mt-2">{ticket.event.title}</h3>
+                      <p className="text-xs text-white/60 mt-0.5">{ticket.event.venue.name}</p>
                     </div>
                     <Badge
                       variant={
                         ticket.status === 'registered'
                           ? 'lime'
                           : ticket.status === 'attended'
-                          ? 'approved'
-                          : 'pending'
+                            ? 'approved'
+                            : 'pending'
                       }
                     >
                       {ticket.status === 'registered'
                         ? 'Confirmed'
                         : ticket.status === 'attended'
-                        ? 'Checked in'
-                        : 'Waiting list'}
+                          ? 'Checked in'
+                          : 'Waiting list'}
                     </Badge>
                   </div>
 
@@ -642,17 +644,14 @@ export const EventsPage: React.FC = () => {
               <div className="flex justify-between">
                 <span className="text-white/50">Capacity:</span>
                 <span className="text-white">
-                  {selectedEventForDetail.registeredCount} / {selectedEventForDetail.capacity} seats filled
+                  {selectedEventForDetail.registeredCount} / {selectedEventForDetail.capacity} seats
+                  filled
                 </span>
               </div>
             </div>
 
             <div className="flex justify-end gap-2 pt-2 border-t border-ring/60">
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => setSelectedEventForDetail(null)}
-              >
+              <Button variant="outline" size="sm" onClick={() => setSelectedEventForDetail(null)}>
                 Close
               </Button>
               <Button

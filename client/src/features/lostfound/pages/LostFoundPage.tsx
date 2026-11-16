@@ -253,9 +253,7 @@ export const LostFoundPage: React.FC = () => {
                     This is mine
                   </Button>
                 )}
-                {item.status === 'claimed' && (
-                  <Badge variant="info">Claimed</Badge>
-                )}
+                {item.status === 'claimed' && <Badge variant="info">Claimed</Badge>}
                 {item.status === 'resolved' && (
                   <span className="text-xs text-emerald-400 font-semibold flex items-center gap-1">
                     <CheckCircle2 className="w-3.5 h-3.5" /> Handed back

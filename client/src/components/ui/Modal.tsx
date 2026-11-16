@@ -104,9 +104,7 @@ export const Modal: React.FC<ModalProps> = ({
         )}
 
         {/* Body */}
-        <div className="p-6 overflow-y-auto space-y-4 text-sm text-white/80">
-          {children}
-        </div>
+        <div className="p-6 overflow-y-auto space-y-4 text-sm text-white/80">{children}</div>
 
         {/* Footer */}
         {footer && (

@@ -23,11 +23,7 @@ export const triageTicket = asyncHandler(async (req: Request, res: Response) => 
     return;
   }
 
-  const result = await AIService.triageTicket(
-    title,
-    description || title,
-    location
-  );
+  const result = await AIService.triageTicket(title, description || title, location);
 
   ApiResponse.success(res, result, 'Ticket triaged successfully');
 });

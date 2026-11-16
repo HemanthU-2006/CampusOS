@@ -134,12 +134,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         const role: UserProfile['role'] = lowerEmail.includes('faculty')
           ? 'faculty'
           : lowerEmail.includes('maintenance')
-          ? 'maintenance'
-          : lowerEmail.includes('club')
-          ? 'club_head'
-          : 'student';
+            ? 'maintenance'
+            : lowerEmail.includes('club')
+              ? 'club_head'
+              : 'student';
 
-        const rawName = credentials.email.split('@')[0].replace(/[._0-9]/g, ' ').trim() || 'User';
+        const rawName =
+          credentials.email
+            .split('@')[0]
+            .replace(/[._0-9]/g, ' ')
+            .trim() || 'User';
         const formattedName = rawName.charAt(0).toUpperCase() + rawName.slice(1);
 
         const sessionUser: UserProfile = {

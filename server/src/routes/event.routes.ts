@@ -27,7 +27,12 @@ router.post(
   validate(createEventSchema),
   createEvent
 );
-router.patch('/:id/publish', authenticate, roleGuard('club_head', 'faculty', 'admin'), publishEvent);
+router.patch(
+  '/:id/publish',
+  authenticate,
+  roleGuard('club_head', 'faculty', 'admin'),
+  publishEvent
+);
 router.post('/:id/register', authenticate, registerForEvent);
 router.post('/:id/cancel', authenticate, cancelRegistration);
 router.post(
@@ -37,6 +42,11 @@ router.post(
   validate(checkInTicketSchema),
   checkInAttendee
 );
-router.patch('/:id/complete', authenticate, roleGuard('club_head', 'faculty', 'admin'), completeEvent);
+router.patch(
+  '/:id/complete',
+  authenticate,
+  roleGuard('club_head', 'faculty', 'admin'),
+  completeEvent
+);
 
 export default router;

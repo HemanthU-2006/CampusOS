@@ -27,25 +27,117 @@ interface HODContact {
 }
 
 const HOD_DIRECTORY: HODContact[] = [
-  { slNo: 1, name: 'Dr. Chandrappa D N', department: 'ECE (Electronics & Communication)', phone: '+91-9739099707', email: 'ecehod@sjbit.edu.in' },
-  { slNo: 2, name: 'Dr. Vitala H.R', department: 'Mechanical Engineering', phone: '+91-9916907193', email: 'mechhod@sjbit.edu.in' },
-  { slNo: 3, name: 'Dr. Prasad C S M V', department: 'Civil Engineering', phone: '+91-9972835799', email: 'civhod@sjbit.edu.in' },
-  { slNo: 4, name: 'Dr. Krishna A N', department: 'CSE (Computer Science & Engg)', phone: '+91-9739099708', email: 'csehod@sjbit.edu.in' },
-  { slNo: 5, name: 'Dr. Gopalakrishna M T', department: 'ISE (Information Science & Engg)', phone: '+91-8660744196', email: 'isehod@sjbit.edu.in' },
-  { slNo: 6, name: 'Dr. Chandrashekar M J', department: 'EEE (Electrical & Electronics)', phone: '+91-9886328100', email: 'eeehod@sjbit.edu.in' },
-  { slNo: 7, name: 'Dr. Abhilash C N', department: 'AI & ML (Artificial Intelligence & ML)', phone: '+91-6363983527', email: 'aimlhod@sjbit.edu.in' },
-  { slNo: 8, name: 'Dr. Chandrashekar D K', department: 'CSE (Data Science) I/C HoD', phone: '+91-9900329969', email: 'dshod@sjbit.edu.in' },
-  { slNo: 9, name: 'Dr. Mamatha J', department: 'MBA (Department of Management Studies)', phone: '+91-9901176722', email: 'mbahod@sjbit.edu.in' },
-  { slNo: 10, name: 'Dr. Nagamani S', department: 'MCA (Master of Computer Applications)', phone: '+91-9844081602', email: 'mcahod@sjbit.edu.in' },
-  { slNo: 11, name: 'Dr. Poornima M', department: 'Mathematics Department HOD', phone: '+91-9620513818', email: 'mathshod@sjbit.edu.in' },
-  { slNo: 12, name: 'Dr. Doreswamy B H', department: 'Physics Department HOD', phone: '+91-6366334799', email: 'phyhod@sjbit.edu.in' },
-  { slNo: 13, name: 'Dr. Bhanu Prakash G', department: 'Chemistry Department HOD', phone: '+91-9742988988', email: 'chehod@sjbit.edu.in' },
-  { slNo: 14, name: 'Dr. Ranganatha G H', department: 'Sports & Physical Education', phone: '+91-9449379213', email: 'sports@sjbit.edu.in' },
-  { slNo: 15, name: 'Mr. Vinay', department: 'Central Library & Information Centre', phone: '+91-9886811828', email: 'librarian@sjbit.edu.in' },
+  {
+    slNo: 1,
+    name: 'Dr. Chandrappa D N',
+    department: 'ECE (Electronics & Communication)',
+    phone: '+91-9739099707',
+    email: 'ecehod@sjbit.edu.in',
+  },
+  {
+    slNo: 2,
+    name: 'Dr. Vitala H.R',
+    department: 'Mechanical Engineering',
+    phone: '+91-9916907193',
+    email: 'mechhod@sjbit.edu.in',
+  },
+  {
+    slNo: 3,
+    name: 'Dr. Prasad C S M V',
+    department: 'Civil Engineering',
+    phone: '+91-9972835799',
+    email: 'civhod@sjbit.edu.in',
+  },
+  {
+    slNo: 4,
+    name: 'Dr. Krishna A N',
+    department: 'CSE (Computer Science & Engg)',
+    phone: '+91-9739099708',
+    email: 'csehod@sjbit.edu.in',
+  },
+  {
+    slNo: 5,
+    name: 'Dr. Gopalakrishna M T',
+    department: 'ISE (Information Science & Engg)',
+    phone: '+91-8660744196',
+    email: 'isehod@sjbit.edu.in',
+  },
+  {
+    slNo: 6,
+    name: 'Dr. Chandrashekar M J',
+    department: 'EEE (Electrical & Electronics)',
+    phone: '+91-9886328100',
+    email: 'eeehod@sjbit.edu.in',
+  },
+  {
+    slNo: 7,
+    name: 'Dr. Abhilash C N',
+    department: 'AI & ML (Artificial Intelligence & ML)',
+    phone: '+91-6363983527',
+    email: 'aimlhod@sjbit.edu.in',
+  },
+  {
+    slNo: 8,
+    name: 'Dr. Chandrashekar D K',
+    department: 'CSE (Data Science) I/C HoD',
+    phone: '+91-9900329969',
+    email: 'dshod@sjbit.edu.in',
+  },
+  {
+    slNo: 9,
+    name: 'Dr. Mamatha J',
+    department: 'MBA (Department of Management Studies)',
+    phone: '+91-9901176722',
+    email: 'mbahod@sjbit.edu.in',
+  },
+  {
+    slNo: 10,
+    name: 'Dr. Nagamani S',
+    department: 'MCA (Master of Computer Applications)',
+    phone: '+91-9844081602',
+    email: 'mcahod@sjbit.edu.in',
+  },
+  {
+    slNo: 11,
+    name: 'Dr. Poornima M',
+    department: 'Mathematics Department HOD',
+    phone: '+91-9620513818',
+    email: 'mathshod@sjbit.edu.in',
+  },
+  {
+    slNo: 12,
+    name: 'Dr. Doreswamy B H',
+    department: 'Physics Department HOD',
+    phone: '+91-6366334799',
+    email: 'phyhod@sjbit.edu.in',
+  },
+  {
+    slNo: 13,
+    name: 'Dr. Bhanu Prakash G',
+    department: 'Chemistry Department HOD',
+    phone: '+91-9742988988',
+    email: 'chehod@sjbit.edu.in',
+  },
+  {
+    slNo: 14,
+    name: 'Dr. Ranganatha G H',
+    department: 'Sports & Physical Education',
+    phone: '+91-9449379213',
+    email: 'sports@sjbit.edu.in',
+  },
+  {
+    slNo: 15,
+    name: 'Mr. Vinay',
+    department: 'Central Library & Information Centre',
+    phone: '+91-9886811828',
+    email: 'librarian@sjbit.edu.in',
+  },
 ];
 
 export const ContactPage: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<'hods' | 'admin' | 'placement' | 'hostel' | 'helplines'>('hods');
+  const [activeTab, setActiveTab] = useState<
+    'hods' | 'admin' | 'placement' | 'hostel' | 'helplines'
+  >('hods');
   const [hodSearch, setHodSearch] = useState('');
 
   // Form State
@@ -74,7 +166,8 @@ export const ContactPage: React.FC = () => {
       setFormAddress('');
       setFormMessage('');
       toast.success('Inquiry Submitted Successfully', {
-        description: 'Thank you for contacting SJBIT. The administrative office will reach out shortly.',
+        description:
+          'Thank you for contacting SJBIT. The administrative office will reach out shortly.',
       });
     }, 600);
   };
@@ -84,14 +177,19 @@ export const ContactPage: React.FC = () => {
       {/* 1. Header Hero Banner */}
       <div className="text-center space-y-4 max-w-3xl mx-auto">
         <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-card/85 border border-amber-400/30 text-amber-300 text-xs font-semibold shadow-md">
-          <img src="/sjbit-emblem.png" alt="SJBIT" className="w-4 h-4 rounded-full bg-white p-0.5" />
+          <img
+            src="/sjbit-emblem.png"
+            alt="SJBIT"
+            className="w-4 h-4 rounded-full bg-white p-0.5"
+          />
           <span>SJB Institute of Technology · Official Campus Directory</span>
         </div>
         <h1 className="text-4xl sm:text-5xl font-extrabold text-white tracking-tight">
           Get in Touch <span className="text-lime">with SJBIT</span>
         </h1>
         <p className="text-sm sm:text-base text-white/70 leading-relaxed">
-          Official administrative office contacts, department HODs, admission counseling numbers, hostel wardens, and campus emergency helplines.
+          Official administrative office contacts, department HODs, admission counseling numbers,
+          hostel wardens, and campus emergency helplines.
         </p>
       </div>
 
@@ -121,7 +219,9 @@ export const ContactPage: React.FC = () => {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-medium text-white/70 mb-1">Mobile Number</label>
+                <label className="block text-xs font-medium text-white/70 mb-1">
+                  Mobile Number
+                </label>
                 <input
                   type="tel"
                   value={formMobile}
@@ -146,7 +246,9 @@ export const ContactPage: React.FC = () => {
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-white/70 mb-1">Address / Location</label>
+              <label className="block text-xs font-medium text-white/70 mb-1">
+                Address / Location
+              </label>
               <textarea
                 value={formAddress}
                 onChange={(e) => setFormAddress(e.target.value)}
@@ -157,7 +259,9 @@ export const ContactPage: React.FC = () => {
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-white/70 mb-1">Message / Inquiry Details</label>
+              <label className="block text-xs font-medium text-white/70 mb-1">
+                Message / Inquiry Details
+              </label>
               <textarea
                 value={formMessage}
                 onChange={(e) => setFormMessage(e.target.value)}
@@ -191,7 +295,8 @@ export const ContactPage: React.FC = () => {
               <div>
                 <h3 className="font-extrabold text-base text-white">SJB Institute of Technology</h3>
                 <p className="text-xs text-white/70 mt-1 leading-relaxed">
-                  No. 67, BGS Health &amp; Education City, Dr. Vishnuvardhan Road, Kengeri, Bengaluru, Karnataka – 560060, INDIA.
+                  No. 67, BGS Health &amp; Education City, Dr. Vishnuvardhan Road, Kengeri,
+                  Bengaluru, Karnataka – 560060, INDIA.
                 </p>
               </div>
             </div>
@@ -201,7 +306,10 @@ export const ContactPage: React.FC = () => {
                 <Mail className="w-4 h-4 text-lime shrink-0" />
                 <div>
                   <span className="text-[10px] text-white/50 block">Official Principal Email</span>
-                  <a href="mailto:principal@sjbit.edu.in" className="font-semibold text-white hover:text-lime">
+                  <a
+                    href="mailto:principal@sjbit.edu.in"
+                    className="font-semibold text-white hover:text-lime"
+                  >
                     principal@sjbit.edu.in
                   </a>
                 </div>
@@ -226,19 +334,28 @@ export const ContactPage: React.FC = () => {
 
             <div className="space-y-2 text-xs text-white/80">
               <div className="p-2.5 rounded-lg bg-row border border-ring/60">
-                <span className="font-semibold text-amber-300 block mb-0.5">Management Quota Admissions:</span>
+                <span className="font-semibold text-amber-300 block mb-0.5">
+                  Management Quota Admissions:
+                </span>
                 <span className="text-white">+91 9591936004 / +91 9606485138</span>
               </div>
 
               <div className="p-2.5 rounded-lg bg-row border border-ring/60">
-                <span className="font-semibold text-amber-300 block mb-0.5">CET &amp; COMED-K Admissions:</span>
+                <span className="font-semibold text-amber-300 block mb-0.5">
+                  CET &amp; COMED-K Admissions:
+                </span>
                 <span className="text-white">Contact for Admission: +91 9739078206</span>
-                <span className="block text-[11px] text-white/60">Principal Contact: +91 9008719999</span>
+                <span className="block text-[11px] text-white/60">
+                  Principal Contact: +91 9008719999
+                </span>
               </div>
 
               <div className="flex items-center justify-between text-xs pt-1">
                 <span className="text-white/60">Admissions Email:</span>
-                <a href="mailto:admission@bgsgroup.org" className="text-lime font-medium hover:underline">
+                <a
+                  href="mailto:admission@bgsgroup.org"
+                  className="text-lime font-medium hover:underline"
+                >
                   admission@bgsgroup.org
                 </a>
               </div>
@@ -257,7 +374,9 @@ export const ContactPage: React.FC = () => {
                 <span className="font-bold text-white text-sm">+91-7204081185</span>
               </div>
               <div className="p-3 rounded-lg bg-rose-500/10 border border-rose-500/20">
-                <span className="text-[11px] text-white/60 block">Student Welfare &amp; Grievances</span>
+                <span className="text-[11px] text-white/60 block">
+                  Student Welfare &amp; Grievances
+                </span>
                 <span className="font-bold text-white text-sm">+91-9902310181</span>
               </div>
             </div>
@@ -358,10 +477,14 @@ export const ContactPage: React.FC = () => {
                       <td className="py-3 px-4 font-bold text-white">{h.name}</td>
                       <td className="py-3 px-4">{h.department}</td>
                       <td className="py-3 px-4 font-mono text-lime font-semibold">
-                        <a href={`tel:${h.phone}`} className="hover:underline">{h.phone}</a>
+                        <a href={`tel:${h.phone}`} className="hover:underline">
+                          {h.phone}
+                        </a>
                       </td>
                       <td className="py-3 px-4 font-mono text-blue-300">
-                        <a href={`mailto:${h.email}`} className="hover:underline">{h.email}</a>
+                        <a href={`mailto:${h.email}`} className="hover:underline">
+                          {h.email}
+                        </a>
                       </td>
                     </tr>
                   ))}
@@ -379,9 +502,13 @@ export const ContactPage: React.FC = () => {
                 <Building2 className="w-4 h-4 text-lime" />
                 <h3 className="font-bold text-white text-sm">Principal Office / Reception</h3>
               </div>
-              <p className="text-xs text-white/60">Front desk reception and official correspondence.</p>
+              <p className="text-xs text-white/60">
+                Front desk reception and official correspondence.
+              </p>
               <div className="p-3 rounded-lg bg-row border border-ring/60 font-mono text-xs text-lime">
-                +91-6366041109<br />+91-80-28612445 / 46
+                +91-6366041109
+                <br />
+                +91-80-28612445 / 46
               </div>
             </div>
 
@@ -390,9 +517,13 @@ export const ContactPage: React.FC = () => {
                 <Award className="w-4 h-4 text-amber-400" />
                 <h3 className="font-bold text-white text-sm">Account Section</h3>
               </div>
-              <p className="text-xs text-white/60">Fee payments, scholarships, and financial verification.</p>
+              <p className="text-xs text-white/60">
+                Fee payments, scholarships, and financial verification.
+              </p>
               <div className="p-3 rounded-lg bg-row border border-ring/60 font-mono text-xs text-amber-300">
-                +91-9449213292<br />+91-9986502012
+                +91-9449213292
+                <br />
+                +91-9986502012
               </div>
             </div>
 
@@ -401,12 +532,22 @@ export const ContactPage: React.FC = () => {
                 <GraduationCap className="w-4 h-4 text-blue-400" />
                 <h3 className="font-bold text-white text-sm">Exam Section (Autonomous)</h3>
               </div>
-              <p className="text-xs text-white/60">CIE tests, VTU semester exams, and grade cards.</p>
+              <p className="text-xs text-white/60">
+                CIE tests, VTU semester exams, and grade cards.
+              </p>
               <div className="p-3 rounded-lg bg-row border border-ring/60 text-xs space-y-1 font-mono text-white/90">
-                <p>Dr. Vitala H.R: <span className="text-lime">9591987329</span></p>
-                <p>Dr. Supreeth HSG: <span className="text-lime">9986207339</span></p>
-                <p>Mr. Srinivas S.R: <span className="text-lime">9880762882</span></p>
-                <p>Land Line: <span className="text-white/60">6366041109</span></p>
+                <p>
+                  Dr. Vitala H.R: <span className="text-lime">9591987329</span>
+                </p>
+                <p>
+                  Dr. Supreeth HSG: <span className="text-lime">9986207339</span>
+                </p>
+                <p>
+                  Mr. Srinivas S.R: <span className="text-lime">9880762882</span>
+                </p>
+                <p>
+                  Land Line: <span className="text-white/60">6366041109</span>
+                </p>
               </div>
             </div>
           </div>
@@ -455,7 +596,9 @@ export const ContactPage: React.FC = () => {
             <div className="p-5 rounded-2xl bg-card border border-ring/80 space-y-2">
               <Home className="w-5 h-5 text-lime" />
               <h4 className="font-bold text-white text-sm">Dr. Shantha Kumar H. C.</h4>
-              <p className="text-[11px] text-white/60">Associate Professor &amp; Chief Warden Boys</p>
+              <p className="text-[11px] text-white/60">
+                Associate Professor &amp; Chief Warden Boys
+              </p>
               <p className="font-mono text-xs text-lime font-semibold pt-1">+91-9448571119</p>
             </div>
 
@@ -463,7 +606,9 @@ export const ContactPage: React.FC = () => {
               <Home className="w-5 h-5 text-emerald-400" />
               <h4 className="font-bold text-white text-sm">Dr. Poornima M</h4>
               <p className="text-[11px] text-white/60">Asst. Professor &amp; Chief Warden Girls</p>
-              <p className="font-mono text-xs text-emerald-400 font-semibold pt-1">+91-9620513818</p>
+              <p className="font-mono text-xs text-emerald-400 font-semibold pt-1">
+                +91-9620513818
+              </p>
             </div>
 
             <div className="p-5 rounded-2xl bg-card border border-ring/80 space-y-2">

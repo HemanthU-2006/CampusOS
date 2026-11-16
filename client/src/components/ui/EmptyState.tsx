@@ -31,9 +31,7 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
         <Icon className="w-8 h-8" />
       </div>
       <h3 className="text-lg font-bold text-white mb-1.5">{title}</h3>
-      <p className="text-sm text-white/60 max-w-sm mb-6 leading-relaxed">
-        {description}
-      </p>
+      <p className="text-sm text-white/60 max-w-sm mb-6 leading-relaxed">{description}</p>
       {actionLabel && onAction && (
         <Button onClick={onAction} variant="lime" size="sm">
           {actionLabel}

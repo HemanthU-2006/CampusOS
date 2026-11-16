@@ -152,7 +152,10 @@ export function useScrubFrames(sectionRef: React.RefObject<HTMLElement | null>) 
     ctx.clearRect(0, 0, width, height);
 
     if (meta && meta.frameCount > 0 && imagesRef.current.length > 0) {
-      const targetIdx = Math.max(0, Math.min(meta.frameCount - 1, Math.round(currentFrameRef.current)));
+      const targetIdx = Math.max(
+        0,
+        Math.min(meta.frameCount - 1, Math.round(currentFrameRef.current))
+      );
       let img = imagesRef.current[targetIdx];
 
       // Fallback to nearest loaded frame
