@@ -14,5 +14,6 @@
     "strictNullChecks": true,
     "resolveJsonModule": true
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*"],
+  "exclude": ["src/test", "**/*.test.ts", "node_modules", "dist"]
 }
