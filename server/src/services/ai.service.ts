@@ -104,7 +104,7 @@ export class AIService {
       });
 
       const response = await client.models.generateContent({
-        model: 'gemini-3.8-flash',
+        model: 'gemini-2.5-flash',
         contents,
       });
 
@@ -228,7 +228,7 @@ Classify into:
 Return ONLY valid JSON with keys: category, priority, summary, suggestedAction, safetyCaution, estimatedHours.`;
 
       const response = await client.models.generateContent({
-        model: 'gemini-3.8-flash',
+        model: 'gemini-2.5-flash',
         contents: [{ role: 'user', parts: [{ text: prompt }] }],
       });
 
